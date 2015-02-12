@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/commons-httpclient-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/commons-lang-2.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/jaxen-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/jdom-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/junit-3.8.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/log4j-1.2.16.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/nexcore-framework-coreext-6.0.2.jar" sourcepath="/nexcore.framework.coreext/src/main/java">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/runtime/EarContent\APP-INF\lib\nexcore-framework-coreext-6.0.2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/nexcore-framework-online-channel-xplatform-6.0.2.jar" sourcepath="/nexcore.framework.online.channel.xplatform"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-aop-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-asm-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-beans-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-context-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-context-support-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-core-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-expression-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-jdbc-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-test-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-tx-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring-web-3.0.5.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/javaee-api-5.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/commons-codec-1.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/nexcore-framework-coreext-6.0.2-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/commons-io-2.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/gson-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/ibatis-sqlmap-2.3.0.677-nc.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/jsch-0.1.38.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/json-lib-2.2.3-jdk15.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/nexcore-framework-core-6.0.2.1.jar" sourcepath="/nexcore.framework.core/src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/nexcore-star.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/poi-3.8-20120326.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/poi-ooxml-3.8-20120326.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/star-foundation.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/uadetector-core-0.9.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/uadetector-resources-2013.02.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/ams-customizing.jar" sourcepath="/dev-ams-customizing/src"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/axis-1.4.jar" sourcepath="/axis-1.4/src"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/axis-jaxrpc-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/axis-wsdl4j-1.5.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/commons-net-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/nexcore-bat.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/aopalliance-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/spring2-rmi-compatibility.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/projects/mss/workspace/runtime/EarContent/APP-INF/lib/JSPScriptAgent.jar"/>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/sigar.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="runtime/EarContent/APP-INF/lib/sigar-lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="EarContent/APP-INF/lib/xplatform-1.0.0.3591.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 프레임워크 코어 컴포넌트를 정의한다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <bean id="nc.core.ILog4jManager"
+        class="nexcore.framework.core.log.impl.Log4jManager">
+        <description>
+        	<![CDATA[Log4j 설정 및 logger 로그레벨을 관리하는 컴포넌트 ]]>
+        </description>
+        <property name="fileUpdateEnabled" value="false" />
+    </bean>
+
+    <bean id="nc.core.DevLogLevelManager"
+        class="nexcore.framework.core.log.impl.DevLogLevelManager"
+        init-method="init" destroy-method="destroy">
+        <description>
+        	<![CDATA[업무로그 레벨을 관리]]>
+        </description>
+        <property name="sqlManager"   ref="nc.db.ISqlManager" />
+        <property name="cacheManager" ref="nc.core.ICacheManager" />
+        <property name="cacheName"    value="devloglevel" />
+        <property name="log4jManager" ref="nc.core.ILog4jManager" />
+    </bean>
+
+    <bean id="nc.core.IErrorLog"
+        class="nexcore.framework.core.log.impl.ErrorLog"
+        init-method="init">
+        <description>
+        	<![CDATA[에러정보 로깅]]>
+        </description>
+    </bean>
+    
+    <bean id="nc.core.ISystemLog"
+        class="nexcore.framework.core.log.impl.SystemLog"
+        init-method="init">
+        <description>
+        	<![CDATA[시스템 정보 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.ITxSqlLog"
+        class="nexcore.framework.core.log.impl.TxSqlLog"
+        init-method="init">
+        <description>
+        	<![CDATA[트랜잭션 요청별 SQL 실행 내역 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.IAccessLog"
+        class="nexcore.framework.core.log.impl.AccessLog"
+        init-method="init">
+        <description>
+        	<![CDATA[사용자 접근(로그인/로그아웃) 관련 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.ITransactionLog"
+        class="nexcore.framework.core.log.impl.TransactionLog"
+        init-method="init">
+        <description>
+        	<![CDATA[(웹 기본)트랜잭션 요청에 대한 내역 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.IFrontLayerLog"
+        class="nexcore.framework.core.log.impl.FrontLayerLog"
+        init-method="init">
+        <description>
+        	<![CDATA[(웹 기본)트랜잭션 요청에 대한 FrontController Layer에서의 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.IBizLayerLog"
+        class="nexcore.framework.core.log.impl.BizLayerLog"
+        init-method="init">
+        <description>
+        	<![CDATA[(웹 기본)트랜잭션 요청에 대한 EJB Layer에서의 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.IChannelTransactionLog"
+        class="nexcore.framework.core.log.impl.ChannelTransactionLog"
+        init-method="init">
+        <description>
+        	<![CDATA[(채널)트랜잭션 요청에 대한 내역 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.IPerformanceLog"
+        class="nexcore.framework.core.log.impl.PerformanceLog"
+        init-method="init">
+        <description>
+        	<![CDATA[성능 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.IAsyncLog"
+        class="nexcore.framework.core.log.impl.AsyncLog"
+        init-method="init">
+        <description>
+        	<![CDATA[비동기 처리 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.ISchedulingLog"
+        class="nexcore.framework.core.scheduling.SchedulingLog"
+        init-method="init">
+        <description>
+        	<![CDATA[스케쥴링 작업용 로깅]]>
+        </description>
+    </bean>
+
+    <bean id="nc.core.ILogAllowManager"
+        class="nexcore.framework.core.log.impl.ParamedLogAllowManager">
+        <description>
+        	<![CDATA[레이어 별 로깅에 대한 허용여부를 Parameter 등록값으로 판별하는 컴포넌트.]]>
+        </description>
+        <property name="bizParamManager" ref="nc.core.IBizParamManager" />
+        <property name="wordDelimeter" value=",">
+            <description>단어 구분자.</description>
+        </property>
+        <property name="lineDelimeter" value="\n">
+            <description>행 구분자.</description>
+        </property>
+        <property name="bizGroupXd" value="SKF900">
+            <description>'bizGroupXd'에 해당하는 파라미터 설정 정보를 조회하여 사용한다. 미등록시 기본값은 'SKF900'이다.</description>
+        </property>
+    </bean>
+    
+</beans>
+            

@@ -1,0 +1,76 @@
+{! Link.base = ""; /* all generated links will be relative to this */ !}
+{+subtemplate("subtemplates/head.tmpl", {subtitle: "Class Index"})+}
+{+subtemplate("subtemplates/menu.tmpl")+}
+<div class="content">
+	<div class="innerContent">
+		<article>
+			<h1 class="classTitle"><span>Class Index</span></h1>
+			
+			<ul id="ClassList2">
+				<for each="thisClass" in="data">
+					<li>
+						<h2 class="classname">{+(new Link().toSymbol(thisClass.alias))+}</h2>
+						<p>{+resolveLinks(summarize(thisClass.classDesc))+}</p>
+					</li>
+				</for>
+			</ul>
+		</article>
+{!
+	function sortKey(obj) {
+		var keys = [];
+		
+		for(var key in obj)
+			keys.push(key);
+			
+		keys.sort();
+		
+		return keys;
+	}
+
+
+	var methods = {};
+
+	for(var i = 0; i < data.length; i++) {
+		var c = data[i];
+
+		for(var j = 0; j < c.methods.length; j++) {
+			var m = c.methods[j];
+			var n = m.name.replace(/\^\d+$/, '');
+			var method = methods[n];
+			
+			if(method === undefined)
+				method = {
+					name: n,
+					classes: {}
+				};
+
+			method.classes[c.alias] = c.alias;
+
+			methods[n] = method;
+		}
+	}
+
+	var methodKeys = sortKey(methods);
+!}
+		<article style="margin-top: 100px;">
+			<h1 class="classTitle"><span>Method Index</span></h1>
+			
+			<ul id="ClassList2">
+				<for each="m" in="methodKeys">
+					<li>
+						<h2 class="classname"><a name="{+ m +}">{+ m +}</a></h2>
+						<ul>
+							{!
+								var classKeys = sortKey(methods[m].classes);
+							!}
+							<for each="c" in="classKeys">
+								<li>- <a href="symbols/{+ c +}.html#{+ m +}">{+ c +}</a></li>
+							</for>
+						</ul>
+					</li>
+				</for>
+			</ul>
+		</article>
+	</div>
+</div>
+{+subtemplate("subtemplates/foot.tmpl")+}

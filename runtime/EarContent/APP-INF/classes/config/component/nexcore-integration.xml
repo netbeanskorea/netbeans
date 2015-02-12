@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 프레임워크 통합레이어  컴포넌트를 정의한다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="nc.integration.AbstractTCPConnectionHSMMeta" class="nexcore.framework.integration.tcp.TCPConnectionMeta" abstract="true">
+        <description><![CDATA[HSM 기본 설정]]></description>
+		<property name="connectTimeout"     value="5000"/>
+		<property name="blockTimeout"       value="15000"/>
+		<property name="defaultReadTimeout" value="10000"/>
+		<property name="connectionClazz"    value="ams.fwk.outbound.tcp.HSMTCPConnection"/>
+		<property name="pooling"            value="true"/>
+		<property name="min"                value="0"/>
+		<property name="max"                value="5"/>
+		<property name="inc"                value="1"/><!-- Connection 증가수. -->
+		<property name="idle"               value="180000"/>
+    </bean>
+ 
+    <bean id="nc.integration.TCPConnectionManager" 
+          class="nexcore.framework.integration.tcp.internal.TCPConnectionManager" 
+          init-method="init" 
+          destroy-method="destroy">
+    	<description><![CDATA[TCP Connection 관리기.]]></description>
+    	<!-- property name="loggerName" value="__tcplog"/ -->
+    	<property name="preloadPools" ref="nc.integration.TCPConnectionManager.preloadPoolsMap" />
+    </bean>
+
+	<bean id="nc.integration.TCPConnectionManager.preloadPoolsMap" class="nexcore.framework.core.ioc.SpringOptionalMapFactoryBean">
+		<description><![CDATA[사전로딩 아웃바운드 채널.]]></description>    
+		<property name="option" value="${nexcore.runtime.mode.${system.id}}"/> <!-- 프레임워크 환경 구분을 옵션으로 사용한다. -->
+		<property name="optionSourceMap">
+			<map>
+				<entry key="L"> <!-- 로컬용 -->
+					<map>
+		    			<entry key="HSM_PUSH1">
+		    				<bean parent="nc.integration.AbstractTCPConnectionHSMMeta">
+		    					<property name="hostName"     value="168.154.220.204"/>
+								<property name="port"               value="8301"/>
+								<property name="max"                value="1"/>
+		    				</bean>
+		    			</entry>
+					</map> 
+				</entry>
+				<entry key="D"> <!-- 개발용 -->
+					<map>
+		    			<entry key="HSM_PUSH1">
+		    				<bean parent="nc.integration.AbstractTCPConnectionHSMMeta">
+		    					<property name="hostName"     value="168.154.220.204"/>
+								<property name="port"               value="8301"/>
+		    				</bean>
+		    			</entry>
+					</map> 
+				</entry>
+				<entry key="R"> <!-- 운영용 -->
+					<map>
+		    			<entry key="HSM_PUSH1">
+		    				<bean parent="nc.integration.AbstractTCPConnectionHSMMeta">
+		    					<property name="hostName"           value="168.154.220.204"/>
+								<property name="port"               value="8301"/>
+		    				</bean>
+		    			</entry>
+					</map>
+				</entry>
+			</map>
+		</property>
+	</bean>  
+	
+</beans>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 프레임워크 웹 컴포넌트를 정의한다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <bean id="nc.channel.IFlatRequestHandler"
+        class="nexcore.framework.online.channel.handler.internal.StandardFlatHandler"
+        init-method="init" destroy-method="destroy">
+        <property name="description"         value="표준 Flat 전문 처리용" />
+    </bean>
+
+    <bean id="nc.channel.web.IFlatApplicationController"
+        class="nexcore.framework.online.channel.core.internal.DefaultApplicationController">
+        <description>
+            <![CDATA[표준 웹-Flat 요청에서 사용하는 ApplicationController임]]>
+        </description>
+        <property name="commandViewMapResolver" ref="nc.channel.web.IFlatCommandViewMapResolver" />
+        <property name="commandProcessor"       ref="nc.channel.web.ICommandProcessor" />
+        <property name="responseProcessor"      ref="nc.channel.web.IResponseProcessor" />
+        <property name="preCheckers">
+            <list>
+                <!-- ref bean="nc.channel.IValidationManager" /-->
+                <!-- ref bean="nc.channel.IFormattingManager" /-->
+                <!-- ref bean="nc.channel.IDataMappingManager" /-->
+            </list>
+        </property>
+        <property name="postCheckers">
+            <list>
+                <!-- ref bean="nc.channel.IDataMappingManager" /-->
+                <!-- ref bean="nc.channel.IFormattingManager" /-->
+            </list>
+        </property>
+    </bean>
+
+	<bean id="nc.channel.web.IFlatView"
+        class="nexcore.framework.online.channel.web.FlatView">
+    </bean>
+    
+    <bean id="nc.channel.web.IFlatCommandViewMapResolver"
+        class="nexcore.framework.online.channel.core.internal.DefaultCommandViewMapResolver">
+        <description>
+            <![CDATA[표준 웹-Flat 요청에서 사용하는 CommandViewMapResolver임]]>
+        </description>
+        <property name="defaultErrorView" ref="nc.channel.web.IFlatView"/>
+        <property name="defaultCommandViewMap">
+            <bean class="nexcore.framework.online.channel.core.DefaultCommandViewMap">
+                <!-- 커맨드 맵의 커맨드 정보 -->
+                <property name="command">
+                    <bean class="nexcore.framework.online.channel.core.command.StdCommand"></bean>
+                </property>
+                <!-- 커맨드 맵의 View 정보 -->
+                <property name="viewMap">	
+                    <map>
+                        <entry key="SUCCESS" value-ref="nc.channel.web.IFlatView"/>
+                        <entry key="FAIL"    value-ref="nc.channel.web.IFlatView"/>
+                    </map>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+</beans>            

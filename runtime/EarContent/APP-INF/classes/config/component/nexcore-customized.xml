@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 프레임워크 DB관련 컴포넌트를 정의한다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+
+    <!-- 프로젝트에서 개발한 customize 용 클래스들. -->
+    <bean id="nc.db.ISqlManager_message"
+        class="nexcore.framework.integration.db.internal.XmlSqlManager"
+        init-method="init">
+        <description>XML 기반의 ISqlManager</description>
+        <property name="configFile"          value="config/sql/message-sql-config.xml" />
+        <property name="userThreadManager"   ref="nc.core.IUserThreadManager" />
+    </bean>
+    
+    <bean id="ams.fwk.mail.IMailManager"
+        class="ams.fwk.mail.MailManager"
+        init-method="init" destroy-method="destroy">
+        <description>메일 컴포넌트</description>
+        <property name="configurationManager" ref="nc.core.IConfigurationManager" />
+		<property name="templateEngine"       ref="nc.core.ITemplateEngine" />
+        <property name="templateLocation"     value="config/template/" />
+    </bean>
+    
+    <bean id="ams.ICodeManager"
+        class="ams.fwk.code.internal.AmsCachedCodeManager">
+        <description>AMS 코드 제공을 위한 컴포넌트(캐쉬 사용)</description>
+        <property name="cacheManager" ref="nc.core.ICacheManager" />
+        <property name="sqlManager" ref="nc.db.ISqlManager_amsCode" />
+    </bean>
+
+    <bean id="ams.IAmsPrhbWrdManager"
+        class="ams.fwk.biz.internal.AmsPrhbWrdManager">
+        <description>AMS 금칙어 제공을 위한 컴포넌트(캐쉬 사용)</description>
+        <property name="cacheManager" ref="nc.core.ICacheManager" />
+        <property name="sqlManager" ref="nc.db.ISqlManager_amsPrhbWrd" />
+    </bean>
+    
+    <bean id="ams.ILabelManager"  class="ams.fwk.label.AmsCachedLabelManager" init-method="init">
+        <description>
+            <![CDATA[AMS 레이블 관리 컴포넌트]]>
+        </description>
+        <property name="cacheManager" ref="nc.core.ICacheManager" />
+        <property name="sqlManager" ref="nc.db.ISqlManager_amsLabel" />
+        <property name="cacheName" value="amsLabel" />
+        <property name="preload" value="true" />
+    </bean>
+    <bean id="nc.db.ISqlManager_amsCode"
+        class="nexcore.framework.integration.db.internal.XmlSqlManager"
+        init-method="init">
+        <description>XML 기반의 ISqlManager</description>
+        <property name="configFile"          value="config/sql/code-sql-config.xml" />
+        <property name="userThreadManager"   ref="nc.core.IUserThreadManager" />
+    </bean>
+    <bean id="nc.db.ISqlManager_amsLabel"
+        class="nexcore.framework.integration.db.internal.XmlSqlManager"
+        init-method="init">
+        <description>XML 기반의 ISqlManager</description>
+        <property name="configFile"          value="config/sql/amsLabel-sql-config.xml" />
+        <property name="userThreadManager"   ref="nc.core.IUserThreadManager" />
+    </bean>
+    <bean id="ams.common.IMailManager"
+        class="ams.fwk.mail.MailManager"
+        init-method="init" destroy-method="destroy">
+        <description>메일 컴포넌트</description>
+        <property name="configurationManager" ref="nc.core.IConfigurationManager" />
+		<property name="templateEngine"       ref="nc.core.ITemplateEngine" />
+        <property name="templateLocation"     value="config/template/" />
+    </bean>
+    <!--
+    <bean id="nc.db.ISqlManager_push"
+        class="nexcore.framework.integration.db.internal.XmlSqlManager"
+        init-method="init">
+        <description>XML 기반의 ISqlManager</description>
+        <property name="configFile"          value="config/sql/amspush-sql-config.xml" />
+        <property name="userThreadManager"   ref="nc.core.IUserThreadManager" />
+    </bean>
+    
+    <bean id="nc.biz.IPushManager"
+    	class="ams.fwk.push.AmsPushManager"
+    	init-method="init">
+    	<description>
+    		<![CDATA[Component for supporting Push Message Send]]>
+    	</description>
+    	<property name="sqlManager" ref="nc.db.ISqlManager_push" />
+    	<property name="sleep" value="60000"/>
+    	<property name="maxMsgCount" value="100"/>
+    </bean>
+      -->
+   
+    <bean id="nc.db.ISqlManager_amsPrhbWrd"
+        class="nexcore.framework.integration.db.internal.XmlSqlManager"
+        init-method="init">
+        <description>XML 기반의 ISqlManager</description>
+        <property name="configFile"          value="config/sql/amsPrhbWrd-sql-config.xml" />
+        <property name="userThreadManager"   ref="nc.core.IUserThreadManager" />
+    </bean>         
+</beans>

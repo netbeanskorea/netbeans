@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+            
+	<bean id="ams.server.monitoring.Manager" class="ams.fwk.monitoring.server.ServerEnvMonitoringManager"  init-method="init">
+		<description>서버의 환경(CPU, Memory)을 모니터링하기 위한 Manager</description>
+		<property name="writeSqlManager" ref="nc.db.ISqlManager.writeMonitoring" />
+		<property name="readSqlManager" ref="nc.db.ISqlManager.readMonitoring" />
+		<property name="checkIntervalTime" value="4000"/><!-- CPU/MEM 체크모니터링시간(ms) -->
+		<property name="fsCheckIntervalTime" value="60000"/><!-- 파일시스템 체크모니터링시간(ms) -->
+		<property name="transPerSecCheckIntervalTime" value="1000"/><!-- 초당 거래건수 파악(ms) -->
+		<property name="delayStartTime" value="40000"/><!-- WAS가 안정적으로 시작되기 전까지 지연시간(ms) -->
+		<property name="cpuWarningPer" value="95"/><!-- 경고메일을 보내기 위한 CPU의 한계치-->
+		<property name="memWarningPer" value="80"/><!-- 경고메일을 보내기 위한 MEM의 한계치-->
+		<property name="fsWarningPer" value="90"/><!-- 경고메일을 보내기 위한 File System의 한계치-->
+		<property name="startProcessor" value="true"/><!--프로세서 동작여부-->
+		<property name="cacheName"  value="serverEnvMonitoring"/><!-- 캐쉬네임-->
+		<property name="warningMailSendIntervalTime" value="600000"/><!-- 메일송신 인터벌시간(ms) -->
+		<property name="warningMailMap">
+			<map>
+				<entry key="L"> <!-- 로컬용 -->
+					<list>
+						
+					</list>
+				</entry>
+				<entry key="D"> <!-- 개발용 -->
+					<list>
+						<value>psi728@sk.com</value>
+						<value>hunkee1017@sk.com</value>
+						<value>single@sk.com</value>
+						<value>netbeans@sk.com</value>
+						<value>jangij@sk.com</value>
+					</list>
+				</entry>
+				<entry key="R"> <!--운영용 -->
+					<list>
+						<value>psi728@sk.com</value>
+						<value>hunkee1017@sk.com</value>
+						<value>single@sk.com</value>
+						<value>netbeans@sk.com</value>
+						<value>jangij@sk.com</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+		<property name="monitoingFsNameList">
+			<list>
+				<value>/logs</value>
+				<value>C:\</value>
+			</list>
+		</property>
+	</bean>            
+            
+            
+	<!-- 프로젝트에서 개발한 customize 용 클래스들. -->
+    <bean id="nc.db.ISqlManager.writeMonitoring"
+        class="nexcore.framework.integration.db.internal.XmlSqlManager"
+        init-method="init">
+        <description>XML 기반의 ISqlManager</description>
+        <property name="configFile"          value="config/sql/monitoring-sql-config.xml" />
+        <property name="userThreadManager"   ref="nc.core.IUserThreadManager" />
+    </bean>
+    	<!-- 프로젝트에서 개발한 customize 용 클래스들. -->
+    <bean id="nc.db.ISqlManager.readMonitoring"
+        class="nexcore.framework.integration.db.internal.XmlSqlManager"
+        init-method="init">
+        <description>XML 기반의 ISqlManager</description>
+        <property name="configFile"          value="config/sql/monitoring-sql-config.xml" />
+        <property name="userThreadManager"   ref="nc.core.IUserThreadManager" />
+    </bean>
+</beans>

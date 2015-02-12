@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 프레임워크 코어 컴포넌트를 정의한다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <!-- =================================================================== -->
+    <!-- [서비스 필터 선언 영역]                                                  -->
+    <!-- =================================================================== -->
+    <!-- 본 영역은 단순히 서비스 필터들을 선언할 뿐이다.                                -->
+    <!-- 트랜잭션 요청에 필터를 적용할 것인지는 아래 서비스 필터 적용 영역에서                              -->
+    <!-- 서비스 필터 매니저(컴포넌트)에 관련 내용을 설정해야 한다.                       -->
+    <!-- =================================================================== -->
+<!--
+	<bean id="nc.coreext.filter.TransactionControlProcessor"
+		class="nexcore.framework.coreext.pojo.filter.DefaultTransactionControlProcessor"
+		init-method="init"
+		destroy-method="destroy">
+        <property name="description"       value="거래프로파일 기반 거래제어"/>
+        <property name="txProfileManager"  ref="nc.core.TxProfileManager"/>
+        <property name="passingIfNotFound" value="false" />
+        <property name="componentFqId"     value="fwk.FWKSBase" />
+        <property name="methodName"        value="fFWK09TxControl" />
+	</bean>
+-->
+	<bean id="nc.coreext.filter.PrePostProcessor"
+		class="nexcore.framework.coreext.pojo.filter.DefaultPrePostProcessor"
+		init-method="init"
+		destroy-method="destroy">
+        <property name="description"                value="전체 거래 선/후 처리"/>
+        <property name="componentFqId"              value="asm.FWKSBase" />
+        <property name="preMethodName"              value="preProcessor99" />
+        <property name="postMethodName"             value="postProcessor99" />
+        <property name="mainTransactionEnabled"     value="true" />
+        <property name="linkTransactionEnabled"     value="true" />
+        <property name="deferredTransactionEnabled" value="false" />
+	</bean>
+	
+	<bean id="nc.coreext.filter.BizPrePostProcessor"
+		class="nexcore.framework.coreext.pojo.filter.DefaultAttributeBasedPrePostProcessor"
+		init-method="init"
+		destroy-method="destroy">
+        <property name="description"                value="컴포넌트 속성 기반 업무 선/후 처리"/>
+        <property name="mainTransactionEnabled"     value="true" />
+        <property name="linkTransactionEnabled"     value="false" />
+        <property name="deferredTransactionEnabled" value="false" />
+	</bean>
+	
+	<bean id="nc.coreext.filter.TransactionLogProcessor" class="ams.fwk.filter.TransactionLogProcessor"
+		init-method="init"
+		destroy-method="destroy">
+	    <property name="description"       value="거래/에러로그(CommonArea를 DB에 기록)"/>
+	    <property name="componentFqId"     value="asm.FWKSBase"/>
+	    <property name="trLogMethodName"   value="writeTrLog"/>
+	    <property name="errLogMethodName"  value="writeErLog"/>
+	</bean>
+	
+	<bean id="nc.coreext.filter.UTestUserInfoProcessor" class="ams.fwk.filter.UTestUserInfoProcessor"
+		init-method="init"
+		destroy-method="destroy">
+	    <property name="description"        value="uTest시 사용자정보설정이 되도록 함."/>
+	    <property name="componentFqId"      value="com.COMBBase" />
+	    <property name="loginMethodName"    value="pCOM10001"/>
+	    <property name="commandId"     		value="/web/xml.xmd"/>
+	</bean>
+<!-- 
+	<bean id="nc.coreext.filter.RequestEncryptProcessor"
+		class="nexbank.fwk.filter.RequestEncryptProcessor"
+		init-method="init"
+		destroy-method="destroy">
+        <property name="description"       value="요청데이타 필드 암호화"/>
+	</bean>
+
+	<bean id="nc.coreext.filter.CommonAreaProcessor"
+		class="ams.fwk.filter.CommonAreaProcessor"
+		init-method="init"
+		destroy-method="destroy">
+        <property name="description"      value="CommonArea 관리"/>
+	</bean>
+
+	<bean id="nc.coreext.filter.TransactionRollbackProcessor"
+		class="nexbank.fwk.filter.TransactionRollbackProcessor"
+		init-method="init"
+		destroy-method="destroy">
+        <property name="description"      value="트랜잭션 롤백 처리"/>
+        <property name="trnmChnlCdList">
+        	<list>
+        		<value>UTM</value>
+        	</list>
+        </property>
+	</bean>
+
+	<bean id="nc.core.filter.TimeoutCheckProcessor" 
+	   class="nexcore.framework.core.service.filter.timeout.TimeoutCheckFilter" 
+	   init-method="init" 
+	   destroy-method="destroy">
+	   <description>
+	       <![CDATA[타임아웃 체크. 
+	       applyToMainOnly 
+	           - 주 거래(최초 실행되는 거래)에만 타임아웃을 적용하고 연동거래에는 타임아웃을 적용하지 않을 지 여부
+	           - 미설정시 기본값은 true
+	           - false이면 주거래와 연동거래 모두 각각 지정된 타임아웃을 적용
+	           - true이면 주거래의 타임아웃만 적용하고 연동거래는 타임아웃을 적용안함
+	       applyToLinkRequiresNewOnly 
+	           - 연동거래 타임아웃 적용에 대한 옵션 
+	           - 미설정시 기본값은 true
+	           - applyToMainOnly 값이 true일 경우에는 무시됨
+	           - true이면 연동거래 중에서 RequiresNew 트랜잭션에 대해서만 타임아웃을 적용
+	           - false이면 모든 연동거래에 타임아웃을 적용 
+	       ]]>
+	   </description>
+	   <property name="description"                value="타임아웃 체크"/>
+	   <property name="applyToMainOnly"            value="false"/>
+	   <property name="applyToLinkRequiresNewOnly" value="true"/>
+	   <property name="transactionTimeoutProvider">
+	       <bean class="nexcore.framework.core.service.filter.timeout.MetadataTimeoutProvider">
+	           <description>
+	               <![CDATA[메소드 메타데이터에서 타임아웃 시간을 조회. 
+	              	 	defaultTimeout 단위는 초(sec).
+	               		거래아이디에 timeout값이 설정되지 않는 경우에는 defaultTimeout 적용.
+	               ]]>
+	           </description>
+	           <property name="defaultTimeout"    value="30"/>
+		       <property name="bizComponentMetadataRegistry" ref="nc.core.IBizComponentMetaDataRegistry"/>
+	       </bean>
+	   </property>
+	</bean>
+-->
+
+    <!-- =================================================================== -->
+    <!-- [서비스 필터 적용 영역] : 서비스Facade에서  필터링 수행(컴포넌트)         -->
+    <!-- =================================================================== -->
+    <!-- [property] 설명                                                                       -->
+    <!-- serviceFilters : 사용하지 않음. 설정시 예외 발생함.                          -->
+    <!-- txMapping      : 트랜잭션 아이디 매핑 문자열을 기술하고 해당 문자열과  일치하는       -->
+    <!--                  업무 요청에 적용할 필터들을 기술한다. 필터들은 기술한 순서로 수행된다. -->
+    <!-- =================================================================== -->
+    <bean id="nc.service.IServiceFilterManager"
+          class="nexcore.framework.core.service.filter.internal.OnlyTxMappingServiceFilterManager"
+          init-method="init"
+          destroy-method="destroy">
+        <!-- bizClassLoadManager는 POJO Component 방식 사용시 필요함. 그외는 comment 처리 -->
+        <property name="bizClassLoadManager"                ref="nc.core.IBizClassLoadManager"/>
+        <property name="txMapping">
+            <map>
+            	  <!-- 거래코드로 호출하는 경우 -->
+                <!-- <entry key="[A-Z]{3}([0-8][0-9]|[9][0-79])[0-9]{3}"> -->
+                <entry key="*">
+                    <list>
+                    
+                      <ref bean="nc.coreext.filter.UTestUserInfoProcessor"/> 				   <!-- uTest일 경우는 사용자정보 셋팅 -->
+                      <!--  <ref bean="nc.coreext.filter.CommonAreaProcessor"/>          -->   <!-- CommonArea 생성 -->
+                      <!--  <ref bean="nc.coreext.filter.TransactionRollbackProcessor"/> -->   <!-- 롤백여부 판단 (테스트거래인경우) -->
+                      <ref bean="nc.coreext.filter.TransactionLogProcessor"/>         <!-- 거래로그 -->
+                      <!--  <ref bean="nc.coreext.filter.RequestEncryptProcessor"/>      -->   <!-- 요청데이타 필드 암호화 -->
+                      <!--  <ref bean="nc.coreext.filter.TransactionControlProcessor"/>  -->   <!-- 거래제어 -->
+                      <ref bean="nc.coreext.filter.PrePostProcessor"/>      <!-- 전체 거래 선/후처리 -->
+                      <ref bean="nc.coreext.filter.BizPrePostProcessor"/>             <!-- 업무 선/후처리 -->
+                      <!--  <ref bean="nc.core.filter.TimeoutCheckProcessor"/>           -->   <!-- 타임아웃 체크 -->
+                    </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

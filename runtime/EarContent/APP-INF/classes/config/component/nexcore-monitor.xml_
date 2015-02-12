@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  ############################################################# -->
+<!--  프레임워크 모니터링  컴포넌트를 정의한다.       ################### -->
+<!--  이 파일은 코어측 제일 뒤에 배치한다.           ################### -->
+<!--  ############################################################# -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd 
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+
+    <!-- <jee:jndi-lookup id="nc.monitor.MBeanServer" jndi-name="java:comp/jmx/runtime" /> -->
+    <!--
+    <bean id="nc.monitor.MBeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean" />
+
+    <bean id="nc.monitor.IMonitorMBean"
+        class="nexcore.framework.core.monitor.internal.MonitorMBean"
+        lazy-init="false">
+        <description>
+            <![CDATA[JMX로 서비스 건강상태를 노출시킴.]]>
+        </description>
+    </bean>
+
+    <bean id="nc.monitor.Exporter"
+        class="org.springframework.jmx.export.MBeanExporter"
+        lazy-init="false">
+        <description>
+            <![CDATA[JMX로 서비스를 노출시킴.]]>
+        </description>
+        <property name="server" ref="nc.monitor.MBeanServer" />
+        <property name="beans">
+            <map>
+                <entry key="nexcore:Name=monitor"
+                    value-ref="nc.monitor.IMonitorMBean" />
+            </map>
+        </property>
+        <property name="registrationBehaviorName"
+            value="REGISTRATION_REPLACE_EXISTING" />
+    </bean>
+
+    <bean id="nc.monitor.IMonitorAgent"
+        class="nexcore.framework.core.monitor.internal.MonitorAgent"
+        init-method="init" destroy-method="destroy">
+        <description>
+            <![CDATA[IOC 컨테이너내의 서비스들을 모니터링하고, MBean에 정보를 입력한다.]]>
+        </description>
+        <property name="server" ref="nc.monitor.MBeanServer" />
+        <property name="delay" value="15000" />
+        <property name="interval" value="5000" />
+    </bean>
+
+    <bean id="nc.monitor.IMonitorManager"
+        class="nexcore.framework.core.monitor.internal.MonitoringManager"
+        init-method="init" destroy-method="destroy">
+        <description>
+            <![CDATA[WAS의 Instance에 대한 모니터링을 실시하는 컴포넌트]]>
+        </description>
+        <property name="wasInstanceManager" ref="nc.core.IWasInstanceManager" />
+        <property name="vendorMonitor" ref="nc.monitor.WebApplicationMonitor"/>
+        <property name="delay" value="2000" />
+        <property name="interval" value="10000" />
+        <property name="verbose" value="false" />
+        <property name="filterExpression" value="localhost" />
+    </bean>
+    -->
+    <!--##############  장애 모니터링  ###############-->
+    <bean id="nc.monitor.AdminChannelClient"
+        class="nexcore.framework.core.monitor.internal.AdminChannelClient">
+        <description>
+            <![CDATA[Admin 서버와 통신을 위한 채널]]>
+        </description>
+        <property name="ip"     value="127.0.0.1" />
+        <property name="port"   value="9988" />
+    </bean>
+    
+    <bean id="nc.monitor.IFaultAlerter"
+        class="nexcore.framework.core.monitor.internal.FaultAlerter"
+        init-method="init" destroy-method="destroy">
+        <description>
+            <![CDATA[장애 발생시 Admin 서버로 장애메세지 전달]]>
+        </description>
+        <property name="client"   ref="nc.monitor.AdminChannelClient" />
+        <property name="enabled"  value="true" />
+    </bean>
+    
+    
+    <bean id="nc.monitor.FaultMonitoringJobScheduler"
+        class="nexcore.framework.core.monitor.internal.FaultMonitoringJobScheduler"
+        init-method="init" destroy-method="destroy">
+        <description>
+            <![CDATA[장애 모니터링 작업을 주기적으로 실행시켜준다]]>
+        </description>
+        <property name="monitoringJobs">
+            <list><!--
+                <bean class="nexcore.framework.core.monitor.internal.JDBCLeakMonitoringJob">
+                    <description>
+                        <![CDATA[JDBC 의 Leak이 발생하는지 감지하는 모니터링 Job]]>
+                    </description>
+                    <property name="delay"    value="10000" />
+                    <property name="interval" value="10000000" />
+                    <property name="wasInstanceManager" ref="nc.core.IWasInstanceManager" />
+                    <property name="vendorMonitor" ref="nc.monitor.WebApplicationMonitor" />
+                </bean>-->
+                <bean class="nexcore.framework.core.monitor.internal.HeapFreeMonitoringJob">
+                  <property name="delay"             value="5000" />
+                  <property name="interval"          value="10000" />
+                  <property name="minHeapFreeMemory" value="200000000" />   
+                </bean>
+                <bean class="nexcore.framework.core.monitor.internal.DataSourceConnectionCheckJob">
+                  <property name="delay"             value="10000" />
+                  <property name="interval"          value="10000" />
+                  <property name="connections">
+                      <list>
+<!--
+                          <map>
+                              <entry key="java.naming.factory.initial"       value="jeus.jndi.JNSContextFactory"/>
+                              <entry key="java.naming.provider.url"          value="127.0.0.1:9736"/>
+                              <entry key="java.naming.security.principal"    value="administrator"/>
+                              <entry key="java.naming.security.credentials"  value="password"/>
+                              <entry key="_jndi_name_"                       value="java:/jdbc/NexcoreDS"/>
+                          </map>
+                          <map>
+                              <entry key="java.naming.factory.initial"       value="weblogic.jndi.WLInitialContextFactory"/>
+                              <entry key="java.naming.provider.url"          value="t3://localhost:7001"/>
+                              <entry key="java.naming.security.principal"    value="administrator"/>
+                              <entry key="java.naming.security.credentials"  value="password"/>
+                              <entry key="_jndi_name_"                       value="java:/jdbc/DefaultDS"/>
+                          </map>
+-->
+                      </list>
+                  </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!--##############  성능 모니터링  ###############-->
+    <bean id="nc.pmonitor.PLogBuffer"
+        class="nexcore.framework.core.monitor.internal.PLogBuffer"
+        init-method="init" destroy-method="destroy">
+        <description>
+            <![CDATA[성능 모니터링. 각 거래별 start_time,end_time,id 값을 담아두는 버퍼]]>
+        </description>
+        <property name="bufferSizeTxLog"  value="10000"/>
+        <property name="bufferSizeSqlLog" value="30000"/>
+    </bean>
+
+    <bean id="nc.pmonitor.IPLogger"
+        class="nexcore.framework.core.monitor.internal.PLogger"
+        init-method="init" destroy-method="destroy">
+        <description>
+            <![CDATA[성능 모니터링. 로그를 남기는 로거 클래스.]]>
+        </description>
+        <property name="enabled"        value="true"/>
+        <property name="PLogBuffer"     ref="nc.pmonitor.PLogBuffer"/>
+    </bean>
+
+    <bean id="nc.pmonitor.IPMonitorAgent"
+        class="nexcore.framework.core.monitor.internal.PMonitorAgent"
+        init-method="init" destroy-method="destroy">
+        <description>
+            <![CDATA[성능 모니터링. PLogBuffer를 주기적으로 취합하여 Admin 서버로 전송]]>
+        </description>
+        <property name="PLogBuffer"             ref="nc.pmonitor.PLogBuffer"/>
+        <property name="interval1Millis"        value="3000"/>
+        <property name="interval2Millis"        value="30000"/>
+        <property name="PMonFileDirectory"      value=""/> <!-- default value is home/pmon -->
+        <property name="client"                 ref="nc.monitor.AdminChannelClient" />
+    </bean>
+</beans>

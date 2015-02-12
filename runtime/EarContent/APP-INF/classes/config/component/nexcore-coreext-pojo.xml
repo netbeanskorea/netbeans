@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 프레임워크 COREEXT POJO 관련 컴포넌트를 정의한다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+
+    <bean id="nc.coreext.pojo.ServiceResolverFactory"
+        class="nexcore.framework.coreext.pojo.resolver.ServiceResolverFactory"
+        init-method="init">
+        <description>POJO Component Model Service Resolver</description>
+		<!-- 기본설정
+        <property name="DBAccessableResolver">
+        	<bean class="nexcore.framework.coreext.pojo.resolver.impl.DefaultDBAccessableResolver">
+        		<property name="sqlManagerFactory" ref="nc.db.ISqlManagerFactory"/>
+        		<property name="contextedSqlLog"   ref="nc.core.IContextedSqlLog"/>
+        		<property name="mergeUnitName"     value="false"/>
+        	</bean>
+        </property>
+        <property name="bizComponentResolver">
+        	<bean class="nexcore.framework.coreext.pojo.resolver.impl.DefaultBizComponentResolver">
+        		<property name="autoFilterMethodPattern"   value="p.*"/>
+        	</bean>
+        </property>
+        -->
+        <property name="onlineContextResolver">
+            <!-- <bean class="nexcore.framework.coreext.pojo.resolver.impl.DefaultOnlineContextResolver">    -->     
+        	<bean class="ams.fwk.resolver.AmsOnlineContextResolver">
+        	</bean>
+        </property>
+        <!--  
+        <property name="identityResolver">
+        	<bean class="nexcore.framework.coreext.pojo.resolver.impl.DefaultIdentityResolver">
+        		<property name="globalSequenceMax"   value="99999"/>
+        		<property name="asyncSequenceMax"    value="99"/>
+        	</bean>
+        </property>
+        <property name="flatTransformResolver">
+        	<bean class="nexcore.framework.coreext.pojo.resolver.impl.DefaultFlatTransformResolver">
+        		<property name="componentMetaDataRegistry" ref="nc.core.IBizComponentMetaDataRegistry"/>
+        		<property name="ioLayoutMetaDataRegistry"  ref="nc.core.IBizIoLayoutMetaDataRegistry"/>
+        		<property name="byteArrayMemoryPool"       ref="nc.core.IByteArrayMemoryPool"/>
+        		<property name="encoding"                  value="${flat.encoding}"/>
+        		<property name="lengthAbout"               value="1000"/>
+        	</bean>
+        </property>
+        <property name="asyncServiceResolver">
+        	<bean class="nexcore.framework.coreext.pojo.resolver.impl.DefaultAsyncServiceResolver">
+        		<property name="asyncQueueManager"         ref="nc.core.AsyncQueueManager"/>
+        		<property name="xaQueueName"               value="${online.internal.async.queuename.xa}"/>
+        		<property name="nonXaQueueName"            value="${online.internal.async.queuename.nonxa}"/>
+        	</bean>
+        </property>
+        <property name="delayAsyncServiceResolver">
+        	<bean class="nexcore.framework.coreext.pojo.resolver.impl.DefaultDelayAsyncServiceResolver">
+        		<property name="delayAsyncManager"         ref="nc.core.DelayAsyncManager"/>
+        	</bean>
+        </property>
+        <property name="batchResolver">
+        	<bean class="nexcore.framework.coreext.pojo.resolver.impl.DefaultBatchResolver" init-method="init">
+        		<property name="schedulerAddress" value="${nexcore.ondemand.batch.scheduler.${system.id}}"/>
+        	</bean>
+        </property>		
+		-->        
+    </bean>
+
+    <bean id="nc.core.IContextedSqlLog"
+        class="nexcore.framework.coreext.pojo.biz.base.BaseContextedSqlLog"
+        init-method="init" 
+        destroy-method="destroy">
+        <description>
+            <![CDATA[ ContextedSqlLog ]]>
+        </description>
+		<property name="enabled"  			value="true"/>
+		<property name="skipStatementsMap"> <!-- 기록 제외대상 쿼리아이디를 정규표현식으로 등록한다. Map(was instance id, List(정규표현식 쿼리 아이디))-->
+			<map>
+				<entry key="localhost">     
+					<list>
+						<value>DTB_CBS_FWK_TRLOG_H_00\..*</value>
+						<value>DTB_CBS_FWK_ERLOG_H_00\..*</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+    </bean>
+    
+</beans>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 프레임워크 웹 컴포넌트를 정의한다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<!-- RequestHandler 정의 부분 -->
+	<bean id="nc.channel.IWebRequestHandler"
+		class="nexcore.framework.online.channel.handler.internal.StandardWebHandler">
+		<description>
+			<![CDATA[표준 웹요청에서 사용하는 RequestHandler]]>
+		</description>
+	</bean>
+
+	<!-- ApplicationController 정의 부분 -->
+	<bean id="nc.channel.web.IWebApplicationController"
+		class="nexcore.framework.online.channel.core.internal.DefaultApplicationController">
+		<description>
+			<![CDATA[표준 웹요청에서 사용하는 ApplicationController]]>
+		</description>
+		<property name="commandViewMapResolver"    ref="nc.channel.web.IWebCommandViewMapResolver" />
+		<property name="commandProcessor"          ref="nc.channel.web.ICommandProcessor" />
+		<property name="responseProcessor"         ref="nc.channel.web.IResponseProcessor"/>
+		<property name="preCheckers">
+			<list>
+				<!-- ref bean="nc.channel.IValidationManager" /-->
+				<!-- ref bean="nc.channel.IFormattingManager" /-->
+				<!-- ref bean="nc.channel.IDataMappingManager" /-->
+			</list>
+		</property>
+		<property name="postCheckers">
+			<list>
+				<!-- ref bean="nc.channel.IDataMappingManager" /-->
+				<!-- ref bean="nc.channel.IFormattingManager" /-->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- CommandViewMapResolver 정의 부분 -->
+	<bean id="nc.channel.web.IWebCommandViewMapResolver"
+		class="nexcore.framework.online.channel.core.internal.DefaultCommandViewMapResolver">
+		<description>
+			<![CDATA[표준 웹요청에서 사용하는 CommandViewMapResolver]]>
+		</description>
+		<property name="defaultErrorView">
+			<ref bean="nc.channel.web.DefaultWebErrorView" />
+		</property>
+		<property name="errorViewMap">
+			<map>
+				<entry key="NC_TrControlErr">
+					<bean
+						class="nexcore.framework.online.channel.web.RequestView">
+						<constructor-arg value="/jsp/Test.jsp" />
+					</bean>
+				</entry>
+				<entry key="NC_NoViewMap">
+					<bean
+						class="nexcore.framework.online.channel.web.RequestView">
+						<constructor-arg value="/jsp/Test.jsp" />
+					</bean>
+				</entry>
+				<entry key="NC_NoView">
+					<bean
+						class="nexcore.framework.online.channel.web.RequestView">
+						<constructor-arg value="/jsp/Test.jsp" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+		<property name="defaultCommandViewMap">
+			<bean
+				class="nexcore.framework.online.channel.core.DefaultCommandViewMap">
+				<!-- 커맨드 맵의 커맨드 정보 -->
+				<property name="command">
+					<bean
+						class="nexcore.framework.online.channel.core.command.StdCommand">
+					</bean>
+				</property>
+				<!-- 커맨드 맵의 View 정보 -->
+				<property name="viewMap">
+					<map>
+						<entry key="SUCCESS">
+							<bean
+								class="nexcore.framework.online.channel.web.RequestView">
+								<constructor-arg value="/jsp/Test.jsp" />
+							</bean>
+						</entry>
+						<entry key="FAIL">
+							<ref
+								bean="nc.channel.web.DefaultWebErrorView" />
+						</entry>
+					</map>
+				</property>
+			</bean>
+		</property>
+
+		<!-- Command/View와 매핑되는 ICommandViewMap 로직을 설정한다.-->
+		<property name="commandViewMaps">
+			<map>
+				<!-- 표준 Web 요청 CommandViewMap  -->
+				<entry key="/standard.cmd">
+					<bean
+						class="nexcore.framework.online.channel.core.DefaultCommandViewMap">
+						<!-- 커맨드 맵의 커맨드 정보 -->
+						<property name="command">
+							<bean
+								class="nexcore.framework.online.channel.core.command.StdCommand">
+							</bean>
+						</property>
+						<!-- 커맨드 맵의 View 정보 -->
+						<property name="viewMap">
+							<map>
+								<entry key="SUCCESS">
+									<bean
+										class="ams.fwk.channel.web.AmsRequestView">
+										<constructor-arg
+											value="/jsp/Test.jsp" />
+									</bean>
+								</entry>
+								<entry key="FAIL">
+									<ref
+										bean="nc.channel.web.DefaultWebErrorView" />
+								</entry>
+							</map>
+						</property>
+					</bean>
+				</entry>
+				<entry key="/filedownload.cmd">
+					<bean class="nexcore.framework.online.channel.core.DefaultCommandViewMap">
+						<property name="command">
+							<bean
+								class=" ams.fwk.channel.command.AmsDownloadCommand"></bean>
+						</property>
+						<property name="viewMap">
+							<map>
+								<entry key="SUCCESS">
+									<bean class="nexcore.framework.online.channel.web.HttpNullView">
+										<constructor-arg value="" />
+									</bean>
+								</entry>
+								<entry key="FAIL" value-ref="nc.channel.web.DefaultWebErrorView" />
+							</map>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+</beans>

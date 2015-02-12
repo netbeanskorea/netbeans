@@ -1,0 +1,5 @@
+@charset "utf-8";
+
+.tb_basic .ui-jqgrid-htable th div{line-height:18px; padding-top:0px;}
+
+.button span.button-text {margin-top:-3px; margin-top:0px\0IE8;}

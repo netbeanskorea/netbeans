@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://java.sun.com/xml/ns/j2ee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/application_1_4.xsd"
+	version="1.4">
+
+	<!-- Don't miss ending '/' for archived war file. -->
+	<module>
+		<web>
+			<web-uri>/webapp/ams.war</web-uri>
+			<context-root>/ams</context-root>
+		</web>
+	</module>
+	<module>
+		<web>
+			<web-uri>/webapp/web.war</web-uri>
+			<context-root>/web</context-root>
+		</web>
+	</module>
+	<module>
+		<web>
+			<web-uri>/webapp/Resource</web-uri>
+			<context-root>/Resource</context-root>
+		</web>
+	</module>	
+	<module>
+		<ejb>ejb/nexcore-framework-core-6.0.2-services.jar</ejb>
+	</module>
+	<module>
+         <ejb>ejb/nexcore.framework.bat.jar</ejb>
+     </module>	
+	<!-- uncomment the following to use async facade
+	<module>
+		<ejb>ejb/nexcore-framework-core-6.0.2-services-async.jar</ejb>
+	</module>
+	-->
+	<!--  
+	<module>
+		<ejb>ejb/nexcore.framework.bat.jar</ejb>
+	</module>
+	-->
+</application>

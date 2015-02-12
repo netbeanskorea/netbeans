@@ -1,0 +1,294 @@
+<%@ page pageEncoding="utf-8"%>
+<%@ page import="ams.fwk.utils.BaseUtils" %>
+<%@ page import="ams.fwk.code.internal.AmsCode" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	if(request.getProtocol().equals("HTTP/1.1")) {
+		response.setHeader("Cache-Control", "no-cache");
+	}
+	List<AmsCode> localeList = BaseUtils.getAmsCodes("C009", locale);
+ 	if(localeList==null)localeList= new ArrayList();
+	//URL을 직접 치고 들어올 경우 세션이 없는 경우는 로그인화면으로 보내기 위해 임시적으로 개발.(2013.04.04 by PSI)
+	if(userInfo==null || StringUtils.isEmpty(userInfo.getLoginId())) {
+%>
+<script>
+		window.alert("잘못된 경로 접근하셨습니다. 로그인하시기 바랍니다.");
+		location.href="<%=request.getContextPath()%>/index.jsp";
+</script>
+<%
+	}
+%>
+
+<script>
+	$(function() {
+		$.Page({
+			init: function() {
+				var post = $.PostData();
+				if(post && post.FRT_LOGIN) {
+					if(post.FRT_LOGIN=='Y') {
+						alert('비밀번호를 변경해야합니다.');
+						changePassword();
+					}
+				}
+			}
+		});
+		
+		$('#TSubmit').Button({
+			click: function() {
+				TCode();
+			}	
+		});
+		
+		//조회 필수값 체크
+		$('#TCODE_goSearch').Form({
+			validation: {
+				CODE_ID: {
+					required: true,
+					name: '메뉴 아이디'
+				}
+			}
+		}).Enter('#TSubmit');
+		
+		$('#selectLocale').Select({
+			change: function(event) {
+				var request = $.DataSet();
+				request.fields.LOCALE_ID =$('#selectLocale').val();
+				$.Service({
+					transaction: 'com.COMBBase#pCOM10101',
+					request: request,
+					success: function(ds) {
+						location.reload();
+					}
+				});
+			}
+		})
+	});
+	
+	var popupFlag = false;
+	//T-Code
+	function TCode() {
+		
+		var request = $.DataSet();
+		request.fields.MENU_CODE =$('#CODE_ID').val();
+		
+		$('#TCODE_goSearch').Validate(function() {
+			$.Service({
+				transaction: 'mng.MNGMNUB#selectTCodeMenu',
+				request: request,
+				success: function(ds) {
+					if(ds.fields.MENU_CNT==1 && ds.fields.URL!='')
+						$.Navigate('/ams/' + ds.fields.URL);
+					else {
+						if(!popupFlag) {
+							popupFlag = true;
+							$.Popup({
+								url : '/ams/mng/MNGMNU004P01.jsp',
+								center : true,
+								width : 550,
+								height : 410,
+								modal: true,
+								data : {
+									'MENU_CODE' : request.fields.MENU_CODE
+								},
+								close : function(data) {
+									popupFlag = false;
+									if(data!=null)
+										$.Navigate('/ams/' + data.URL);
+								}
+							});
+						}
+					}
+				}
+			});
+		});
+	}
+	
+	//즐겨찾기 추가
+	function AddPrivate() {
+		var request = $.DataSet();
+		
+		var depth3_menu_id = $.cookie('depth3_menu_id');
+		
+		request.fields.MENU_ID = depth3_menu_id;
+		 
+		$.Service({
+			transaction: 'mng.MNGMNUB#insertFavoritesTopMenu',
+			request: request,
+			success: function(ds) {
+				window.alert('즐겨찾기에 추가되었습니다.');
+			}
+		});
+	}
+	
+	var isTopOpened = true;
+
+	function SlideUpDown() {
+		if (isTopOpened) {
+			$("#logo").hide("slow");
+			if (!$.browser.msie) {
+				$("#topmenuArea").hide("slow");
+			} else {
+				$("#topmenuArea").hide();
+			}
+			$("#headerArea").animate({
+				"height": 38
+			}, "slow");
+			$("#controlTopArea").animate({
+				"top": 21
+			}, "slow");
+			//$("#tabs").animate({"height":$("#tabs").height() + 30},"slow" ); 
+
+			document.slideTop.src = "${pageContext.request.contextPath}/Resource/image/ui/top/btn_controlToparea_open.gif";
+			isTopOpened = false;
+		} else {
+			$("#logo").show(400);
+			if (!$.browser.msie) {
+				$("#topmenuArea").show(400);
+			} else {
+				$("#topmenuArea").show();
+			}
+			$("#headerArea").animate({
+				"height": 68
+			}, "slow");
+			$("#controlTopArea").animate({
+				"top": 51
+			}, "slow");
+			//$("#tabs").animate({"height":$("#tabs").height() - 30},"slow" );
+
+			document.slideTop.src = "${pageContext.request.contextPath}/Resource/image/ui/top/btn_controlToparea.gif";
+			isTopOpened = true;
+		}
+	}
+	
+	function logout() {
+		if (window.confirm("로그아웃 하시겠습니까?")) {
+			var ds = {
+					fields: {
+					},
+					recordSets: {}
+				};
+			
+			$.Logout({
+				transaction: 'com.COMBBase#pCOM10002',
+				request: ds,
+				success: function(result) {
+					$.Cookie('AUTO_LOGIN_KEY', '');
+					$.Cookie('depth_menu_id', '');
+					$.Cookie('depth2_menu_id', '');
+					$.Cookie('depth3_menu_id', '');
+					$.Cookie('depth_menu_nm', '');
+					$.Cookie('depth2_menu_nm', '');
+					$.Cookie('depth3_menu_nm', '');
+					$.Session('TOP_PAGE', null);
+					$.Session('LEFT_PAGE', null);
+					window.location.href = '${pageContext.request.contextPath}/index.jsp';
+				},
+			    fail: function(ds) {
+			    	//window.alert(ds.message.messageName);
+			    	$.Cookie('AUTO_LOGIN_KEY', '');
+					$.Cookie('depth_menu_id', '');
+					$.Cookie('depth2_menu_id', '');
+					$.Cookie('depth3_menu_id', '');
+					$.Cookie('depth_menu_nm', '');
+					$.Cookie('depth2_menu_nm', '');
+					$.Cookie('depth3_menu_nm', '');
+					$.Session('TOP_PAGE', null);
+					$.Session('LEFT_PAGE', null);
+			    	window.location.href = '${pageContext.request.contextPath}/index.jsp';
+			    },
+				error: function(ds) {
+					$.Cookie('AUTO_LOGIN_KEY', '');
+					$.Cookie('depth_menu_id', '');
+					$.Cookie('depth2_menu_id', '');
+					$.Cookie('depth3_menu_id', '');
+					$.Cookie('depth_menu_nm', '');
+					$.Cookie('depth2_menu_nm', '');
+					$.Cookie('depth3_menu_nm', '');
+					$.Session('TOP_PAGE', null);
+					$.Session('LEFT_PAGE', null);
+					window.location.href = '${pageContext.request.contextPath}/index.jsp';
+				}
+			});
+		}
+	}	
+	
+	function changeUserInfo() {
+		$.Navigate('${pageContext.request.contextPath}/mng/MNGUSR001P04.jsp');
+	}
+	
+	function changePassword() {
+		$.Popup({
+			modal: true,
+			center: true,
+			width: 320,
+			height: 420,
+			url : '/ams/changePassword.jsp',
+			close: function(data) {
+				if(data==null || data.change == false) {
+					$.Navigate('${pageContext.request.contextPath}/index.jsp');	
+				}
+			}
+		});
+	}
+</script>
+
+		<div id="headerArea">
+			<div id="globalArea">
+				<div class="global">
+					<a href="${pageContext.request.contextPath}/main.jsp"><span class="g_logo"><em>SK e-Market</em></span></a>
+					<ul class="global_links">
+						<li class="links_type01"><b><%=loginName%></b><%=BaseUtils.getAmsLabelValue("L0045", locale, "") %> <%=BaseUtils.getAmsLabelValue("L0046", locale, "Welcome") %>.</li>
+						<li class="links_type02">
+							<a href="javascript:changeUserInfo();"><%=BaseUtils.getAmsLabelValue("L0047", locale, "My Info") %></a> | 
+							<a href="javascript:logout();">LOGOUT</a>
+						</li>
+						<li class="links_type03">
+							<a href="javascript:AddPrivate();"><%=BaseUtils.getAmsLabelValue("L0048", locale, "Favorite") %></a> | 
+							<a href="javascript:void(0);">Notice</a> 
+						</li>
+						<li class="links_type03">
+							<select id="selectLocale">
+								<%
+									AmsCode code = null;
+									String lang = locale.getLanguage();
+									for(int i=0; i<localeList.size();i++) { 
+										code = (AmsCode)localeList.get(i);
+										if(code==null)System.out.println("코드가 Null임.");
+								%>
+								<option value="<%=code.getAttributeValue(1)%>"  <%=lang.equals(code.getAttributeValue(1))?"selected='selected'":"" %>><%=code.getValue() %></option>
+								<%} %>
+							</select>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div id="topmenuArea" class="topmenuArea">
+			<div id="gnbArea">
+				<div class="gnb">
+					<div class="gnb_wrap">
+						<div class="faverite_links">
+							<form id="TCODE_goSearch">
+							<input id="CODE_ID" value="" type="text" maxlength="7" class="input01" />
+							<button id="TSubmit"><em>이동</em></button>
+							</form>
+						</div>
+						<div id="topmenu" class="gnb_menus">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			<script>
+			$(function() {
+				$('#topmenu').append($.Session('TOP_PAGE'));
+				reloadLeft();
+			});
+			
+			</script> 
+		</div>
+			

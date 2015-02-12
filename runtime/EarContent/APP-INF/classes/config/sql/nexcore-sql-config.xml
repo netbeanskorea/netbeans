@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMapConfig
+        PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+	<settings useStatementNamespaces="true" cacheModelsEnabled="false" />
+
+	<!-- typeAlias type="java.util.HashMap" alias="hmap" / -->
+	<typeAlias type="nexcore.framework.core.data.CaseIgnoreHashMap"
+		alias="hmap" />
+	<typeAlias type="com.ibatis.sqlmap.engine.type.ClobTypeHandlerCallback"
+		alias="clobHanlder" />
+
+	<transactionManager type="EXTERNAL">
+		<property name="SetAutoCommitAllowed" value="false" />
+		<property name="DefaultAutoCommit" value="false" />
+		<dataSource type="JNDI">
+			<property name="DataSource" value="jdbc/NexcoreDS_NonXA" />
+		</dataSource>
+	</transactionManager>
+
+	<!-- oracle용 -->
+	<sqlMap resource="nexcore/framework/core/code/Code.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/message/Message.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/label/Label.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/parameter/Configuration.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/parameter/BizParam.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/parameter/WasInstance.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/service/txcontrol/TxControl.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/service/async/Async.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/service/txcontrol/ExpressionTxControl.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/log/impl/DevLogLevelManager.mssql.xsql" />
+	<sqlMap resource="nexcore/framework/core/service/txprofile/TxProfile.mssql.xsql" />
+
+	<!-- mssql용 -->
+	<!-- <sqlMap resource="nexcore/framework/core/code/Code.mssql.xsql" /> <sqlMap 
+		resource="nexcore/framework/core/message/Message.mssql.xsql" /> <sqlMap resource="nexcore/framework/core/label/Label.mssql.xsql" 
+		/> <sqlMap resource="nexcore/framework/core/parameter/Configuration.mssql.xsql" 
+		/> <sqlMap resource="nexcore/framework/core/parameter/BizParam.mssql.xsql" 
+		/> <sqlMap resource="nexcore/framework/core/parameter/WasInstance.mssql.xsql" 
+		/> -->
+	<!-- <sqlMap resource="nexcore/framework/online/biz/menu/Menu.mssql.xsql" 
+		/> -->
+	<!-- <sqlMap resource="nexcore/framework/online/biz/button/Button.mssql.xsql" 
+		/> -->
+	<!-- <sqlMap resource="nexcore/framework/online/biz/screen/Screen.mssql.xsql" 
+		/> -->
+	<!-- <sqlMap resource="nexcore/framework/core/service/txcontrol/TxControl.mssql.xsql" 
+		/> <sqlMap resource="nexcore/framework/core/service/async/Async.mssql.xsql" 
+		/> -->
+	<!-- <sqlMap resource="nexcore/framework/admin/fault/Fault.mssql.xsql" /> -->
+	<!-- <sqlMap resource="nexcore/framework/online/biz/auth/User.mssql.xsql" 
+		/> -->
+	<!-- <sqlMap resource="nexcore/framework/core/service/txcontrol/ExpressionTxControl.mssql.xsql" 
+		/> <sqlMap resource="nexcore/framework/core/log/impl/DevLogLevelManager.mssql.xsql" 
+		/> <sqlMap resource="nexcore/framework/core/service/txprofile/TxProfile.mssql.xsql" 
+		/> -->
+</sqlMapConfig>
+

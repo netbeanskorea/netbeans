@@ -1,0 +1,92 @@
+<%@ page pageEncoding="utf-8"%>
+<script>
+	var isLeftOpened = true;
+
+	function SlideLeft() {
+		if (isLeftOpened) {
+			$('.ui-jqgrid-btable').each(function() {
+				//$(this).data('star-width', $(this).jqGrid('getGridWidth'));
+			});
+			
+			$("#leftArea").data('star-width', $('#leftArea').width());
+
+			$("#leftArea").hide("slow");
+			$("#controlLeftArea").animate({
+				left: 10
+			}, "slow");
+
+			$("#contents").animate({
+				width: $("#contents").width() + $("#leftArea").data('star-width')
+			}, {
+				duration: "slow",
+				complete: function() {
+					$('.highcharts-container').parent().each(function() {
+						$(this).Build({
+							chart: {
+								width: null //$(this).parent().width()
+							}
+						});
+					});//.show();});
+				},
+				step: function() {
+					$('.ui-jqgrid-btable').each(function() {
+						$(this).WidthResize();
+					});
+				}
+			});
+
+			document.slideLeft.src = "${pageContext.request.contextPath}/Resource/image/ui/left/btn_controlLeftarea_open.png";
+			isLeftOpened = false;
+		} else {
+			$('.ui-jqgrid-btable').each(function() {
+				//$(this).jqGrid('setGridWidth',$(this).data('star-width'));
+			});
+
+			$("#leftArea").show("slow");
+			$("#controlLeftArea").animate({
+				"left": 186
+			}, "slow");
+
+			$("#contents").animate({
+				width: $("#contents").width() - $('#leftArea').data('star-width')
+			}, {
+				duration: "slow",
+				complete: function() {
+					$('.highcharts-container').parent().each(function() {
+						$(this).Build({
+							chart: {
+								width: null //$(this).parent().width()
+							}
+						});
+					});//.show();});
+				},
+				step: function() {
+					$('.ui-jqgrid-btable').each(function() {
+						$(this).WidthResize();
+					});
+				}
+			});
+
+			document.slideLeft.src = "${pageContext.request.contextPath}/Resource/image/ui/left/btn_controlLeftarea.png";
+			isLeftOpened = true;
+		}
+	}
+</script>
+
+			<div id="leftArea">
+				<div class="leftTitle">
+					<span id="tit_depth01"><em>커뮤니케이션</em> </span>
+				</div>
+				<div id="leftMenu" class="leftMenus">
+					<div id="leftMenuArea" class="leftMenuList">
+
+					</div>
+				</div>
+			</div> 
+
+<!-- //controlLeftArea -->
+<%-- <div id="controlLeftArea" class="btnControlLeftarea">
+	<a href="javascript:SlideLeft()"> <img src="${pageContext.request.contextPath}/Resource/image/ui/left/btn_controlLeftarea.png" name="slideLeft" alt="" /> </a>
+</div> --%>
+<!-- //controlLeftArea -->
+

@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Nexcore Build Batch - Samples" default="all">
+
+    <property environment="env" />
+
+    <!-- ################################################################## -->
+    <!-- ## [NEXCORE_HOME] common build property ########################## -->
+    <!-- ################################################################## -->
+    <!-- custombuild build.properties -->
+    <property file="${NEXCORE_HOME_ANT}/script/build/${project.name}.build.properties" />
+    <!-- default build.properties -->
+    <property file="${NEXCORE_HOME_ANT}/script/build/nexcore.build.properties" />
+    <!-- custombuild for CI tool (Continuous Integration : quickBuild etc) -->
+    <property file="${ant.home}/${project.name}.build.properties" />
+    <!-- default for CI tool (Continuous Integration : quickBuild etc) -->
+    <property file="${ant.home}/nexcore.build.properties" />
+    <target name="check.nexcore.property" unless="NEXCORE_HOME">
+        <echo message=" find ANT_HOME ..." />
+        <available file="${ant.home}/nexcore.build.properties" property="check.property.ant" />
+        <antcall target="check.nexcore.property.anthome" />
+    </target>
+    <target name="check.nexcore.property.anthome" unless="check.property.ant">
+        <echo message="ERROR: " />
+        <echo message="      define property 'NEXCORE_HOME_ANT' first " />
+        <echo message="      in your Eclipse Preferences [Ant-Runtime-properties]" />
+        <echo message="      before depoying" />
+		    <fail message="ERROR: Ant runtime property 에 'NEXCORE_HOME_ANT'을 등록하세요. " />
+    </target>
+
+    <!--
+    <property name="NEXCORE_HOME"      value="C:\\projects\\nexbank\\project-workspace\\runtime" />
+    -->
+
+    <property name="target"             value="${NEXCORE_HOME}/batch" />
+    <property name="target.bin"         value="${target}/job/classes" />
+
+
+    <target name="all" depends="check.nexcore.property">
+        <antcall target="prepare" />
+        <antcall target="compile.java" />
+        <antcall target="copy.samples" />
+    </target>
+    
+    <target name="prepare">
+        <mkdir dir="${target.bin}" />
+    </target>
+    
+     
+    <!-- ################################################################## -->
+    <!-- #########          Java Source Compile             ############### -->
+    <!-- ################################################################## -->
+    <target name="compile.java">
+        <delete dir="${WORKSPACE_HOME}/tempbin"/>
+        <mkdir  dir="${WORKSPACE_HOME}/tempbin"/>
+        <mkdir  dir="${WORKSPACE_HOME}/tempjar"/>
+        <javac srcdir="${WORKSPACE_HOME}/src/java" destdir="${target.bin}" encoding="utf-8" debug="true">
+            <classpath>
+                <fileset dir="${NEXCORE_HOME}/lib" includes="*.jar" />
+                <fileset dir="${NEXCORE_HOME}/EarContent/APP-INF/lib" includes="*.jar" />
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- ################################################################## -->
+    <!-- #########          xsql, bcml             ############### -->
+    <!-- ################################################################## -->
+    <target name="copy.samples">
+        <copy todir="${target.bin}" preservelastmodified="true">
+            <fileset dir="${WORKSPACE_HOME}/src/java" defaultexcludes="false">
+                <include name="**/*.bcml" />
+                <include name="**/*.xsql" />
+            </fileset>
+        </copy>
+    </target>
+</project>
+

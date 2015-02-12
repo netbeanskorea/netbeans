@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 프레임워크 반복작업 컴포넌트를 정의한다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+            default-lazy-init="true">
+
+    <!-- 배치 프레임워크에 포함되지 않으나 cron 형식 혹은 interval을 부여받아 
+        반복적으로 실행되는 서비스를 등록한다. -->
+    <!-- [cronExpression] run interval is given by this :  
+         second  minute  hour  day_of_month  month  day_of_week  year(optional)
+         see javadoc of <code>org.quartz.cronTrigger </code> -->
+
+	<!--  
+    <bean
+        class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+        <description>
+        <![CDATA[
+            - 반복작업을 등록하는 컴포넌트.
+        ]]>
+        </description>
+        <property name="triggers">
+            <list>
+                <ref bean="SqlLogTransfer" />
+                <ref bean="SourceAnalyzer" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="SqlLogTransfer"
+        class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean
+                class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+                <property name="targetObject">
+				    <bean class="nexcore.framework.core.scheduling.logtransfer.SqlLogBatch">
+				    	<description>transferring SQL log to DB.</description>
+				    	<property name="sqlManager" ref="nc.db.ISqlManager" />
+				    	<property name="fileEncoding" value="MS949" />
+				    </bean>
+                </property>
+                <property name="targetMethod" value="execute" />
+            </bean>
+        </property>
+        <property name="cronExpression" value="0 0 3 * * ?" />
+    </bean>
+
+    <bean id="AccessLogTransfer" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean
+                class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+                <property name="targetObject">
+                    <bean class="nexcore.framework.core.scheduling.logtransfer.AccessLogBatch">
+                        <description> transferring Login/Logout log to DB. </description>
+                        <property name="sqlManager" ref="nc.db.ISqlManager"/>
+                        <property name="fileEncoding" value="MS949" />
+                    </bean>
+                </property>
+                <property name="targetMethod" value="execute" />
+            </bean>
+        </property>
+        <property name="cronExpression" value="0 10 3 * * ?" />
+    </bean>
+
+    <bean id="SystemLogTransfer"
+        class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean
+                class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+                <property name="targetObject">
+                    <bean class="nexcore.framework.core.scheduling.logtransfer.SystemLogBatch">
+                        <description> transferring system log to DB. </description>
+                        <property name="sqlManager" ref="nc.db.ISqlManager"/>
+                        <property name="fileEncoding" value="MS949" />
+                    </bean>
+                </property>
+                <property name="targetMethod" value="execute" />
+            </bean>
+        </property>
+        <property name="cronExpression" value="0 20 3 * * ?" />
+    </bean>
+    
+    <bean id="TransactionLogTransfer"
+        class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <bean
+                class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+                <property name="targetObject">
+                    <bean class="nexcore.framework.core.scheduling.logtransfer.TransactionLogBatch">
+                        <description> transferring online transaction log to DB. </description>
+                        <property name="sqlManager" ref="nc.db.ISqlManager"/>
+                        <property name="fileEncoding" value="MS949" />
+                    </bean>
+                </property>
+                <property name="targetMethod" value="execute" />
+            </bean>
+        </property>
+        <property name="cronExpression" value="0 30 3 * * ?" />
+    </bean>
+
+
+	<bean id="SourceAnalyzer" 
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+				<property name="targetObject">
+					<bean class="nexcore.framework.analysis.structure.internal.SourceAnalyzer" init-method="init" destroy-method="destroy">
+						<description>
+							<![CDATA[ 컴포넌트 소스, 웹 소스 파일을 읽어 소스정보 구조분석 테이블에 저장한다.  ]]>
+						</description>
+						<property name="sqlManager" ref="nc.db.ISqlManager" />
+						<property name="bizComponentMetaDataRegistry" ref="nc.core.IBizComponentMetaDataRegistry" />
+					</bean>
+				</property>
+				<property name="targetMethod" value="doWork" />
+			</bean>
+		</property>
+		<property name="cronExpression" value="0 0 5 * * ?" />
+	</bean>
+	-->
+	
+</beans>
