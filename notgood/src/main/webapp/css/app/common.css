@@ -1,0 +1,60 @@
+.af-table .{alopex_ui_theme} td:nth-child(2n+1) {
+	background-color: #F4F4F1;
+}
+#result_area input {
+	width: 50%;
+	padding: 0px 8px;
+	margin: 0 10px;
+}
+.floatL {
+	float : left;
+}
+.textAR {
+	text-align: right;
+}
+.w25 {
+	width: 25%;
+}
+
+.w50 {
+	width: 50%;
+}
+
+.w70 {
+	width: 70%;
+}
+
+.marginR10{
+	margin-right: 10px;
+}
+
+.padding10 {
+	padding: 10px;
+}
+
+.border1 {
+	border: 1px solid gray;
+}
+
+.form_example div{
+	margin-bottom: 20px;
+}
+
+form>table {
+	width: 100%;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+form>table tr{height:40px;}
+form>table td{
+	
+	padding: 0px 10px;
+	vertical-align: middle;
+	height:28px;
+	line-height:28px;
+	*height:17px;
+	overflow:hidden;
+	position:relative;
+}
+
+body {max-width: 900px;margin: 0 auto;}

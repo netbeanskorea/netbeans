@@ -1,0 +1,582 @@
+/*! Alopex UI - v2.2.34.2 - 2015-01-28
+* http://ui.alopex.io
+* Copyright (c) 2015 alopex.ui; Licensed Copyright. SK C&C. All rights reserved. */
+.alopexgrid.positioner * {
+	box-sizing:border-box;
+    font-size: 12px;
+}
+
+.alopexgrid.positioner {
+	position:relative;
+	overflow:hidden;
+	border-top:1px solid #edecf1;
+	border-bottom:1px solid #edecf1;
+	cursor: default;
+}
+
+.alopexgrid.positioner.text-selection-disabled {
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.alopexgrid.positioner .title {
+	height:50px;
+	position:relative;
+}
+.alopexgrid.positioner .title .title-label {
+	float:left;
+	margin-top:10px;
+	margin-left:10px;
+	font-family: Source Sans Pro;
+	font-size: 30px;
+	line-height: 33px;
+}
+.alopexgrid.positioner .title .table-toggle {
+	float:right;
+	cursor:pointer;
+	background:url(grid/title_close.png) no-repeat right center;
+	width:26px;
+	height:100%;
+}
+.alopexgrid.positioner.fold .title .table-toggle {
+	background:url(grid/title_open.png) no-repeat right center;
+}
+
+.alopexgrid.positioner .wrapper {
+	overflow:hidden;
+	position:relative;
+	margin:0!important;
+	padding:0!important;
+	border:1px solid #c0c7d1;
+}
+
+.alopexgrid.positioner .scroller {
+	scrollbar-width:6px;
+	scrollbar-color:#c0c7cf;
+	scrollbar-bgcolor:#eeeef0;
+    border-top : 1px solid #c0c7d1;
+}
+.alopexgrid.positioner .wrapper .fixed-body-div {
+    border-top : 1px solid #c0c7d1;
+}
+
+.alopexgrid.positioner .table {
+	border-collapse: collapse;
+}
+.alopexgrid.positioner,
+.alopexgrid.positioner * {
+	vertical-align:baseline;
+}
+.alopexgrid.positioner .table .table-body .cell,
+.alopexgrid.positioner .table .table-header .cell {
+	vertical-align:middle;
+}
+.alopexgrid.positioner 
+.alopexgrid.positioner .table .table-body {
+	border-top:1px solid #edecf1;
+	border-left:1px solid #edecf1;
+	border-right:1px solid #edecf1;
+}
+.alopexgrid.positioner .table .table-header {
+	border-left:1px solid #edecf1;
+    border-right : 1px solid #c0c7d1;
+    /*border-right:1px solid #FFFFFF;*/
+    /*set border-right color = header background color.
+    border-right is needed to do precise calculation.*/
+}
+.alopexgrid.positioner .table .table-header .row {
+    border-bottom: 1px solid #c0c7d1;
+}
+.alopexgrid.positioner .table .table-header .row.lastrow {
+    border-bottom:none;
+}
+
+.alopexgrid.positioner .table .table-body .row {
+	border-bottom : 1px solid #edecf1;
+	border-top : 1px solid #edecf1;
+	height:33px;
+}
+
+.alopexgrid.positioner .table .table-header .cell {
+	border-right : 1px solid #c0c7d1;
+}
+.alopexgrid.positioner .table .table-header .cell.lastcolumn {
+    border-right : none;
+}
+.alopexgrid.positioner .table .table-body .cell {
+	border-right : 1px solid #edecf1;
+}
+
+.alopexgrid.positioner .table .cell {
+	background-color:#FFFFFF;
+	padding:3px 3px 3px;
+	overflow:hidden;
+	white-space:nowrap;
+}
+.alopexgrid.positioner .table .table-header .cell.selector-column {
+	padding-left:0px;
+	padding-right:0px;
+}
+.alopexgrid.positioner .table .row-odd .cell {
+	background-color:#f7f7f7;
+}
+.alopexgrid.positioner .table .editing .cell {
+	background-color:#c0c7cf;
+}
+.alopexgrid.positioner .table .deleted .cell {
+	background-color:#808788;
+}
+.alopexgrid.positioner .table .table-body .hovering .cell{
+	background-color:#f8f0ee;
+}
+
+.alopexgrid.positioner .table .table-header .row.pinnedrow .cell {
+    background-color:#f6ffff;
+}
+
+.alopexgrid.positioner .table .table-body .editing.hovering .cell{
+	background-color:#dcdcde;
+}
+.alopexgrid.positioner .table .table-body .deleted.hovering .cell{
+	background-color:#a4a6a7;
+}
+
+.alopexgrid.positioner .table .cell.copied {
+    box-shadow: inset 0 0 5px #dfc1c9, inset 0 0 5px #dfc1c9, inset 0 0 5px #dfc1c9;
+}
+.alopexgrid.positioner .table .cell.bodycell:focus{
+    background-color:#dff1f9!important;
+}
+.alopexgrid.positioner .table .cell.bodycell:focus .bodycell{
+    background-color:#ebf1f9!important;
+}
+.alopexgrid.positioner .table .row.editing .cell.bodycell:focus{
+    background-color:#afd1d9!important;
+}
+.alopexgrid.positioner .table .row.editing .cell.bodycell:focus .bodycell{
+    background-color:#bbd1d9!important;
+}
+
+.alopexgrid.positioner .table .row.editing .cell.bodycell.editingcell {
+    background-color: #d5dce4;
+}
+
+.alopexgrid.positioner .row.footerrow .cell.footercell {
+	border-right:1px solid #edecf1;
+}
+.alopexgrid.positioner .row.footerrow .cell.footercell.lastcell {
+    border-right:1px solid #c0c7d1;
+}
+.alopexgrid.positioner .footer {
+	border:1px solid #c0c7d1;
+	border-top:none;
+	overflow:hidden;
+}
+
+.alopexgrid.positioner .table .row.bodyrow.summaryrow .cell.bodycell.summarycell {
+	background-color:#698B69;
+}
+.alopexgrid.positioner .table .row.bodyrow.summaryrow.summary-depth-1 .cell.bodycell.summarycell {
+	background-color:#81A881;
+}
+.alopexgrid.positioner .table .row.bodyrow.summaryrow.summary-depth-2 .cell.bodycell.summarycell {
+	background-color:#9BCD9B;
+}
+.alopexgrid.positioner .table .row.bodyrow.summaryrow.summary-depth-3 .cell.bodycell.summarycell {
+	background-color:#B4EEB4;
+}
+.alopexgrid.positioner .table .row.bodyrow.summaryrow.summary-depth-4 .cell.bodycell.summarycell {
+	background-color:#C1FFC1;
+}
+
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon {
+	display:inline-block;
+	width:15px;
+	height:100%;
+	border:none;
+}
+.alopexgrid.positioner .table .table-body .row .cell .rowindex-column-wrapper{
+	text-align:center;
+	vertical-align:bottom;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-start{
+	background: transparent;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	width: 5px;
+	margin-left:10px;
+	position: relative;
+	top: 50%;
+}
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-action-fold {
+	cursor:n-resize;
+}
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-action-unfold {
+	cursor:s-resize;
+}
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-line:after {
+	content: "";
+	height: 100%;
+	width: 1px;
+	display: block;
+	background: #ccc;
+	margin-left: 10px;
+}
+
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-fold:before{
+	content: "-";
+	padding-left:2px;
+}
+
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-fold{
+	width: 10px;
+	height: 10px;
+	margin-left:5px;
+	line-height: 10px;
+	text-align: center;
+	border-radius: 5px;
+	border: 1px solid #f3f3f3;
+	-webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+	/*cursor: n-resize;*/
+	margin-bottom: 3px;
+	position: relative;
+}
+
+
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-fold:after {
+	content: "";
+	height: 300%;
+	width: 1px;
+	display: block;
+	background: #ccc;
+	margin-left: 4px;
+	position: absolute;
+	top: -300%;
+	bottom: 10px;
+	/*cursor : n-resize;*/
+}
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-unfold {
+	width: 10px;
+	height: 10px;
+	margin-left:5px;
+	line-height: 10px;
+	text-align: center;
+	border-radius: 5px;
+	border: 1px solid #f3f3f3;
+	-webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+	/*cursor: s-resize;*/
+	margin-bottom: 3px;
+	position: relative;
+}
+
+.alopexgrid.positioner .table .table-body .cell.grouping-column .alopexgrid-group-icon.alopexgrid-group-unfold:before{
+	content: "+";
+	padding-left:2px;
+}
+
+.alopexgrid.positioner .table .cell-wrapper {
+	display:inline-block;
+	width:100%;
+	max-width:100%;
+	vertical-align: middle;
+	overflow:hidden;
+}
+.alopexgrid.positioner .table .relative-wrap {
+	position:relative;
+}
+.alopexgrid.positioner .table .cell.multi {
+	padding:0;
+}
+.alopexgrid.positioner .table .cell.multi .table.inside {
+	width:100%;
+}
+.alopexgrid.positioner .table .cell.multi .table.inside .table-body {
+	border:none;
+}
+.alopexgrid.positioner .table .cell.multi .table.inside .table-body .row{
+	border-right:none;
+	border-left:none;
+	border-bottom:none;
+	border-top:1px solid #edecf1;
+}
+.alopexgrid.positioner .table .cell.multi .table.inside .table-body .row:first-child{
+	border-top:none;
+}
+.alopexgrid.positioner .table .cell.multi .table.inside .table-body .row .cell{ 
+	border:none;
+}
+
+
+.alopexgrid.positioner .cell.align-left {text-align:left;}
+.alopexgrid.positioner .cell.align-center {text-align:center;}
+.alopexgrid.positioner .cell.align-right {text-align:right;}
+
+/* 편집기능 */
+.alopexgrid.positioner .cell input,
+.alopexgrid.positioner .cell select {
+	/*margin:0;
+	padding:0px 5px;*/
+}
+.alopexgrid.positioner .cell input[type="text"] {
+	border : 1px;
+	border-radius:3px;
+	height:21px;
+/* 	border-style:inset; */
+}
+.alopexgrid.positioner .cell input[type="checkbox"] {
+	
+}
+/*
+.alopexgrid.positioner .cell .cell-wrapper select {
+	-webkit-appearance:none;
+	color: #444;
+	border: 1px solid #c1ccd8;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	vertical-align: middle;
+	width: 100%;
+	line-height:19px;
+	background : url(grid/sortable.png) no-repeat right 10px center, linear-gradient(#fff,#f8f8f8);
+}
+*/
+.alopexgrid.positioner .table .table-body .row{
+	border:1px solid #edecf1;
+}
+.alopexgrid.positioner .table .table-body .row.selected {
+	border:1px solid #4b5056;
+}
+.alopexgrid.positioner .table .table-body .row.selected .cell{
+	border-top:1px solid #4b5056;
+	border-bottom:1px solid #4b5056;
+}
+/* .alopexgrid.positioner .table .table-body .row.focused { */
+/* 	border:1px solid #FFB6C1; */
+/* } */
+/* .alopexgrid.positioner .table .table-body .row.focused .cell{ */
+/* 	border-top:1px solid #FFB6C1; */
+/* 	border-bottom:1px solid #FFB6C1; */
+/* } */
+
+.alopexgrid.positioner .table .table-body .row.selected .cell.lastcell{
+	border-right:1px solid #4b5056;
+}
+
+.alopexgrid.positioner .table .table-header .cell.sorting {
+	cursor:pointer;
+}
+.alopexgrid.positioner .table .table-header .cell.sorting .sorting-handle {
+	position:absolute;
+	right:5px;
+	top:0px;
+	width:20px;
+	height:100%;
+	background : url(grid/sortable.png) no-repeat right center;
+}
+.alopexgrid.positioner .table .table-header .cell.sorting.asc .sorting-handle {
+	background : url(grid/sortable_asc.png) no-repeat right center;
+}
+.alopexgrid.positioner .table .table-header .cell.sorting.desc .sorting-handle {
+	background : url(grid/sortable_desc.png) no-repeat right center;
+}
+
+.alopexgrid.positioner .table .table-header .cell.resizing .resizing-handle {
+	cursor:col-resize;
+	position:absolute;
+	right:-3px;
+	bottom:-3px;
+	width:8px;
+	height:1000%;
+	background: url(grid/resizable.png) no-repeat right bottom;
+}
+.alopexgrid.positioner .table .table-body .row .cell .rowindex-column-wrapper{
+	text-align:center;
+	vertical-align:bottom;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.alopexgrid.positioner .table .table-header .cell.resizing.header-group-rowspan .resizing-handle {
+	bottom:-17px;
+}
+.alopexgrid.positioner .table .table-header .cell.resizing.header-group-rowspan[rowspan="3"] .resizing-handle {
+	bottom:-31px;
+}
+
+.alopexgrid.positioner .pager {
+	width:100%;
+	height:60px;
+	text-align: center;;
+}
+.alopexgrid.positioner .pager div.pagination {
+	display:inline-block;
+	width:31px;
+	height:31px;
+}
+.alopexgrid.positioner .pager .pagination a{
+	display:inline-block;
+	border-top:1px solid #bec8d2;
+	border-bottom:1px solid #bec8d2;
+	border-right:1px solid #bec8d2;
+	width:31px;
+	height:31px;
+	padding-top:5px;
+	text-align:center;
+	vertical-align:middle;
+	text-decoration: none;
+	color:#afafaf;
+}
+.alopexgrid.positioner .pager .pagination .current a,
+.alopexgrid.positioner .pager .pagination .hovering a{
+	font-weight: bold;
+	color:#000;
+}
+
+.alopexgrid.positioner .pager .pagination.first-page a{
+	border-left:1px solid #bec8d2;
+	background:url(grid/page_start_off.png) no-repeat center center #f7f7f7;
+}
+.alopexgrid.positioner .pager .pagination.prev-page a{
+	border-right:1px solid #bec8d2;
+	background:url(grid/page_prev_off.png) no-repeat center center #f7f7f7;
+}
+.alopexgrid.positioner .pager .pagination.next-page a{
+	border-right:1px solid #bec8d2;
+	background:url(grid/page_next_off.png) no-repeat center center #f7f7f7;
+}
+.alopexgrid.positioner .pager .pagination.last-page a{
+	border-right:1px solid #bec8d2;
+	background:url(grid/page_end_off.png) no-repeat center center #f7f7f7;
+}
+.alopexgrid.positioner .pager .pagination.first-page.hovering a{
+	background:url(grid/page_start_on.png) no-repeat center center #f7f7f7;
+}
+.alopexgrid.positioner .pager .pagination.prev-page.hovering a{
+	background:url(grid/page_prev_on.png) no-repeat center center #f7f7f7;
+}
+.alopexgrid.positioner .pager .pagination.next-page.hovering a{
+	background:url(grid/page_next_on.png) no-repeat center center #f7f7f7;
+}
+.alopexgrid.positioner .pager .pagination.last-page.hovering a{
+	background:url(grid/page_end_on.png) no-repeat center center #f7f7f7;
+}
+
+.alopexgrid.positioner .pager .page-list {
+	margin-top:15px;
+	padding:0px;
+	list-style:none;
+	display:inline-block;
+}
+.alopexgrid.positioner .pager .page-list li {
+	display:inline-block;
+	margin:0px;
+}
+.alopexgrid.positioner .pager .pagerleft {
+	position:absolute;
+	top:20px;
+	left:0px;
+}
+.alopexgrid.positioner .pager .pagerright {
+	position:absolute;
+	top:20px;
+	right:0px;
+}
+
+.alopexgrid.positioner .ie-spacer-bottom,
+.alopexgrid.positioner .ie-spacer-top {
+	background:url(grid/fixed_unscroll_bg.png);
+}
+
+.alopexgrid.positioner .wrapper .filter-cell-unit .alopexgrid-filter-value,
+.alopexgrid.positioner .wrapper .filter-cell-unit .alopexgrid-filter-type,
+.alopexgrid.positioner .wrapper .filter-cell-unit .alopexgrid-filter-submit {
+	height:23px;
+}
+
+.alopexgrid.positioner .wrapper .filter-cell-unit .alopexgrid-filter-value {
+	width:48%;
+	margin-right:2%;
+	max-width:150px;
+}
+.alopexgrid.positioner .wrapper .filter-cell-unit .alopexgrid-filter-type {
+	width:28%;
+	margin-right:2%;
+	max-width:100px;
+}
+.alopexgrid.positioner .wrapper .filter-cell-unit .alopexgrid-filter-submit {
+	width:20%;
+	max-width:50px;
+}
+
+.alopexgrid-indicator {
+	border:1px dashed #51565a;
+}
+.alopexgrid-proxy {
+	opacity:0.5;
+	filter:Alpha(opacity=50);
+}
+.alopexgrid-proxy .table .table-body .row .cell {
+	padding:5px 5px 5px;
+	border:1px solid #c0c7cf;
+}
+.alopexgrid.positioner .progress {
+	position: absolute;
+	margin-left: -50px;
+	margin-top: -15px;
+	width: 100px;
+	height: 30px;
+	top: 50%;
+	left: 50%;
+	background-color: white;
+	border: 2px solid #9ba2aa;
+	border-radius:4px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.alopexgrid.positioner .modal {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+}
+.alopexgrid.positioner {
+	scrollbar-width:8px;
+	scrollbar-base-color:#eeeef0;
+	scrollbar-3dlight-color:#c0c7cf;
+	scrollbar-highlight-color:#eeeef0;
+	scrollbar-shadow-color:#eeeef0;
+	scrollbar-darkshadow-color:#c0c7cf;
+	scrollbar-track-color:#c0c7cf;
+}
+.alopexgrid.positioner ::-webkit-scrollbar {
+	width:10px;
+	height:10px;
+}
+.alopexgrid.positioner ::-webkit-scrollbar-track {
+	background-color:#eeeef0;
+	border:1px solid #c0c7cf;
+	border-collapse:collapse;
+}
+.alopexgrid.positioner ::-webkit-scrollbar-track:horizontal {
+	border-left:none;
+	border-bottom:none;
+}
+.alopexgrid.positioner ::-webkit-scrollbar-track:vertical {
+	border-right:none;
+	border-top:none;
+}
+.alopexgrid.positioner ::-webkit-scrollbar-thumb {
+	background-color:#c0c7cf;
+}
+.alopexgrid.positioner ::-webkit-scrollbar-corner {
+	background-color:#eeeef0;
+}

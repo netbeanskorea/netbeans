@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="DefaultDao">
+	<select id="selectDesign" parameterClass="java.util.HashMap"
+		remapResults="true" resultClass="java.util.HashMap">
+		/* DefaultDao.selectDesign */
+		SELECT '1234' number2
+		FROM DUAL
+	</select>
+
+	<select id="selectDesign1" parameterClass="java.util.HashMap"
+		remapResults="true" resultClass="java.util.HashMap">
+		/* DefaultDao.selectDesign1 */
+		SELECT loc
+		FROM DEPT
+		WHERE DEPTNO=#deptno#
+	</select>
+
+	<select id="selectDesign2" parameterClass="java.util.HashMap"
+		remapResults="true" resultClass="java.util.HashMap">
+		/* DefaultDao.selectDesign2 */
+		SELECT loc, deptno
+		FROM DEPT
+	</select>
+	
+	<select id="selectDesign3" parameterClass="java.util.HashMap"
+		remapResults="true" resultClass="com.skcc.notgood.util.egov.dataaccess.util.EgovMap">
+		/* DefaultDao.selectDesign3 */
+		SELECT dept_no
+		FROM DEPT
+	</select>
+	
+	<insert id="insertDept" parameterClass="java.util.HashMap">
+	<selectKey keyProperty="" resultClass="int">
+	    SELECT NVL(MAX(DEPTNO),0)+1 as seq FROM DEPT
+	</selectKey>
+    	/* DefaultDao.insertDept */
+		insert into DEPT
+		           (DEPTNO,
+		            DNAME,
+		            LOC)
+	    values     (#deptno#,
+		            #dname#,
+		            #loc#
+		            ) 
+	</insert>
+</sqlMap>
