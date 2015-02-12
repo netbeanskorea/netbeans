@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<!--[if IE]><meta content='IE=8, IE=9' http-equiv='X-UA-Compatible'/><![endif]-->
+<title>List</title>
+<link rel="stylesheet" type="text/css" media="screen" href="jqGridPlugin/css/jquery-ui-1.10.1.custom.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="jqGridPlugin/css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="jqGridPlugin/plugins/ui.multiselect.css" />
+<!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+
+<script src="jqGridPlugin/js/jquery-1.9.0.min.js"            type="text/javascript"></script>
+<script src="jqGridPlugin/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+<script src="jqGridPlugin/js/jquery.layout.js"               type="text/javascript"></script>
+<script src="jqGridPlugin/js/i18n/grid.locale-en.js"         type="text/javascript"></script>
+<script src="jqGridPlugin/plugins/ui.multiselect.js"         type="text/javascript"></script>
+<script src="jqGridPlugin/js/jquery.jqGrid.src.js"           type="text/javascript"></script>
+<script src="jqGridPlugin/js/jquery.tablednd.js"             type="text/javascript"></script>
+<script src="jqGridPlugin/js/jquery.contextmenu.js"          type="text/javascript"></script>
+<script src="jqGridPlugin/plugins/jquery.searchFilter.js"    type="text/javascript"></script>
+<script src="jqGridPlugin/src/grid.celledit.js"              type="text/javascript"></script>
+<script src="jqGridPlugin/src/grid.subgrid.js"               type="text/javascript"></script>
+<script type="text/javascript">
+
+function hcFunction(){
+	jQuery("#MarsList").jqGrid().hideCol("Status");
+	jQuery("#MarsList").jqGrid().hideCol("Creator");
+}
+
+function scFunction(){
+	jQuery("#MarsList").jqGrid().showCol("Status");
+	jQuery("#MarsList").jqGrid().showCol("Creator");
+}
+
+//Ref Count 에 들어갈 이미지 삽입 로직
+function ref_link(cellvalue){
+	
+	var Ref = cellvalue;
+	var html = '<center><img src="images/common/';
+	
+	if(Ref == '3'){
+		html += 'save.jpg';
+	}else if(Ref == '4'){
+		html += 'processing.jpg';
+	}else if(Ref == '5'){
+		html += 'rejected.jpg';
+	}else if(Ref == '6'){
+		html += 'canceled.jpg';
+	}else if(Ref == '7'){
+		html += 'complete.jpg';
+	}else if(Ref == '8'){
+		html += 'model.jpg';
+	}
+	html += '" width="80"></img></center>'
+	return html;
+}
+
+function mvt_link(cellvalue,options,rowObject){
+	var mvt = cellvalue;
+	var html = '<a herf="#">'+mvt+'</a>';
+	
+	return html;
+}
+
+function project_link(cellvalue,options,rowObject){
+	var project = cellvalue;
+	var html = '<a herf="#">'+project+'</a>';
+	
+	return html;
+}
+
+$(document).ready(function(){
+
+    $("#MarsList").jqGrid({
+        url:'server.json',
+        mtype: 'GET',
+        datatype: "json",
+        jsonReader: {
+        	page: "page", 
+        	total: "total",
+        	records: function(obj){return obj.length;},
+        	id: "id"
+        },
+        
+        colNames:['Product Code','Product Group', 'Product Plant', 'Project','Created','Creator','Status'],
+        colModel:[                 
+        	{name:'ProductCode',index:'ProductCode',title:false, width:180,search:true, align:"center",resizable:true, editable:false, editoptions:{size:"20",maxlength:"30"},frozen:true,formatter:mvt_link},       		 
+        	{name:'ProductGroup',index:'ProductGroup',title:false, width:120,align:"center",resizable:true,search:true,editable:false,editoptions:{size:"20",maxlength:"30",dataUrl:""}},
+        	{name:'ProductPlant',index:'ProductPlant', title:false,width:120,align:"center",resizable:true,search:true,editable:false,editoptions:{size:"20",maxlength:"30",dataUrl:""}},
+        	{name:'Project',index:'Project', title:false,width:120,search:true,align:"center",resizable:true,editable:false,editoptions:{size:"20",maxlength:"30",dataUrl:""},formatter:project_link},
+        	{name:'Created',index:'Created', title:false,width:180,search:true,align:"center",resizable:true,editable:true,sorttype:"date",formatter:'date', formatoptions:{srcformat:"Y-m-d H:i",newformat:"Y-m-d H:i"}},
+        	{name:'Creator',index:'Creator', title:false,width:120,search:true,align:"right",resizable:true,editable:true,editoptions:{size:"20",maxlength:"30",dataUrl:""}},
+        	{name:'Status',index:'Status', title:false,width:120, search:true,align:"right",resizable:true,editable:false,editable:false,formatter:ref_link}        	
+        ],
+        rowNum:10,
+        width:'100%',
+        rowList:[10,20,30],
+        pager:'#pager',
+        rownumbers: true,
+        sortname:'ProductCode',
+        gridview: true,
+        viewrecords: true,
+        multiselect: true,
+        sortorder:"desc",
+        sortable: false,                                   // sortable:true = FrozenColumn  Error
+        caption:"&nbsp",
+        height: "auto",
+        editurl: "server.json",
+        cellEdit: false,
+        cellsubmit: '',                                    // cellEdit:true = FrozenColumn  Error
+    	grouping:true,
+        groupingView:{groupField:['ProductGroup'],
+        	          groupColumnShow: [true],
+        	          groupText:['<b><font color="blue" size="2">{0}</font> <font color="red" size="1">({1})</font></b>'],
+                      groupDataSorted: true
+        	          },
+        subGrid:true,
+        subGridRowExpanded:function(subgrid_id, row_id){
+        	var subgrid_table_id, pager_id; 
+        	subgrid_table_id = subgrid_id+"_t"; 
+        	pager_id = "p_"+subgrid_table_id; 
+        	$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
+        	jQuery("#"+subgrid_table_id).jqGrid({
+        		url:"server.json",
+        		datatype: "json",
+        		colNames:['Product Code','Product Group', 'Product Plant', 'Project','Created','Creator','Status'],
+                colModel:[                 
+                	{name:'ProductCode',index:'ProductCode',width:180,search:true, align:"center",resizable:true,formatter:mvt_link},       		 
+                	{name:'ProductGroup',index:'ProductGroup',width:120,align:"center",resizable:true},
+                	{name:'ProductPlant',index:'ProductPlant',width:120,align:"center",resizable:true},
+                	{name:'Project',index:'Project',width:120,search:true,align:"center",resizable:true,formatter:project_link},
+                	{name:'Created',index:'Created',width:180,align:"center",sorttype:"date",formatter:'date',
+                		  formatoptions:{srcformat:"Y-m-d H:i",newformat:"Y-m-d H:i"}},
+                	{name:'Creator',index:'Creator',width:120,search:true,align:"right",resizable:true},
+                	{name:'Status',index:'Status',width:120, search:true,align:"right",resizable:true,formatter:ref_link}        	
+                ],
+                rowNum:10,
+                pager:pager_id,
+                rownumbers: true,
+                sortname:'ProductCode',
+                sortorder:'asc',
+                height:'100',
+                caption:'&nbsp',
+                loadonce: true
+        	});
+        	jQuery("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false});
+        	jQuery("#"+subgrid_table_id).jqGrid('setFrozenColumns');     
+            jQuery("#"+subgrid_table_id).trigger('reloadGrid');
+        	},
+        	subGridRowColapsed: function(subgrid_id, row_id) {
+        		// this function is called before removing the data 
+        		//var subgrid_table_id; 
+        		//subgrid_table_id = subgrid_id+"_t"; 
+        		//jQuery("#"+subgrid_table_id).remove(); 
+        	},   	
+        loadonce: true
+
+    });
+    
+    jQuery("#MarsList").jqGrid('setGroupHeaders',{
+    	useColSpanStyle:true,
+    	groupHeaders:[
+    	              {startColumnName:'ProductGroup',numberOfColumns:3, titleText:'<center><em>Group One</em></center>'},
+    	              {startColumnName:'Created', numberOfColumns: 2, titleText: '<center><em>Group Two</em></center>'}
+    	              ]
+    });
+    
+    jQuery("#MarsList").jqGrid('setFrozenColumns');     
+    jQuery("#MarsList").trigger('reloadGrid');
+     
+    jQuery("#MarsList").jqGrid('navGrid','#pager'
+    		
+    		 ,{ excel:false,add:false,edit:false,view:false,del:false,search:false,refresh:true} 
+             ,{ } // Edit Option
+             ,{ } // Add Option
+             ,{ } // Delete Option
+             ,{ }
+             ,{ } //View Parameter
+            
+     );
+         
+});
+</script>
+					
+		<!-- list_table -->
+					
+		<table id="MarsList"></table>
+ 
+        <div id="pager"></div>                                    
+					
+	    <!-- //list_table -->
+	    
+	    <a href="javascript:hcFunction();" id="hc">Hide column Tax</a><br/> 
+	    <a href="javascript:scFunction();" id="sc">Show column Tax</a>
