@@ -1,0 +1,14 @@
+
+
+장성방법 : CLASS 명  / 생성 사유 / 요청인  
+예) red / grid 좌측 하단 붉은 text / 이진희
+
+num01, num02, num03 / form input size 조절 / 이진희
+.tb_data .input01.num01,.tb_data .input02.num01, .tb_data .input03.num01{width:90px;}
+.tb_data .input01.num02,.tb_data .input02.num02, .tb_data .input03.num02{width:100%; *width:90%;}
+.tb_data .input01.num03,.tb_data .input02.num03, .tb_data .input03.num03{width:76px;}
+.tb_data .input01.num04,.tb_data .input02.num04, .tb_data .input03.num04{width:40px;}
+.tb_data .input01.num05,.tb_data .input02.num05, .tb_data .input03.num05{width:80%;}
+
+num01 / grid 내부 input size 조절 / 최지은 / GradePrice.jsp
+      / 버튼 클릭시 버튼 색상 변경 유지 / 최지은 

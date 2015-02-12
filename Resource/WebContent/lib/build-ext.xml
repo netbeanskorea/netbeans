@@ -1,0 +1,202 @@
+<project name="star.ext" default="noop" basedir=".">
+
+	<!--
+		주의: 외부 라이브러리를 머지해서 사용할 경우 추가 설정을 하여야 합니다.
+			window.tinymce.baseURL = 'lib/@/build/publish/js';
+			window.$.jstree._themes = 'lib/@/build/publish/js/themes/';
+	-->
+
+	<property file="build.properties" />
+
+	<property name="jquery-ui.version" value="1.9.2.custom" />
+	<property name="jquery-ui.theme" value="smoothness" />
+
+	<target name="noop">
+	</target>
+
+	<target name="-clean">
+		<delete dir="${publish}" />
+	</target>
+
+	<target name="-prepare">
+		<mkdir dir="${js}" />
+		<mkdir dir="${css}" />
+	</target>
+
+	<target name="-compress">
+		<java jar="${setup}/compiler.jar" fork="true" failonerror="true">
+			<arg line="--charset=UTF-8 --js=${source} --js_output_file=${target}" />
+			<classpath>
+				<pathelement location="${setup}/compiler.jar" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="ext.json" depends="-prepare">
+		<get src="https://raw.github.com/douglascrockford/JSON-js/master/json2.js" dest="${temp}/json.js" />
+		<antcall target="-compress">
+			<param name="source" value="${temp}/json.js" />
+			<param name="target" value="${js}/json.js" />
+		</antcall>
+	</target>
+
+	<target name="ext.jquery" depends="-prepare">
+		<get src="http://code.jquery.com/jquery.min.js" dest="${js}/jquery.js" />
+	</target>
+
+	<target name="ext.jquery-ui" depends="-prepare">
+		<!-- http://code.jquery.com/ui/1.9.2/jquery-ui.min.js -->
+		<get src="http://jqueryui.com/resources/download/jquery-ui-${jquery-ui.version}.zip" dest="${temp}/jquery-ui.zip" />
+		<unzip src="${temp}/jquery-ui.zip" dest="${temp}" />
+		<copy file="${temp}/jquery-ui-${jquery-ui.version}/js/jquery-ui-${jquery-ui.version}.min.js" tofile="${js}/jquery-ui.js" />
+		<copy file="${temp}/jquery-ui-${jquery-ui.version}/css/${jquery-ui.theme}/jquery-ui-${jquery-ui.version}.min.css" tofile="${css}/jquery-ui.css" />
+		<copy todir="${css}/images">
+			<fileset dir="${temp}/jquery-ui-${jquery-ui.version}/css/${jquery-ui.theme}/images" />
+		</copy>
+	</target>
+
+	<target name="ext.bootstrap" depends="-prepare">
+		<get src="http://twitter.github.com/bootstrap/assets/bootstrap.zip" dest="${temp}/bootstrap.zip" />
+		<unzip src="${temp}/bootstrap.zip" dest="work/temp" />
+		<copy file="${temp}/bootstrap/js/bootstrap.min.js" tofile="${js}/bootstrap.js" />
+		<copy file="${temp}/bootstrap/css/bootstrap.min.css" tofile="${css}/bootstrap.css" />
+		<copy todir="${resource}/img">
+			<fileset dir="${temp}/bootstrap/img" />
+		</copy>
+	</target>
+
+	<target name="ext.cookie" depends="-prepare">
+		<get src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js" dest="${temp}/cookie.js" />
+		<antcall target="-compress">
+			<param name="source" value="${temp}/cookie.js" />
+			<param name="target" value="${js}/cookie.js" />
+		</antcall>
+	</target>
+
+	<target name="ext.block" depends="-prepare">
+		<get src="http://malsup.github.com/jquery.blockUI.js" dest="${temp}/block.js" />
+		<antcall target="-compress">
+			<param name="source" value="${temp}/block.js" />
+			<param name="target" value="${js}/block.js" />
+		</antcall>
+	</target>
+
+	<target name="ext.template" depends="-prepare">
+		<get src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.js" dest="${temp}/template.js" />
+		<antcall target="-compress">
+			<param name="source" value="${temp}/template.js" />
+			<param name="target" value="${js}/template.js" />
+		</antcall>
+	</target>
+
+	<target name="ext.form" depends="-prepare">
+		<get src="http://malsup.github.com/jquery.form.js" dest="${temp}/form.js" />
+		<antcall target="-compress">
+			<param name="source" value="${temp}/form.js" />
+			<param name="target" value="${js}/form.js" />
+		</antcall>
+	</target>
+
+	<target name="ext.validation" depends="-prepare">
+		<!-- http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js -->
+		<get src="http://jquery.bassistance.de/validate/jquery-validation-1.10.0.zip" dest="${temp}/validation.zip" />
+		<unzip src="${temp}/validation.zip" dest="${temp}/validation" />
+		<copy file="${temp}/validation/dist/jquery.validate.min.js" tofile="${js}/validation.js" />
+		<echo message=";" file="${js}/validation.js" append="true" />
+	</target>
+
+	<target name="ext.mask" depends="-prepare">
+		<get src="http://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.min.js" dest="${js}/mask.js" />
+		<echo message=";" file="${js}/mask.js" append="true" />
+		<!--
+		<get src="http://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.js" dest="${js}/mask.js" />
+		-->
+	</target>
+
+	<target name="ext.number" depends="-prepare">
+		<get src="http://www.decorplanit.com/plugin/autoNumeric-1.7.5.js.txt" dest="${temp}/number.js" />
+		<antcall target="-compress">
+			<param name="source" value="${temp}/number.js" />
+			<param name="target" value="${js}/number.js" />
+		</antcall>
+	</target>
+
+	<target name="ext.month" depends="-prepare">
+		<get src="https://raw.github.com/thebrowser/jquery.ui.monthpicker/master/jquery.ui.monthpicker.js" dest="${temp}/month.js" />
+		<antcall target="-compress">
+			<param name="source" value="${temp}/month.js" />
+			<param name="target" value="${js}/month.js" />
+		</antcall>
+	</target>
+
+	<target name="ext.grid" depends="-prepare">
+		<get src="http://www.trirand.com/blog/jqgrid/js/jquery.jqGrid.min.js" dest="${js}/grid.js" />
+		<!-- <get src="http://www.trirand.com/blog/jqgrid/js/i18n/grid.locale-en.js" dest="${js}/grid.en.js" /> -->
+		<get src="http://www.trirand.com/blog/jqgrid/themes/ui.jqgrid.css" dest="${css}/grid.css" />
+	</target>
+
+	<target name="ext.tree" depends="-prepare">
+		<get src="http://cloud.github.com/downloads/vakata/jstree/jstree_pre1.0_fix_1.zip" dest="${temp}/tree.zip" />
+		<unzip src="${temp}/tree.zip" dest="${temp}/tree" />
+		<antcall target="-compress">
+			<param name="source" value="${temp}/tree/jquery.jstree.js" />
+			<param name="target" value="${js}/tree.js" />
+		</antcall>
+		<copy todir="${js}/themes/default">
+			<fileset dir="${temp}/tree/themes/default" />
+		</copy>
+	</target>
+
+	<target name="ext.editor" depends="-prepare">
+		<!--
+		<get src="http://cloud.github.com/downloads/tinymce/tinymce/tinymce_3.5.8.zip" dest="${temp}/editor.zip" />
+		<copy file="${temp}/tinymce/jscripts/tiny_mce/tiny_mce.js" tofile="${js}/editor.js" />
+			<fileset dir="${temp}/tinymce/jscripts/tiny_mce/langs" includes="en.js" />
+		-->
+		<get src="http://cloud.github.com/downloads/tinymce/tinymce/tinymce_3.5.8_jquery.zip" dest="${temp}/editor.zip" />
+		<unzip src="${temp}/editor.zip" dest="${temp}" />
+		<concat destfile="${js}/editor.js" fixlastline="yes" encoding="utf-8">
+			<fileset dir="${temp}/tinymce/jscripts/tiny_mce" includes="tiny_mce_src.js" />
+			<fileset dir="${temp}/tinymce/jscripts/tiny_mce" includes="jquery.tinymce.js" />
+		</concat>
+		<copy todir="${js}/langs">
+			<fileset dir="${temp}/tinymce/jscripts/tiny_mce/langs" />
+		</copy>
+		<copy todir="${js}/themes">
+			<fileset dir="${temp}/tinymce/jscripts/tiny_mce/themes" />
+		</copy>
+	</target>
+
+	<!-- tooltip -->
+	<!-- chart -->
+	<!-- mobile -->
+
+	<target name="ext:merge">
+		<concat destfile="${js}/star-ext.js" fixlastline="yes" encoding="utf-8">
+			<fileset dir="${js}" includes="json.js" />
+			<fileset dir="${js}" includes="jquery.js" />
+			<fileset dir="${js}" includes="jquery-ui.js" />
+			<!-- bootstrap -->
+			<fileset dir="${js}" includes="cookie.js" />
+			<fileset dir="${js}" includes="block.js" />
+			<fileset dir="${js}" includes="template.js" />
+			<fileset dir="${js}" includes="form.js" />
+			<fileset dir="${js}" includes="validation.js" />
+			<fileset dir="${js}" includes="mask.js" />
+			<fileset dir="${js}" includes="number.js" />
+			<fileset dir="${js}" includes="month.js" />
+			<fileset dir="${js}" includes="grid.js" />
+			<fileset dir="${js}" includes="tree.js" />
+			<fileset dir="${js}" includes="editor.js" />
+		</concat>
+		<concat destfile="${css}/star-ext.css" fixlastline="yes" encoding="utf-8">
+			<fileset dir="${css}" includes="jquery-ui.css" />
+			<fileset dir="${css}" includes="grid.css" />
+		</concat>
+		<gzip src="${js}/star-ext.js" destfile="${js}/star-ext.js.gz" />
+	</target>
+
+	<target name="ext" depends="-clean,-prepare,ext.json,ext.jquery,ext.jquery-ui,ext.cookie,ext.block,ext.template,ext.form,ext.validation,ext.mask,ext.number,ext.month,ext.grid,ext.tree,ext.editor,ext:merge">
+	</target>
+
+</project>

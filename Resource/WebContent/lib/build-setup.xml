@@ -1,0 +1,36 @@
+<project name="star.setup" default="setup.build" basedir=".">
+
+	<property file="build.properties" />
+
+	<target name="-clean">
+		<delete dir="${work}" />
+	</target>
+
+	<target name="-prepare" depends="-clean">
+		<mkdir dir="${work}" />
+		<mkdir dir="${temp}" />
+		<mkdir dir="${setup}" />
+	</target>
+
+	<target name="-setup.ant-contrib" depends="-clean,-prepare">
+		<get src="http://downloads.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fant-contrib%2Ffiles%2Fant-contrib%2F1.0b3%2F&amp;ts=1355739774&amp;use_mirror=jaist" dest="${temp}/ant-contrib.zip" />
+		<unzip src="${temp}/ant-contrib.zip" dest="${temp}" />
+		<copy todir="${setup}">
+			<fileset dir="${temp}/ant-contrib" includes="*.jar" />
+			<fileset dir="${temp}/ant-contrib/lib" includes="*.jar" />
+		</copy>
+	</target>
+
+	<target name="-setup.compress" depends="-clean,-prepare">
+		<get src="http://closure-compiler.googlecode.com/files/compiler-latest.zip" dest="${temp}/compiler.zip" />
+		<unzip src="${temp}/compiler.zip" dest="${temp}/compiler" />
+		<copy file="${temp}/compiler/compiler.jar" todir="${setup}" />
+	</target>
+
+	<target name="setup.build" description="JS 압축기 다운로드" depends="-clean,-prepare,-setup.compress">
+	</target>
+
+	<target name="setup.clean" description="초기화" depends="-clean">
+	</target>
+
+</project>
