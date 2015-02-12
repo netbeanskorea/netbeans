@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DAMS_FAQ_00" type="">
+    <bizUnitName>[DU]FAQ테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>abm.INFSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="insertFAQ" type="1">
+            <methodName>FAQ 등록</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.INFSBase#insertFAQ</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-22T15:23:34" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectFAQList" type="1">
+            <methodName>FAQ 목록조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.INFSBase#selectFAQList</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-22T15:22:51" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="deleteFAQ" type="1">
+            <methodName>FAQ 삭제</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.INFSBase#deleteFAQ</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-22T15:23:58" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectFAQ" type="1">
+            <methodName>FAQ 상세조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.INFSBase#selectFAQ</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-22T15:23:23" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="updateFAQ" type="1">
+            <methodName>FAQ 수정</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.INFSBase#updateFAQ</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-22T15:23:46" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DAMS_FAQ_00.xsql</name>
+        <history>
+            <created date="2013-10-22T15:24:33" user="강훈기(hunkee)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2013-10-22T15:22:20" user="강훈기 (hunkee)"/>
+    </history>
+</bizUnit>

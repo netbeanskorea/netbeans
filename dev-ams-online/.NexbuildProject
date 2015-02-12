@@ -1,0 +1,16 @@
+#
+#Mon Dec 16 10:37:52 KST 2013
+jndi_prefix=
+component_version=2.0
+local_jndi_suffix=
+xml_post=web
+jndi_suffix=
+ui_folder=ui
+java_src_folder=src/java
+channel_folder=src/channel
+java_bin_folder=bin
+lib_folder=lib
+java_test_folder=src/test
+local_jndi_prefix=
+local_ejb=true
+ejb_version=2.1

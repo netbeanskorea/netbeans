@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="PXWD100" type="">
+    <bizUnitName>[PU]금칙어관리</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>BPU</parentClassXd>
+    <componentId>abm.XWDBBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="pXWD10001" type="1">
+            <methodName>금칙어 목록조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.XWDBBase#pXWD10001</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2014-01-03T17:26:56" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="pXWD10002" type="1">
+            <methodName>금칙어 저장</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.XWDBBase#pXWD10002</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2014-01-03T17:27:24" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql/>
+    <history>
+        <created date="2014-01-03T17:23:00" user="강훈기 (hunkee)"/>
+    </history>
+</bizUnit>

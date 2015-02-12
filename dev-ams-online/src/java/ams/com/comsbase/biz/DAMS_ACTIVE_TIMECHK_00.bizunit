@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DAMS_ACTIVE_TIMECHK_00" type="">
+    <bizUnitName>[DU]Active시간체크테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>com.COMSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="upddateAcvtiveTimeByTableName" type="1">
+            <methodName>테이블명별 Active Time update</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMSBase#upddateAcvtiveTimeByTableName</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-12T11:27:48" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+        <method id="insertActiveTime" type="1">
+            <methodName>테이블별 Active Time등록</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMSBase#insertActiveTime</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-12T11:28:30" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+        <method id="selectActiveTimeByTableName" type="1">
+            <methodName>테이블별 Active Time시간취득</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMSBase#selectActiveTimeByTableName</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-12T11:00:22" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DAMS_ACTIVE_TIMECHK_00.xsql</name>
+        <history>
+            <created date="2013-09-12T11:28:41" user="박세일(ParkSeIl)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2013-09-12T10:58:30" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DAMS_USER_00" type="">
+    <bizUnitName>[DU]사용자테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>abm.USRSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="selectUserSsoList" type="1">
+            <methodName>SSO 직원검색</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#selectUserSsoList</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-25T14:39:41" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="updateFailCntAndUserLock" type="1">
+            <methodName>로그인실패횟수 증가및 사용자잠금 실시</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#updateFailCntAndUserLock</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-08-14T17:46:03" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+        <method id="updateFailCntInit" type="1">
+            <methodName>사용자 로그인실패카운트 초기화</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#updateFailCntInit</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-08-14T14:27:53" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+        <method id="selectUserByLogin" type="1">
+            <methodName>사용자 로그인조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#selectUserByLogin</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2014-01-22T16:12:46" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectUserList" type="1">
+            <methodName>사용자 목록조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#selectUserList</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-30T14:42:29" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="changePassword" type="1">
+            <methodName>비밀번호변경</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#changePassword</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2014-02-24T23:24:15" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectUser" type="1">
+            <methodName>사용자 상세조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#selectUser</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-08-14T13:19:16" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+        <method id="insertUserInfo" type="1">
+            <methodName>사용자등록</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#insertUserInfo</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-04T19:01:01" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+        <method id="updateUserInfo" type="1">
+            <methodName>사용자수정</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#updateUserInfo</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-10T15:33:21" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectUserForAutoLogin" type="1">
+            <methodName>자동로그인을 위한 사용자조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#selectUserForAutoLogin</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-08-14T17:24:03" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+        <method id="updateAutoLoginInfo" type="1">
+            <methodName>자동로그인정보 업데이트</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#updateAutoLoginInfo</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-08-14T15:12:56" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DAMS_USER_00.xsql</name>
+        <history>
+            <created date="2013-08-14T13:19:37" user="박세일(ParkSeIl)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2013-08-14T13:18:04" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

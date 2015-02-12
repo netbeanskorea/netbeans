@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DAMS_GROUP_00" type="">
+    <bizUnitName>[DU]사용자그룹테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>abm.UGRSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="insertUserGroup" type="1">
+            <methodName>사용자그룹 등록</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.UGRSBase#insertUserGroup</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-26T15:09:46" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="deleteUserGroup" type="1">
+            <methodName>사용자그룹 삭제</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.UGRSBase#deleteUserGroup</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-26T15:10:57" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectUserGroup" type="1">
+            <methodName>사용자그룹 상세조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.UGRSBase#selectUserGroup</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-26T15:09:31" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="updateUserGroup" type="1">
+            <methodName>사용자그룹 수정</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.UGRSBase#updateUserGroup</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-26T15:10:02" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectUserGroupList" type="1">
+            <methodName>사용자그룹 조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.UGRSBase#selectUserGroupList</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-26T15:08:24" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DAMS_GROUP_00.xsql</name>
+        <history>
+            <created date="2013-09-26T15:11:11" user="강훈기(hunkee)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2013-09-26T15:07:02" user="강훈기 (hunkee)"/>
+    </history>
+</bizUnit>

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_NOTICE_00">
+	<select id="selectNoticeList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_selectNoticeList_2013-10-24T17:04:16(2013-12-09T20:24:58) */
+
+SELECT *
+FROM
+(
+   SELECT
+      ROW_NUMBER() OVER (ORDER BY NOTICE_SEQ_NO desc) as ROWNO
+      ,NOTICE_SEQ_NO
+      ,NOTICE_DT
+      ,TITLE
+      ,VIEW_START_DT
+      ,VIEW_END_DT
+      ,USE_YN
+      ,NOTICE_HTML_FILE
+      ,POP_UP_WSIZE
+      ,POP_UP_HSIZE
+      ,CONTENTS
+      ,FILE_SEQ_NO
+  	
+  	FROM 	AMS_NOTICE
+    
+    WHERE 	ROWID IN (SELECT MAX(ROWID) FROM AMS_NOTICE GROUP BY NOTICE_SEQ_NO, NOTICE_DT)
+    	
+			]]><isNotEmpty prepend="AND" property="START_DT"><![CDATA[
+			(
+				(VIEW_START_DT BETWEEN #START_DT# AND #END_DT#	OR	VIEW_END_DT BETWEEN #START_DT# AND #END_DT#)
+					OR
+				(VIEW_START_DT <= #START_DT# AND VIEW_END_DT >= #END_DT#)
+			)
+			]]></isNotEmpty><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+				TITLE LIKE '%' || #schWord# || '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+				CONTENTS LIKE '%' || #schWord# || '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+				(TITLE LIKE '%' || #schWord# || '%' or CONTENTS LIKE '%' || #schWord# || '%')
+			]]></isEqual><![CDATA[	
+
+	) A
+	
+WHERE 	ROWNO BETWEEN #nc_firstRowIndex# and #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectNoticeListByUserGroup" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_selectNoticeListByUserGroup_2013-10-24T17:04:16(2013-11-22T11:24:53) */
+SELECT NOTICE_SEQ_NO
+      ,NOTICE_DT
+      ,TITLE
+      ,CONTENTS
+      ,REG_USER_ID
+      ,REG_DATE
+      ,UPDATE_USER_ID
+      ,UPDATE_DATE
+      ,VIEW_START_DT
+      ,VIEW_END_DT
+      ,TARGET_GROUP_ID
+      ,USE_YN
+      ,NOTICE_HTML_FILE
+      ,POP_UP_WSIZE
+      ,POP_UP_HSIZE
+      ,FILE_SEQ_NO
+  FROM AMS_NOTICE
+  WHERE 
+  		VIEW_START_DT <= #CURRENT_DT#
+    AND VIEW_END_DT   >= #CURRENT_DT#
+    AND USE_YN='Y'
+    ]]><isNotEmpty property="GROUP_ID_LIST" prepend="AND"><![CDATA[
+		]]><iterate property="GROUP_ID_LIST" open="TARGET_GROUP_ID in (" conjunction="," close=")"><![CDATA[
+			#GROUP_ID_LIST[].GROUP_ID#
+		]]></iterate><![CDATA[
+	]]></isNotEmpty><![CDATA[ ]]>
+	</select>
+	<insert id="insertNotice" parameterClass="map" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_insertNotice_2013-10-24T17:04:16(2013-12-09T20:37:21) */
+INSERT INTO AMS_NOTICE
+           (
+            NOTICE_SEQ_NO
+           ,NOTICE_DT
+           ,TITLE
+           ,CONTENTS
+           ,REG_USER_ID
+           ,REG_DATE
+           ,UPDATE_USER_ID
+           ,UPDATE_DATE
+           ,VIEW_START_DT
+           ,VIEW_END_DT
+           ,TARGET_GROUP_ID
+           ,USE_YN
+           ,NOTICE_HTML_FILE
+           ,POP_UP_WSIZE
+           ,POP_UP_HSIZE
+           ,FILE_SEQ_NO)
+     VALUES
+           (
+            #NOTICE_SEQ_NO#
+           ,#NOTICE_DT#
+           ,#TITLE#
+           ,#CONTENTS#
+           ,#onlineContext.userInfo.USER_ID#
+           ,SYSTIMESTAMP
+           ,#onlineContext.userInfo.USER_ID#
+           ,SYSTIMESTAMP
+           ,#VIEW_START_DT#
+           ,#VIEW_END_DT#
+           ,#TARGET_GROUP_ID# 
+           ,#USE_YN#
+           ,#NOTICE_HTML_FILE#
+           ,#POP_UP_WSIZE#
+           ,#POP_UP_HSIZE#
+           ,#FILE_SEQ_NO#)]]>
+	</insert>
+	<update id="updateNotice" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_updateNotice_2013-10-24T17:04:16(2013-10-25T11:32:54) */
+UPDATE AMS_NOTICE
+SET TITLE = #TITLE# ,
+    CONTENTS = #CONTENTS# ,
+    UPDATE_USER = #USER_ID# ,
+    UPDATE_DATE = GETDATE() ,
+    VIEW_START_DT = #VIEW_START_DT# ,
+    VIEW_END_DT = #VIEW_END_DT# ,
+    TARGET_GROUP_ID = #TARGET_GROUP_ID# ,
+    USE_YN = #USE_YN# ,
+    NOTICE_HTML_FILE = #NOTICE_HTML_FILE# , 
+    POP_UP_WSIZE = #POP_UP_WSIZE#
+    POP_UP_HSIZE = #POP_UP_HSIZE#
+WHERE NOTICE_SEQ_NO = #NOTICE_SEQ_NO#]]>
+	</update>
+	<delete id="deleteNotice" parameterClass="map" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_deleteNotice_2013-10-24T17:04:16(2013-11-04T17:56:59) */
+DELETE 	
+
+FROM 	AMS_NOTICE
+
+WHERE 	NOTICE_SEQ_NO = #NOTICE_SEQ_NO#
+AND		NOTICE_DT = #NOTICE_DT#]]>
+	</delete>
+	<select id="selectNoticeListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_selectNoticeListCount_2013-10-24T17:04:16(2013-12-09T20:34:52) */
+
+SELECT 	COUNT(DISTINCT NOTICE_SEQ_NO) as totalCount
+
+FROM	AMS_NOTICE
+
+	]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="START_DT"><![CDATA[
+			(
+				(VIEW_START_DT BETWEEN #START_DT# AND #END_DT#	OR	VIEW_END_DT BETWEEN #START_DT# AND #END_DT#)
+					OR
+				(VIEW_START_DT <= #START_DT# AND VIEW_END_DT >= #END_DT#)
+			)
+		]]></isNotEmpty><![CDATA[
+		]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+			TITLE LIKE '%' || #schWord# || '%'
+		]]></isEqual><![CDATA[
+		]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+			CONTENTS LIKE '%' || #schWord# || '%'
+		]]></isEqual><![CDATA[
+		]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+			(TITLE LIKE '%' || #schWord# || '%' or CONTENTS LIKE '%' || #schWord# || '%')
+		]]></isEqual><![CDATA[
+	]]></dynamic><![CDATA[]]>
+	</select>
+	<select id="selectNotice" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_selectNotice_2013-10-24T17:04:16(2013-11-21T18:13:16) */
+
+SELECT	 a.NOTICE_SEQ_NO
+      	,a.NOTICE_DT
+      	,a.TITLE
+		,a.CONTENTS
+		,a.REG_USER_ID
+        ,a.REG_DATE
+        ,a.UPDATE_USER_ID
+        ,a.UPDATE_DATE
+        ,a.VIEW_START_DT
+        ,a.VIEW_END_DT
+        ,a.TARGET_GROUP_ID
+        ,a.USE_YN
+        ,a.NOTICE_HTML_FILE
+        ,a.POP_UP_WSIZE
+        ,a.POP_UP_HSIZE
+        ,a.FILE_SEQ_NO
+        ,b.GROUP_NAME as GROUP_NAME
+
+FROM 	AMS_NOTICE a, AMS_GROUP b
+
+WHERE	NOTICE_SEQ_NO = #NOTICE_SEQ_NO#
+AND		NOTICE_DT = #NOTICE_DT#
+AND		a.TARGET_GROUP_ID = b.GROUP_ID]]>
+	</select>
+	<select id="selectNoticeSeqCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_selectNoticeSeqCount_2013-10-24T17:04:16(2013-11-04T14:24:58) */
+
+SELECT 	MAX(NOTICE_SEQ_NO) as seqCount
+FROM	AMS_NOTICE]]>
+	</select>
+	<select id="selectNoticeList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_selectNoticeList_2013-10-24T17:04:16(2013-11-22T13:15:35) */
+
+SELECT *
+FROM
+(
+   SELECT
+	   ROW_NUMBER() OVER (ORDER BY NOTICE_SEQ_NO desc) as ROWNO
+	  ,NOTICE_SEQ_NO
+      ,NOTICE_DT
+      ,TITLE
+      ,VIEW_START_DT
+      ,VIEW_END_DT
+      ,USE_YN
+      ,NOTICE_HTML_FILE
+      ,POP_UP_WSIZE
+      ,POP_UP_HSIZE
+      ,CAST(CONTENTS AS VARCHAR(MAX)) AS CONTENTS
+      ,FILE_SEQ_NO
+  	
+  	FROM 	AMS_NOTICE
+	
+	GROUP BY  NOTICE_SEQ_NO
+      		 ,NOTICE_DT
+      		 ,TITLE
+      		 ,VIEW_START_DT
+      		 ,VIEW_END_DT
+      		 ,USE_YN
+      		 ,NOTICE_HTML_FILE
+      		 ,POP_UP_WSIZE
+      		 ,POP_UP_HSIZE
+      		 ,CAST(CONTENTS AS VARCHAR(MAX))
+      		 ,FILE_SEQ_NO
+    	]]><dynamic prepend="HAVING"><![CDATA[
+			]]><isNotEmpty prepend="AND" property="START_DT"><![CDATA[
+			(
+				(VIEW_START_DT BETWEEN #START_DT# AND #END_DT#	OR	VIEW_END_DT BETWEEN #START_DT# AND #END_DT#)
+					OR
+				(VIEW_START_DT <= #START_DT# AND VIEW_END_DT >= #END_DT#)
+			)
+			]]></isNotEmpty><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+				TITLE LIKE '%' + #schWord# + '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+				CAST(CONTENTS AS VARCHAR(MAX)) LIKE '%' + #schWord# + '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+				(TITLE LIKE '%' + #schWord# + '%' or CAST(CONTENTS AS VARCHAR(MAX)) LIKE '%' + #schWord# + '%')
+			]]></isEqual><![CDATA[
+		]]></dynamic><![CDATA[
+
+	) A
+	
+WHERE 	ROWNO BETWEEN #nc_firstRowIndex# and #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectNoticeListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_selectNoticeListCount_2013-10-24T17:04:16(2013-11-05T14:59:39) */
+
+SELECT 	COUNT(DISTINCT NOTICE_SEQ_NO) as totalCount
+
+FROM	AMS_NOTICE
+
+	]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="START_DT"><![CDATA[
+			(
+				(VIEW_START_DT BETWEEN #START_DT# AND #END_DT#	OR	VIEW_END_DT BETWEEN #START_DT# AND #END_DT#)
+					OR
+				(VIEW_START_DT <= #START_DT# AND VIEW_END_DT >= #END_DT#)
+			)
+		]]></isNotEmpty><![CDATA[
+		]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+			TITLE LIKE '%' + #schWord# + '%'
+		]]></isEqual><![CDATA[
+		]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+			CONTENTS LIKE '%' + #schWord# + '%'
+		]]></isEqual><![CDATA[
+		]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+			(TITLE LIKE '%' + #schWord# + '%' or CONTENTS LIKE '%' + #schWord# + '%')
+		]]></isEqual><![CDATA[
+	]]></dynamic><![CDATA[]]>
+	</select>
+	<insert id="insertNotice_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_NOTICE_00_insertNotice_2013-10-24T17:04:16(2013-11-21T17:36:31) */
+INSERT INTO AMS_NOTICE
+           (
+            NOTICE_SEQ_NO
+           ,NOTICE_DT
+           ,TITLE
+           ,CONTENTS
+           ,REG_USER_ID
+           ,REG_DATE
+           ,UPDATE_USER_ID
+           ,UPDATE_DATE
+           ,VIEW_START_DT
+           ,VIEW_END_DT
+           ,TARGET_GROUP_ID
+           ,USE_YN
+           ,NOTICE_HTML_FILE
+           ,POP_UP_WSIZE
+           ,POP_UP_HSIZE
+           ,FILE_SEQ_NO)
+     VALUES
+           (
+            #NOTICE_SEQ_NO#
+           ,#NOTICE_DT#
+           ,#TITLE#
+           ,#CONTENTS#
+           ,#onlineContext.userInfo.USER_ID#
+           ,GETDATE()
+           ,#onlineContext.userInfo.USER_ID#
+           ,GETDATE()
+           ,#VIEW_START_DT#
+           ,#VIEW_END_DT#
+           ,#TARGET_GROUP_ID# 
+           ,#USE_YN#
+           ,#NOTICE_HTML_FILE#
+           ,#POP_UP_WSIZE#
+           ,#POP_UP_HSIZE#
+           ,#FILE_SEQ_NO#)]]>
+	</insert>
+</sqlMap>

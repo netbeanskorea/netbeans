@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DAMS_PROHIBIT_WORD_00" type="">
+    <bizUnitName>[DU]금칙어 테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>abm.XWDSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="insertProhibitWord" type="1">
+            <methodName>금칙어 등록</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.XWDSBase#insertProhibitWord</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2014-01-03T15:39:54" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectProhibitWordList" type="1">
+            <methodName>금칙어 목록조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.XWDSBase#selectProhibitWordList</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2014-01-03T15:38:30" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="deleteProhibitWord" type="1">
+            <methodName>금칙어 삭제</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.XWDSBase#deleteProhibitWord</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2014-01-03T15:40:27" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="updateProhibitWord" type="1">
+            <methodName>금칙어 수정</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.XWDSBase#updateProhibitWord</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2014-01-03T15:40:12" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DAMS_PROHIBIT_WORD_00.xsql</name>
+        <history>
+            <created date="2014-01-03T15:40:45" user="강훈기(hunkee)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2014-01-03T15:37:50" user="강훈기 (hunkee)"/>
+    </history>
+</bizUnit>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_ROLE_00">
+	<select id="selectRoleList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_00_selectRoleList_2013-09-13T15:49:10(2013-12-09T19:21:24) */
+
+SELECT *
+
+FROM (
+
+	SELECT
+		ROW_NUMBER() OVER (ORDER BY DISPLAY_INDEX asc, ROLE_ID asc) AS ROWNO
+	,	ROLE_ID
+	,	ROLE_NAME
+	,	DISPLAY_INDEX
+	,	REG_USER_ID
+	,	REG_DATE
+	,	UPDATE_USER_ID
+	,	UPDATE_DATE
+	,	USE_FLAG
+	
+	FROM AMS_ROLE
+	
+	]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="ROLE_ID"><![CDATA[
+			ROLE_ID LIKE '%' || UPPER(#ROLE_ID#) || '%'
+		]]></isNotEmpty><![CDATA[
+		
+		]]><isNotEmpty prepend="AND" property="ROLE_NAME"><![CDATA[
+			ROLE_NAME LIKE '%' || UPPER(#ROLE_NAME#) || '%'
+		]]></isNotEmpty><![CDATA[
+	]]></dynamic><![CDATA[
+) B
+
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectRoleList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_00_selectRoleList_MSSQL_2013-09-13T15:49:10(2013-10-15T13:31:17) */
+
+SELECT *
+
+FROM (
+
+	SELECT
+		ROW_NUMBER() OVER (ORDER BY DISPLAY_INDEX asc, ROLE_ID asc) AS ROWNO
+	,	ROLE_ID
+	,	ROLE_NAME
+	,	DISPLAY_INDEX
+	,	REG_USER_ID
+	,	REG_DATE
+	,	UPDATE_USER_ID
+	,	UPDATE_DATE
+	,	USE_FLAG
+	
+	FROM AMS_ROLE
+	
+	]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="ROLE_ID"><![CDATA[
+			ROLE_ID LIKE '%' + UPPER(#ROLE_ID#) + '%'
+		]]></isNotEmpty><![CDATA[
+		
+		]]><isNotEmpty prepend="AND" property="ROLE_NAME"><![CDATA[
+			ROLE_NAME LIKE '%' + UPPER(#ROLE_NAME#) + '%'
+		]]></isNotEmpty><![CDATA[
+	]]></dynamic><![CDATA[
+) B
+
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<insert id="insertRole" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_00_insertRole_2013-09-13T15:49:10(2013-12-09T23:13:00) */
+
+
+INSERT
+  INTO  AMS_ROLE
+        ( ROLE_ID /*  */ 	
+        , ROLE_NAME /*  */ 	
+        , DISPLAY_INDEX /*  */ 	
+        , USE_FLAG /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */
+        )	
+VALUES  
+        ( #ROLE_ID#	
+        , #ROLE_NAME# 	
+        , #DISPLAY_INDEX# 	
+        , #USE_FLAG# 	
+        , #onlineContext.userInfo.USER_ID#	
+        , SYSTIMESTAMP		
+        )]]>
+	</insert>
+	<insert id="insertRole_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_insertRole_MSSQL_2013-08-09T19:23:37(2013-09-12T16:07:59) */
+
+INSERT
+  INTO  AMS_ROLE
+        (ROLE_ID /*  */ 	
+        , ROLE_NAME /*  */ 	
+        , DISPLAY_INDEX /*  */ 	
+        , USE_FLAG /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */ 
+        )	
+VALUES  
+        ( #ROLE_ID#	
+        , #ROLE_NAME# 	
+        , #DISPLAY_INDEX# 	
+        , #USE_FLAG# 	
+        , #onlineContext.userInfo.USER_ID#	
+        , GETDATE()
+        )]]>
+	</insert>
+	<update id="deleteRole" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_deleteRole_2013-08-09T19:23:37(2013-09-11T10:09:30) */
+
+DELETE
+  FROM  AMS_ROLE
+ WHERE  ROLE_ID = #ROLE_ID# /*  */ ]]>
+	</update>
+	<update id="updateRole" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_00_updateRole_2013-09-13T15:49:10(2013-12-09T23:10:33) */
+
+UPDATE  AMS_ROLE
+   SET  ROLE_NAME = #ROLE_NAME# /*  */ 	
+     ,  DISPLAY_INDEX = #DISPLAY_INDEX# /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = SYSTIMESTAMP /*  */  	
+     
+ WHERE 	ROLE_ID = #ROLE_ID#]]>
+	</update>
+	<update id="updateRole_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_updateRole_MSSQL_2013-08-09T19:23:37(2013-09-13T10:52:46) */
+
+UPDATE  AMS_ROLE
+   SET  ROLE_NAME = #ROLE_NAME# /*  */ 	
+     ,  DISPLAY_INDEX = #DISPLAY_INDEX# /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = GETDATE() /*  */ 
+     
+ WHERE 	ROLE_ID = #ROLE_ID#]]>
+	</update>
+	<select id="selectRoleListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_00_selectRoleListCount_2013-09-13T15:49:10(2013-10-15T15:08:19) */
+
+SELECT 	COUNT(*) as totalCount
+	
+FROM AMS_ROLE
+	
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="ROLE_ID"><![CDATA[
+		ROLE_ID LIKE '%' + UPPER(#ROLE_ID#) + '%'
+	]]></isNotEmpty><![CDATA[
+	
+	]]><isNotEmpty prepend="AND" property="ROLE_NAME"><![CDATA[
+		ROLE_NAME LIKE '%' + UPPER(#ROLE_NAME#) + '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+</sqlMap>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_FAQ_00">
+	<select id="selectFAQList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_selectFAQList_2013-10-22T15:24:33(2013-12-09T22:33:26) */
+
+
+SELECT * 
+
+FROM(
+
+		SELECT 
+				ROW_NUMBER() OVER (ORDER BY FAQ_SEQ_NO desc) AS ROWNO,
+				FAQ_SEQ_NO,
+				FAQ_DT,
+				FILE_SEQ_NO,
+				TITLE,
+				CONTENTS,
+				REG_USER_ID,
+				REG_DATE,
+				UPDATE_USER_ID,
+				UPDATE_DATE,
+				VIEW_CNT
+		FROM 
+				AMS_FAQ
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+				TITLE LIKE '%' || #schWord# || '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+				CONTENTS LIKE '%' || #schWord# || '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+				(TITLE LIKE '%' || #schWord# || '%'
+			or	CONTENTS LIKE '%' || #schWord# || '%')
+			]]></isEqual><![CDATA[
+		]]></dynamic><![CDATA[
+		
+				
+	) A
+		
+WHERE		
+		ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectFAQList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_selectFAQList_MSSQL_2013-10-22T15:24:33(2013-12-09T22:33:33) */
+
+
+SELECT * 
+
+FROM(
+
+		SELECT 
+				ROW_NUMBER() OVER (ORDER BY FAQ_SEQ_NO desc) AS ROWNO,
+				FAQ_SEQ_NO,				
+				FAQ_DT,
+				FILE_SEQ_NO,
+				TITLE,
+				CONTENTS,
+				REG_USER_ID,
+				REG_DATE,
+				UPDATE_USER_ID,
+				UPDATE_DATE,
+				VIEW_CNT
+		FROM 
+				AMS_FAQ
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+				TITLE LIKE '%' + #schWord# + '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+				CONTENTS LIKE '%' + #schWord# + '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+				(TITLE LIKE '%' + #schWord# + '%'
+			or	CONTENTS LIKE '%' + #schWord# + '%')
+			]]></isEqual><![CDATA[
+		]]></dynamic><![CDATA[
+		
+				
+	) A
+		
+WHERE		
+		ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectFAQListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_selectFAQListCount_2013-10-22T15:24:33(2013-12-09T22:33:53) */
+
+SELECT	COUNT(*) AS totalCount
+		
+FROM 	AMS_FAQ
+				
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+		TITLE LIKE '%' || #schWord# || '%'
+	]]></isEqual><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+		CONTENTS LIKE '%' || #schWord# || '%'
+	]]></isEqual><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+		(TITLE LIKE '%' || #schWord# || '%'
+		or	CONTENTS LIKE '%' || #schWord# || '%')
+	]]></isEqual><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+	<insert id="insertFAQ" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_insertFAQ_2013-10-22T15:24:33(2013-12-09T22:42:36) */
+
+INSERT
+  INTO  AMS_FAQ
+        (
+        	FAQ_SEQ_NO,
+        	FAQ_DT,
+        	TITLE,
+			CONTENTS,
+			FILE_SEQ_NO,
+			REG_USER_ID,
+			REG_DATE,
+			VIEW_CNT
+        )	
+VALUES  
+        (
+        	SEQ_AMS_FAQ_00.NEXTVAL,
+        	TO_CHAR(SYSDATE,'YYYYMMDD'),
+        	#TITLE#,
+			#CONTENTS#,
+			NVL(#FILE_SEQ_NO#, 0),
+			#onlineContext.userInfo.USER_ID#,
+			SYSTIMESTAMP,
+			0)]]>
+	</insert>
+	<insert id="insertFAQ_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_insertFAQ_MSSQL_2013-10-22T15:24:33(2013-10-23T13:30:35) */
+
+INSERT
+  INTO  AMS_FAQ
+        (
+        	FAQ_DT,
+        	TITLE,
+			CONTENTS,
+			FILE_SEQ_NO,
+			REG_USER_ID,
+			REG_DATE,
+			VIEW_CNT
+        )	
+VALUES  
+        (
+        	CONVERT(VARCHAR(8), GETDATE(), 112),
+        	#TITLE#,
+			#CONTENTS#,
+			CASE
+			WHEN #FILE_SEQ_NO# = '' 
+				THEN 0
+				ELSE #FILE_SEQ_NO#  
+			END,
+			#onlineContext.userInfo.USER_ID#,
+			GETDATE(),
+			0)]]>
+	</insert>
+	<update id="updateFAQ" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_updateFAQ_2013-10-22T15:24:33(2014-01-08T18:47:30) */
+
+UPDATE  AMS_FAQ
+   SET  TITLE = #TITLE#, 	
+     	CONTENTS = #CONTENTS#     	 
+		]]><isNotEmpty prepend="," property="FILE_SEQ_NO"><![CDATA[
+			FILE_SEQ_NO = #FILE_SEQ_NO#
+		]]></isNotEmpty><![CDATA[
+		,UPDATE_USER_ID = #onlineContext.userInfo.USER_ID#
+     	,UPDATE_DATE = SYSTIMESTAMP
+     
+WHERE 	FAQ_SEQ_NO = #FAQ_SEQ_NO#
+AND		FAQ_DT = #FAQ_DT#]]>
+	</update>
+	<update id="updateFAQ_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_updateFAQ_MSSQL_2013-10-22T15:24:33(2014-01-08T18:50:54) */
+
+UPDATE  AMS_FAQ
+   SET  TITLE = #TITLE# 	
+     ,  CONTENTS = #CONTENTS#
+     	]]><isNotEmpty prepend="," property="FILE_SEQ_NO"><![CDATA[
+			FILE_SEQ_NO = #FILE_SEQ_NO#
+		]]></isNotEmpty><![CDATA[
+     ,	UPDATE_USER_ID = #onlineContext.userInfo.USER_ID#
+     ,	UPDATE_DATE = GETDATE()
+     
+WHERE 	FAQ_SEQ_NO = #FAQ_SEQ_NO#
+AND		FAQ_DT = #FAQ_DT#]]>
+	</update>
+	<update id="updateFAQViewCount" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_updateFAQViewCount_2013-10-22T15:24:33(2013-10-22T16:07:30) */
+
+UPDATE 	AMS_FAQ
+SET		VIEW_CNT = VIEW_CNT + 1
+WHERE	FAQ_SEQ_NO = #FAQ_SEQ_NO#
+AND		FAQ_DT = #FAQ_DT#]]>
+	</update>
+	<delete id="deleteFAQ" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_deleteFAQ_2013-10-22T15:24:33(2013-10-22T15:42:34) */
+
+DELETE
+  
+FROM	AMS_FAQ
+  
+WHERE	FAQ_SEQ_NO = #FAQ_SEQ_NO#
+AND		FAQ_DT = #FAQ_DT#]]>
+	</delete>
+	<select id="selectFAQListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_selectFAQListCount_2013-10-22T15:24:33(2013-10-22T15:28:54) */
+
+SELECT	COUNT(*) AS totalCount
+		
+FROM 	AMS_FAQ
+				
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+		TITLE LIKE '%' + #schWord# + '%'
+	]]></isEqual><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+		CONTENTS LIKE '%' + #schWord# + '%'
+	]]></isEqual><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+		TITLE LIKE '%' + #schWord# + '%'
+		or	CONTENTS LIKE '%' + #schWord# + '%'
+	]]></isEqual><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+	<select id="selectFAQ" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_FAQ_00_selectFAQ_2013-10-22T15:24:33(2013-10-23T14:52:34) */
+
+SELECT
+		FAQ_SEQ_NO,
+		FAQ_DT,
+		TITLE,
+		CONTENTS,
+		REG_USER_ID,
+		REG_DATE,
+		UPDATE_USER_ID,
+		UPDATE_DATE,
+		VIEW_CNT
+FROM
+		AMS_FAQ
+		
+WHERE	
+		FAQ_SEQ_NO = #FAQ_SEQ_NO#
+AND		FAQ_DT = #FAQ_DT#]]>
+	</select>
+</sqlMap>

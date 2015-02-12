@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="PCOM103" type="">
+    <bizUnitName>[PU]PUSH 관리</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>BPU</parentClassXd>
+    <componentId>com.COMBBase</componentId>
+    <interface-list/>
+    <description>PUSH 기능</description>
+    <method-list>
+        <method id="pCOM10301" type="1">
+            <methodName>메시지 브로커</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMBBase#pCOM10301</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields>
+                    <field data="" id="timestamp" length="">
+                        <fieldName>타임스탬프</fieldName>
+                        <fieldEngName/>
+                        <dataTypeXd>00</dataTypeXd>
+                        <dataFormat/>
+                        <keyTypeXd>0</keyTypeXd>
+                        <inMandatoryXd>1</inMandatoryXd>
+                        <inMandatoryLogic/>
+                        <inMinLength/>
+                        <inMaxLength/>
+                        <inLimitTypeXd>00</inLimitTypeXd>
+                        <inLimitLogic/>
+                        <formattingMethodXd>00</formattingMethodXd>
+                        <formattingLogic/>
+                        <loggingMethodXd>1</loggingMethodXd>
+                        <encrypted/>
+                    </field>
+                </fields>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-04T09:50:43" user="성지호 (SungJiHo)"/>
+            </history>
+        </method>
+        <method id="pCOM10302" type="1">
+            <methodName>메시지 입력</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMBBase#pCOM10302</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields>
+                    <field data="" id="MSG" length="">
+                        <fieldName>필드1</fieldName>
+                        <fieldEngName/>
+                        <dataTypeXd>00</dataTypeXd>
+                        <dataFormat/>
+                        <keyTypeXd>0</keyTypeXd>
+                        <inMandatoryXd>1</inMandatoryXd>
+                        <inMandatoryLogic/>
+                        <inMinLength/>
+                        <inMaxLength/>
+                        <inLimitTypeXd>00</inLimitTypeXd>
+                        <inLimitLogic/>
+                        <formattingMethodXd>00</formattingMethodXd>
+                        <formattingLogic/>
+                        <loggingMethodXd>1</loggingMethodXd>
+                        <encrypted/>
+                    </field>
+                </fields>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-04T10:16:27" user="성지호 (SungJiHo)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql/>
+    <history>
+        <created date="2013-10-04T09:50:04" user="성지호 (SungJiHo)"/>
+    </history>
+</bizUnit>

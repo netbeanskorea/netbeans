@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_TRAN_LOG_00">
+	<insert id="insertTranLog" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.asm.fwksbase.DAMS_TRAN_LOG_00_insertTranLog_2013-08-13T16:55:29(2013-09-02T10:57:57) */
+INSERT
+  INTO  AMS_TRAN_LOG
+        ( SEQ_NO
+        , LOG_DT /*  */ 	
+        , GLOB_ID /*  */ 	
+        , MENU_ID /*  */ 	
+        , IPAD /*  */ 	
+        , TRN_CD /*  */ 	
+        , USER_ID /*  */ 	
+        , SVC_STRN_DTTM /*  */ 	
+        , SVC_END_DTTM /*  */ 	
+        , RSLT_MSG_CD /*  */ 	
+        , RSLT_MSG /*  */ 
+        , OS_VER
+        , AGENT_VER
+        , WAS_INSTANCE_ID )	
+VALUES  
+        ( SEQ_AMS_TRAN_LOG_00.NEXTVAL
+        , #LOG_DT#	
+        , #GLOB_ID# 	
+        , #MENU_ID# 	
+        , #IPAD# 	
+        , #TRN_CD# 	
+        , #USER_ID# 	
+        , #SVC_STRN_DTTM# 	
+        , #SVC_END_DTTM# 	
+        , #RSLT_MSG_CD# 	
+        , #RSLT_MSG#
+        , #OS_VER#
+        , #AGENT_VER# 
+        , #WAS_INSTANCE_ID# )]]>
+	</insert>
+	<insert id="insertTranLog_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.asm.fwksbase.DAMS_TRAN_LOG_00_insertTranLog_MSSQL_2013-08-13T16:55:29(2013-09-02T10:58:15) */
+INSERT
+  INTO  AMS_TRAN_LOG
+        ( 
+          LOG_DT /*  */ 	
+        , GLOB_ID /*  */ 	
+        , MENU_ID /*  */ 	
+        , IPAD /*  */ 	
+        , TRN_CD /*  */ 	
+        , USER_ID /*  */ 	
+        , SVC_STRN_DTTM /*  */ 	
+        , SVC_END_DTTM /*  */ 	
+        , RSLT_MSG_CD /*  */ 	
+        , RSLT_MSG /*  */ 
+        , OS_VER
+        , AGENT_VER
+        , WAS_INSTANCE_ID )	
+VALUES  
+        ( 
+          #LOG_DT#	
+        , #GLOB_ID# 	
+        , #MENU_ID# 	
+        , #IPAD# 	
+        , #TRN_CD# 	
+        , #USER_ID# 	
+        , #SVC_STRN_DTTM# 	
+        , #SVC_END_DTTM# 	
+        , #RSLT_MSG_CD# 	
+        , #RSLT_MSG#
+        , #OS_VER#
+        , #AGENT_VER# 
+        , #WAS_INSTANCE_ID# )]]>
+	</insert>
+	<select id="selectTranLogList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(박세일) */
+/* IO: ams.asm.fwksbase.DAMS_TRAN_LOG_00_selectTranLogList_2013-08-13T16:55:29(2013-12-23T17:24:30) */
+
+SELECT *
+
+FROM
+(
+	SELECT 	
+		ROW_NUMBER() OVER (ORDER BY a.LOG_DT desc) AS ROWNO
+     ,  a.LOG_DT AS LOG_DT /*  */ 	
+     ,  a.SEQ_NO AS SEQ_NO /*  */ 	
+     ,  a.GLOB_ID AS GLOB_ID /*  */ 	
+     ,  a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.IPAD AS IPAD /*  */ 	
+     ,  a.TRN_CD AS TRN_CD /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.OS_VER AS OS_VER /*  */ 	
+     ,  a.AGENT_VER AS AGENT_VER /*  */ 	
+     ,  a.SVC_STRN_DTTM AS SVC_STRN_DTTM /*  */ 	
+     ,  a.SVC_END_DTTM AS SVC_END_DTTM /*  */ 	
+     ,  a.RSLT_MSG AS RSLT_MSG /*  */ 	
+     ,  a.RSLT_MSG_CD AS RSLT_MSG_CD /*  */ 	
+     ,  a.WAS_INSTANCE_ID AS WAS_INSTANCE_ID /*  */ 	
+  	
+  	FROM  	AMS_TRAN_LOG a
+  	
+  	WHERE	a.LOG_DT BETWEEN #START_DT# AND #END_DT#
+  	AND		a.TRN_CD <> 'com.COMBBase##pCOM10001'
+  	
+  	]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+		$schKind$ LIKE '%' || #schWord# || '%'
+	]]></isNotEmpty><![CDATA[
+	ORDER BY ROWNO, SVC_END_DTTM DESC
+)B
+
+WHERE ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectTranLogList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_TRAN_LOG_00_selectTranLogList_MSSQL_2013-08-13T16:55:29(2013-10-18T13:47:03) */
+
+SELECT *
+
+FROM
+(
+	SELECT 	
+		ROW_NUMBER() OVER (ORDER BY a.LOG_DT desc) AS ROWNO
+     ,  a.LOG_DT AS LOG_DT /*  */ 	
+     ,  a.SEQ_NO AS SEQ_NO /*  */ 	
+     ,  a.GLOB_ID AS GLOB_ID /*  */ 	
+     ,  a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.IPAD AS IPAD /*  */ 	
+     ,  a.TRN_CD AS TRN_CD /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.OS_VER AS OS_VER /*  */ 	
+     ,  a.AGENT_VER AS AGENT_VER /*  */ 	
+     ,  a.SVC_STRN_DTTM AS SVC_STRN_DTTM /*  */ 	
+     ,  a.SVC_END_DTTM AS SVC_END_DTTM /*  */ 	
+     ,  a.RSLT_MSG AS RSLT_MSG /*  */ 	
+     ,  a.RSLT_MSG_CD AS RSLT_MSG_CD /*  */ 	
+     ,  a.WAS_INSTANCE_ID AS WAS_INSTANCE_ID /*  */ 	
+  	
+  	FROM  	AMS_TRAN_LOG a
+  	
+  	WHERE	LOG_DT BETWEEN #START_DT# AND #END_DT#
+  	AND		TRN_CD <> 'com.COMBBase##pCOM10001'
+  	
+  	]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+		$schKind$ LIKE '%' + #schWord# + '%'
+	]]></isNotEmpty><![CDATA[
+)B
+
+WHERE ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectTranLogListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_TRAN_LOG_00_selectTranLogListCount_2013-08-13T16:55:29(2013-12-06T17:14:27) */
+
+SELECT 	COUNT(*) AS totalCount	
+  	
+FROM  	AMS_TRAN_LOG a
+  	
+WHERE	a.LOG_DT BETWEEN #START_DT# AND #END_DT#
+AND		a.TRN_CD <> 'com.COMBBase##pCOM10001'
+  	
+]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+	$schKind$ LIKE '%' || #schWord# || '%'
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+	<select id="selectTranLogListToExcel" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(박세일) */
+/* IO: ams.asm.fwksbase.DAMS_TRAN_LOG_00_selectTranLogListToExcel_2013-08-13T16:55:29(2013-12-23T16:49:26) */
+SELECT 	
+		a.LOG_DT AS LOG_DT /*  */ 	
+     ,  a.SEQ_NO AS SEQ_NO /*  */ 	
+     ,  a.GLOB_ID AS GLOB_ID /*  */ 	
+     ,  a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.IPAD AS IPAD /*  */ 	
+     ,  a.TRN_CD AS TRN_CD /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.OS_VER AS OS_VER /*  */ 	
+     ,  a.AGENT_VER AS AGENT_VER /*  */ 	
+     ,  a.SVC_STRN_DTTM AS SVC_STRN_DTTM /*  */ 	
+     ,  a.SVC_END_DTTM AS SVC_END_DTTM /*  */ 	
+     ,  a.RSLT_MSG AS RSLT_MSG /*  */ 	
+     ,  a.RSLT_MSG_CD AS RSLT_MSG_CD /*  */ 	
+     ,  a.WAS_INSTANCE_ID AS WAS_INSTANCE_ID /*  */ 	
+  	
+  	FROM  	AMS_TRAN_LOG a
+  	
+  	WHERE	LOG_DT BETWEEN #START_DT# AND #END_DT#
+  	
+  	]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+		$schKind$ LIKE '%' || #schWord# || '%'
+	]]></isNotEmpty><![CDATA[
+	ORDER BY SVC_END_DTTM DESC]]>
+	</select>
+	<select id="selectTranLogListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_TRAN_LOG_00_selectTranLogListCount_2013-08-13T16:55:29(2013-10-18T14:55:03) */
+
+SELECT 	COUNT(*) AS totalCount	
+  	
+FROM  	AMS_TRAN_LOG a
+  	
+WHERE	a.LOG_DT BETWEEN #START_DT# AND #END_DT#
+AND		a.TRN_CD <> 'com.COMBBase##pCOM10001'
+  	
+]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+	$schKind$ LIKE '%' + #schWord# + '%'
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+	<select id="selectTranLogListToExcel_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_TRAN_LOG_00_selectTranLogListToExcel_2013-08-13T16:55:29(2013-12-05T17:45:14) */
+SELECT 	
+		a.LOG_DT AS LOG_DT /*  */ 	
+     ,  a.SEQ_NO AS SEQ_NO /*  */ 	
+     ,  a.GLOB_ID AS GLOB_ID /*  */ 	
+     ,  a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.IPAD AS IPAD /*  */ 	
+     ,  a.TRN_CD AS TRN_CD /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.OS_VER AS OS_VER /*  */ 	
+     ,  a.AGENT_VER AS AGENT_VER /*  */ 	
+     ,  a.SVC_STRN_DTTM AS SVC_STRN_DTTM /*  */ 	
+     ,  a.SVC_END_DTTM AS SVC_END_DTTM /*  */ 	
+     ,  a.RSLT_MSG AS RSLT_MSG /*  */ 	
+     ,  a.RSLT_MSG_CD AS RSLT_MSG_CD /*  */ 	
+     ,  a.WAS_INSTANCE_ID AS WAS_INSTANCE_ID /*  */ 	
+  	
+  	FROM  	AMS_TRAN_LOG a
+  	
+  	WHERE	LOG_DT BETWEEN #START_DT# AND #END_DT#
+  	
+  	]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+		$schKind$ LIKE '%' + #schWord# + '%'
+	]]></isNotEmpty><![CDATA[]]>
+	</select>
+</sqlMap>

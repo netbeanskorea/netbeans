@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_COLLECT_SEQ_00">
+	<insert id="insertSelectSeqNo" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.com.comsbase.DAMS_COLLECT_SEQ_00_insertSelectSeqNo_2013-08-28T14:43:07(2013-12-10T16:02:09) */
+
+INSERT INTO AMS_COLLECT_SEQ(SEQ_NO, TX_DT, TABLE_NAME)
+VALUES($SEQ_NAME$.NEXTVAL, #TX_DT#, #TABLE_NAME#)
+]]><selectKey keyProperty="SEQ_NO" resultClass="int"><![CDATA[
+	SELECT max(seq_no) AS SEQ_NO FROM AMS_COLLECT_SEQ where table_name = #TABLE_NAME#
+]]></selectKey><![CDATA[]]>
+	</insert>
+	<delete id="deleteOldSeqNo" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.com.comsbase.DAMS_COLLECT_SEQ_00_deleteOldSeqNo_2013-08-28T14:43:07(2013-11-04T11:47:31) */
+DELETE FROM AMS_COLLECT_SEQ
+WHERE SEQ_NO < #SEQ_NO# AND TABLE_NAME=#TABLE_NAME#]]>
+	</delete>
+	<select id="insertSelectSeqNo_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.com.comsbase.DAMS_COLLECT_SEQ_00_insertSelectSeqNo_2013-08-28T14:43:07(2013-10-25T10:28:48) */
+INSERT INTO AMS_COLLECT_SEQ(TX_DT, TABLE_NAME) OUTPUT INSERTED.SEQ_NO VALUES(#TX_DT#, #TABLE_NAME#)]]>
+	</select>
+	<select id="selectSeqNo" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.com.comsbase.DAMS_COLLECT_SEQ_00_selectSeqNo_2013-08-28T14:43:07(2013-12-10T16:12:34) */
+
+SELECT 	$SEQ_NAME$.NEXTVAL AS SEQ_NO 
+FROM 	dual]]>
+	</select>
+</sqlMap>

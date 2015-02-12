@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_PUSH_TABLE">
+	<insert id="insertPushMessage" parameterClass="map" ><![CDATA[/* Biz: author_성지호(성지호) */
+/* IO: ams.com.comsbase.DAMS_PUSH_TABLE_insertPushMessage_2013-10-04T10:20:27(2013-10-04T10:26:43) */
+INSERT 
+INTO
+	AMS_PUSH_TABLE(MSG, DATE)
+VALUES (
+	  #MSG#
+	, GETDATE()
+)]]>
+	</insert>
+</sqlMap>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
+<ejb-jar>
+<!-- ejb id : UGRSBase -->
+
+ <enterprise-beans>
+     <session id="Session_abm.UGRSBase">
+         <display-name>abm.UGRSBase</display-name>
+         <ejb-name>abm.UGRSBase</ejb-name>
+         <home>ams.abm.ugrsbase.ejb.UGRSBaseHome</home>
+         <remote>ams.abm.ugrsbase.ejb.UGRSBase</remote>
+         <ejb-class>ams.abm.ugrsbase.ejb.UGRSBaseBean</ejb-class>
+         <session-type>Stateless</session-type>
+         <transaction-type>Container</transaction-type>
+     </session>
+ </enterprise-beans>
+
+ <assembly-descriptor>
+
+ </assembly-descriptor>
+</ejb-jar>

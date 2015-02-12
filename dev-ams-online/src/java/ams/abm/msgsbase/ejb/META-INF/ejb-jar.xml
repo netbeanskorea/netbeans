@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
+<ejb-jar>
+<!-- ejb id : MSGSBase -->
+
+ <enterprise-beans>
+     <session id="Session_abm.MSGSBase">
+         <display-name>abm.MSGSBase</display-name>
+         <ejb-name>abm.MSGSBase</ejb-name>
+         <home>ams.abm.msgsbase.ejb.MSGSBaseHome</home>
+         <remote>ams.abm.msgsbase.ejb.MSGSBase</remote>
+         <ejb-class>ams.abm.msgsbase.ejb.MSGSBaseBean</ejb-class>
+         <session-type>Stateless</session-type>
+         <transaction-type>Container</transaction-type>
+     </session>
+ </enterprise-beans>
+
+ <assembly-descriptor>
+
+ </assembly-descriptor>
+</ejb-jar>

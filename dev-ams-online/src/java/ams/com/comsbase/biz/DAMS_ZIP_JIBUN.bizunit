@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DAMS_ZIP_JIBUN" type="">
+    <bizUnitName>[DU]구우편번호 테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>com.COMSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="selectAddressByDongRi" type="1">
+            <methodName>우편번호검색</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMSBase#selectAddressByDongRi</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-04T17:59:08" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DAMS_ZIP_JIBUN.xsql</name>
+        <history>
+            <created date="2013-10-04T18:05:25" user="박세일(ParkSeIl)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2013-10-04T17:58:26" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

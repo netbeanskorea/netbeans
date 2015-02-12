@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DAMS_ROLE_GROUP_MAPPING_00" type="">
+    <bizUnitName>[DU]권한-사용자그룹 맵핑테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>abm.AUTSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="selectRoleGroupMappingList" type="1">
+            <methodName>권한-사용자그룹 목록조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.AUTSBase#selectRoleGroupMappingList</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-04T13:26:44" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectGroupListByRole" type="1">
+            <methodName>맵핑된 권한제외 사용자그룹 목록조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.AUTSBase#selectGroupListByRole</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-10-04T13:25:44" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DAMS_ROLE_GROUP_MAPPING_00.xsql</name>
+        <history>
+            <created date="2013-10-04T13:15:30" user="강훈기(hunkee)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2013-10-04T13:15:07" user="강훈기 (hunkee)"/>
+    </history>
+</bizUnit>

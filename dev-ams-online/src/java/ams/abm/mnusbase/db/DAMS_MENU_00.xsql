@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_MENU_00">
+	<select id="selectMenuList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_selectMenuList_MSSQL_2013-09-05T14:22:59(2013-09-25T11:00:00) */
+
+DECLARE @MENU_ID NVARCHAR(100)
+SET @MENU_ID = #MENU_ID#;
+DECLARE @MENU_NAME NVARCHAR(100)
+SET @MENU_NAME = #MENU_NAME#;
+DECLARE @MENU_CATEGORY NVARCHAR(100)
+SET @MENU_CATEGORY = #MENU_CATEGORY#;
+
+WITH MENUTREE1 (SORT,
+				PARENT_SORT,
+				PATH,
+				MENU_ID,
+				PARENT_MENU_ID, 
+				MENU_CATEGORY,
+				MENU_DEPTH_NO,
+				DISPLAY_INDEX,
+				USE_FLAG,
+				SCREEN_DISPLAY,
+				SECRET_MODE,
+				REG_USER_ID,
+				REG_DATE,
+				UPDATE_USER_ID,
+				UPDATE_DATE,
+				INTRNL_VIEW,
+				POPUP_VIEW,
+				MENU_NAME,
+				MENU_NAME_EN,
+				PAGE_URI,
+				DESCRIPTION,
+				GRANS_MENU_ID
+				) AS 
+(
+     SELECT 
+			CASE 
+				WHEN LEN(CAST(ISNULL(DISPLAY_INDEX,0) AS NVARCHAR(max)))=2 
+				THEN '0'+CAST(ISNULL(DISPLAY_INDEX,0)AS NVARCHAR(max)) 
+				WHEN LEN(CAST(ISNULL(DISPLAY_INDEX,0)AS NVARCHAR(max)))=1 
+				THEN '00'+CAST(ISNULL(DISPLAY_INDEX,0)AS NVARCHAR(max)) 
+				ELSE CAST(ISNULL(DISPLAY_INDEX,0) AS NVARCHAR(max)) 
+			END AS SORT,
+			CAST('ROOT' AS NVARCHAR(max)) AS PARENT_SORT,
+			'/'+CAST(MENU_ID AS NVARCHAR(200)) AS PATH,
+            MENU_ID,
+			PARENT_MENU_ID,
+			MENU_CATEGORY,
+			MENU_DEPTH_NO,
+			DISPLAY_INDEX,
+			USE_FLAG,
+			SCREEN_DISPLAY,
+			SECRET_MODE,
+			REG_USER_ID,
+			REG_DATE,
+			UPDATE_USER_ID,
+			UPDATE_DATE,
+			INTRNL_VIEW,
+			POPUP_VIEW,
+			MENU_NAME,
+			MENU_NAME_EN,
+			PAGE_URI,
+			DESCRIPTION,
+			PARENT_MENU_ID AS GRANS_MENU_ID
+     FROM	AMS_MENU
+     WHERE	PARENT_MENU_ID = 'ROOT' 
+
+	UNION ALL
+            
+     SELECT 
+			CASE 
+				WHEN LEN(CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)))=2 
+				THEN BB.SORT + '0'+CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)) 
+				WHEN LEN(CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)))=1 
+				THEN BB.SORT + '00'+CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)) 
+				ELSE BB.SORT + CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)) 
+			END AS SORT,
+			BB.SORT AS PARENT_SORT,
+			CAST(BB.PATH +'/'+ CAST(AA.MENU_ID AS NVARCHAR(200)) AS NVARCHAR(201)) AS PATH,
+			AA.MENU_ID,
+			AA.PARENT_MENU_ID,
+			AA.MENU_CATEGORY,
+			AA.MENU_DEPTH_NO,
+			AA.DISPLAY_INDEX,
+			AA.USE_FLAG,
+			AA.SCREEN_DISPLAY,
+			AA.SECRET_MODE,
+			AA.REG_USER_ID,
+			AA.REG_DATE,
+			AA.UPDATE_USER_ID,
+			AA.UPDATE_DATE,
+			AA.INTRNL_VIEW,
+			AA.POPUP_VIEW,
+			AA.MENU_NAME,
+			AA.MENU_NAME_EN,
+			AA.PAGE_URI,
+			AA.DESCRIPTION,
+			BB.PARENT_MENU_ID AS GRANS_MENU_ID
+
+     FROM   AMS_MENU AA                   
+            INNER JOIN MENUTREE1 BB               
+            ON AA.PARENT_MENU_ID = BB.MENU_ID
+                          
+), CODESEARCH AS (
+	SELECT 	* 	
+	FROM 	MENUTREE1
+	WHERE 	PATH LIKE '%' + @MENU_ID + '%' AND
+			MENU_NAME LIKE '%' + @MENU_NAME + '%' AND
+			MENU_CATEGORY = @MENU_CATEGORY
+)
+
+SELECT	DISTINCT *
+FROM	(
+		SELECT
+			A.SORT,
+			A.PARENT_SORT,
+			A.PATH,
+			A.MENU_ID,
+			A.PARENT_MENU_ID, 
+			A.MENU_CATEGORY,
+			A.MENU_DEPTH_NO,
+			A.DISPLAY_INDEX,
+			A.USE_FLAG,
+			A.SCREEN_DISPLAY,
+			A.SECRET_MODE,
+			A.REG_USER_ID,
+			A.REG_DATE,
+			A.UPDATE_USER_ID,
+			A.UPDATE_DATE,
+			A.INTRNL_VIEW,
+			A.POPUP_VIEW,
+			A.MENU_NAME,
+			A.MENU_NAME_EN,
+			A.PAGE_URI,
+			A.DESCRIPTION,
+			A.GRANS_MENU_ID,
+			CASE 
+			WHEN 
+				(
+					SELECT COUNT (*) AS COUNT 
+					FROM AMS_MENU 
+					WHERE A.MENU_ID = PARENT_MENU_ID
+				) > 0 
+				THEN 'false'
+				ELSE 'true'
+			END AS _leaf_,
+			A.MENU_DEPTH_NO AS _level_,
+			'false' AS _expand_, 
+			'true' 	AS loaded
+		FROM	MENUTREE1 A
+		) T
+WHERE (
+		MENU_ID IN (SELECT GRANS_MENU_ID FROM CODESEARCH) OR
+		MENU_ID IN (SELECT PARENT_MENU_ID FROM CODESEARCH) OR
+		PATH IN (SELECT PATH FROM CODESEARCH )
+	   )  
+
+ORDER BY SORT]]>
+	</select>
+	<select id="selectMenu" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_selectMenu_2013-09-05T14:22:59(2013-09-05T17:45:43) */
+
+SELECT
+        a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.PARENT_MENU_ID AS PARENT_MENU_ID /*  */ 	
+     ,  a.MENU_CATEGORY AS MENU_CATEGORY /*  */ 	
+     ,  a.MENU_DEPTH_NO AS MENU_DEPTH_NO /*  */ 	
+     ,  a.DISPLAY_INDEX AS DISPLAY_INDEX /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+     ,  a.SCREEN_DISPLAY AS SCREEN_DISPLAY /*  */ 	
+     ,  a.SECRET_MODE AS SECRET_MODE /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.INTRNL_VIEW AS INTRNL_VIEW /*  */ 	
+     ,  a.POPUP_VIEW AS POPUP_VIEW /*  */ 	
+     ,  a.MENU_NAME AS MENU_NAME /*  */ 	
+     ,  a.MENU_NAME_EN AS MENU_NAME_EN /*  */ 	
+     ,  a.PAGE_URI AS PAGE_URI /*  */ 	
+     ,  a.DESCRIPTION AS DESCRIPTION /*  */ 	
+  FROM  AMS_MENU a
+ WHERE  a.MENU_ID = #MENU_ID#]]>
+	</select>
+	<insert id="insertMenu_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_insertMenu_MSSQL_2013-09-05T14:22:59(2013-09-10T11:17:36) */
+INSERT
+  INTO  AMS_MENU
+        ( MENU_ID /*  */ 	
+        , PARENT_MENU_ID /*  */ 	
+        , MENU_CATEGORY /*  */ 	
+        , MENU_DEPTH_NO /*  */ 	
+        , DISPLAY_INDEX /*  */ 	
+        , USE_FLAG /*  */ 	
+        , SCREEN_DISPLAY /*  */ 	
+        , SECRET_MODE /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */ 
+        , INTRNL_VIEW /*  */ 	
+        , POPUP_VIEW /*  */ 	
+        , MENU_NAME /*  */ 	
+        , MENU_NAME_EN /*  */ 	
+        , PAGE_URI /*  */ 	
+        , DESCRIPTION /*  */ )	
+VALUES  
+        ( #MENU_ID#	
+        , #PARENT_MENU_ID# 	
+        , #MENU_CATEGORY# 	
+        , #MENU_DEPTH_NO# 	
+        , #DISPLAY_INDEX# 	
+        , #USE_FLAG# 	
+        , #SCREEN_DISPLAY# 	
+        , #SECRET_MODE# 	
+        , #onlineContext.userInfo.USER_ID#	
+        , GETDATE() 	
+        , #INTRNL_VIEW# 	
+        , #POPUP_VIEW# 	
+        , #MENU_NAME# 	
+        , #MENU_NAME_EN# 	
+        , #PAGE_URI# 	
+        , #DESCRIPTION#)]]>
+	</insert>
+	<update id="updateMenu_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_updateMenu_MSSQL_2013-09-05T14:22:59(2013-09-10T11:17:28) */
+
+UPDATE  AMS_MENU
+   SET  PARENT_MENU_ID = #PARENT_MENU_ID# /*  */ 	
+     ,  MENU_CATEGORY = #MENU_CATEGORY# /*  */ 	
+     ,  MENU_DEPTH_NO = #MENU_DEPTH_NO# /*  */ 	
+     ,  DISPLAY_INDEX = #DISPLAY_INDEX# /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     ,  SCREEN_DISPLAY = #SCREEN_DISPLAY# /*  */ 	
+     ,  SECRET_MODE = #SECRET_MODE# /*  */ 
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = GETDATE() /*  */ 	
+     ,  INTRNL_VIEW = #INTRNL_VIEW# /*  */ 	
+     ,  POPUP_VIEW = #POPUP_VIEW# /*  */ 	
+     ,  MENU_NAME = #MENU_NAME# /*  */ 	
+     ,  MENU_NAME_EN = #MENU_NAME_EN# /*  */ 	
+     ,  PAGE_URI = #PAGE_URI# /*  */ 	
+     ,  DESCRIPTION = #DESCRIPTION# /*  */ 	
+ WHERE 	MENU_ID = #MENU_ID#]]>
+	</update>
+	<delete id="deleteMenu" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_deleteMenu_2013-09-05T14:22:59(2013-09-05T17:25:52) */
+
+DELETE
+  FROM  AMS_MENU
+ WHERE  MENU_ID = #MENU_ID# /*  */ ]]>
+	</delete>
+	<insert id="insertMenu" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_insertMenu_2013-09-05T14:22:59(2013-12-06T16:16:51) */
+
+INSERT
+  INTO  AMS_MENU
+        ( MENU_ID /*  */ 	
+        , PARENT_MENU_ID /*  */ 	
+        , MENU_CATEGORY /*  */ 	
+        , MENU_DEPTH_NO /*  */ 	
+        , DISPLAY_INDEX /*  */ 	
+        , USE_FLAG /*  */ 	
+        , SCREEN_DISPLAY /*  */ 	
+        , SECRET_MODE /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */ 
+        , INTRNL_VIEW /*  */ 	
+        , POPUP_VIEW /*  */ 	
+        , MENU_NAME /*  */ 	
+        , MENU_NAME_EN /*  */ 	
+        , PAGE_URI /*  */ 	
+        , DESCRIPTION /*  */ )	
+VALUES  
+        ( #MENU_ID#	
+        , #PARENT_MENU_ID# 	
+        , #MENU_CATEGORY# 	
+        , #MENU_DEPTH_NO# 	
+        , #DISPLAY_INDEX# 	
+        , #USE_FLAG# 	
+        , #SCREEN_DISPLAY# 	
+        , #SECRET_MODE# 	
+        , #onlineContext.userInfo.USER_ID#	
+        , SYSTIMESTAMP 	
+        , #INTRNL_VIEW# 	
+        , #POPUP_VIEW# 	
+        , #MENU_NAME# 	
+        , #MENU_NAME_EN# 	
+        , #PAGE_URI# 	
+        , #DESCRIPTION#)]]>
+	</insert>
+	<insert id="updateMenu" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_updateMenu_2013-09-05T14:22:59(2013-12-06T16:17:05) */
+
+
+UPDATE  AMS_MENU
+   SET  PARENT_MENU_ID = #PARENT_MENU_ID# /*  */ 	
+     ,  MENU_CATEGORY = #MENU_CATEGORY# /*  */ 	
+     ,  MENU_DEPTH_NO = #MENU_DEPTH_NO# /*  */ 	
+     ,  DISPLAY_INDEX = #DISPLAY_INDEX# /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     ,  SCREEN_DISPLAY = #SCREEN_DISPLAY# /*  */ 	
+     ,  SECRET_MODE = #SECRET_MODE# /*  */ 
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = SYSTIMESTAMP /*  */ 	
+     ,  INTRNL_VIEW = #INTRNL_VIEW# /*  */ 	
+     ,  POPUP_VIEW = #POPUP_VIEW# /*  */ 	
+     ,  MENU_NAME = #MENU_NAME# /*  */ 	
+     ,  MENU_NAME_EN = #MENU_NAME_EN# /*  */ 	
+     ,  PAGE_URI = #PAGE_URI# /*  */ 	
+     ,  DESCRIPTION = #DESCRIPTION# /*  */ 	
+ WHERE 	MENU_ID = #MENU_ID#]]>
+	</insert>
+	<select id="selectMenuDisplayIndexCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_selectMenuDisplayIndexCount_2013-09-05T14:22:59(2014-01-15T14:55:24) */
+
+SELECT 	NVL(MAX(DISPLAY_INDEX), 0) AS maxCount
+
+FROM	AMS_MENU
+
+WHERE	PARENT_MENU_ID = #PARENT_MENU_ID#
+  AND	MENU_CATEGORY = #MENU_CATEGORY#]]>
+	</select>
+	<select id="selectMenuDisplayIndexCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_selectMenuDisplayIndexCount_2013-09-05T14:22:59(2013-11-01T07:51:47) */
+
+SELECT 	ISNULL(MAX(DISPLAY_INDEX), 0) AS maxCount
+
+FROM	AMS_MENU
+
+WHERE	PARENT_MENU_ID = #PARENT_MENU_ID#]]>
+	</select>
+	<select id="selectMenuList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.mnusbase.DAMS_MENU_00_selectMenuList_2013-09-05T14:22:59(2013-12-09T19:22:45) */
+SELECT *
+FROM (
+	SELECT   
+		REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '')  AS  SORT,
+    	CASE 
+			WHEN LEVEL=1 THEN 'ROOT'
+			WHEN LEVEL=2 THEN SUBSTR( REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '') ,1 , (LEVEL-1)*3)
+			WHEN LEVEL=3 THEN SUBSTR( REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '') ,1 , (LEVEL-1)*3)
+		END  PARENT_SORT,
+		SYS_CONNECT_BY_PATH(A.MENU_ID,'/') AS PATH,
+		A.MENU_ID,
+    	A.PARENT_MENU_ID, 
+		A.MENU_CATEGORY,
+		A.MENU_DEPTH_NO,
+		A.DISPLAY_INDEX,
+		A.USE_FLAG,
+		A.SCREEN_DISPLAY,
+		A.SECRET_MODE,
+		A.REG_USER_ID,
+		A.REG_DATE,
+		A.UPDATE_USER_ID,
+		A.UPDATE_DATE,
+		A.INTRNL_VIEW,
+		A.POPUP_VIEW,
+		A.MENU_NAME,
+		A.MENU_NAME_EN,
+		A.PAGE_URI,
+		A.DESCRIPTION,  
+    	CASE
+			WHEN 
+				(
+					SELECT COUNT (*) AS COUNT 
+					FROM AMS_MENU B
+					WHERE A.MENU_ID = B.PARENT_MENU_ID
+				) > 0 
+			THEN 'false'
+			ELSE 'true'
+		END AS LEAF_,
+		LEVEL-1 AS LEVEL_,
+		'false' AS EXPAND_,
+    	'true' AS LOADED
+	FROM 	AMS_MENU A
+	WHERE	A.MENU_CATEGORY = #MENU_CATEGORY#
+
+	START WITH A.PARENT_MENU_ID = 'ROOT'
+	CONNECT BY PRIOR A.MENU_ID =  A.PARENT_MENU_ID
+	ORDER 	SIBLINGS BY A.DISPLAY_INDEX ASC
+) C
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MENU_ID"><![CDATA[
+		C.PATH LIKE '%' || UPPER(#MENU_ID#) || '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MENU_NAME"><![CDATA[
+		C.MENU_NAME LIKE '%' || #MENU_NAME# || '%'
+	]]></isNotEmpty><![CDATA[	
+]]></dynamic><![CDATA[]]>
+	</select>
+</sqlMap>

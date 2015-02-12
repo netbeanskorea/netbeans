@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_ACTIVE_TIMECHK_00">
+	<insert id="insertActiveTime" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.com.comsbase.DAMS_ACTIVE_TIMECHK_00_insertActiveTime_2013-09-12T11:28:41(2013-09-12T11:29:57) */
+INSERT INTO AMS_ACTIVE_TIMECHK
+VALUES (#TABLE_NAME#, SYSTIMESTAMP)]]>
+	</insert>
+	<select id="selectActiveTimeByTableName" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.com.comsbase.DAMS_ACTIVE_TIMECHK_00_selectActiveTimeByTableName_2013-09-12T11:28:41(2013-09-12T13:46:10) */
+SELECT TABLE_NAME, UPDATE_DATE
+FROM AMS_ACTIVE_TIMECHK
+WHERE TABLE_NAME = #TABLE_NAME#]]>
+	</select>
+	<update id="upddateAcvtiveTimeByTableName_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.com.comsbase.DAMS_ACTIVE_TIMECHK_00_upddateAcvtiveTimeByTableName_MSSQL_2013-09-12T11:28:41(2013-09-12T13:51:11) */
+UPDATE AMS_ACTIVE_TIMECHK
+SET UPDATE_DATE = GETDATE()
+WHERE TABLE_NAME = #TABLE_NAME#]]>
+	</update>
+	<update id="upddateAcvtiveTimeByTableName" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.com.comsbase.DAMS_ACTIVE_TIMECHK_00_upddateAcvtiveTimeByTableName_2013-09-12T11:28:41(2013-09-12T13:52:07) */
+UPDATE AMS_ACTIVE_TIMECHK
+SET UPDATE_DATE = SYSTIMESTAMP
+WHERE TABLE_NAME = #TABLE_NAME#]]>
+	</update>
+	<insert id="insertActiveTime_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.com.comsbase.DAMS_ACTIVE_TIMECHK_00_insertActiveTime_MSSQL_2013-09-12T11:28:41(2013-09-12T13:53:07) */
+INSERT INTO AMS_ACTIVE_TIMECHK
+VALUES (#TABLE_NAME#, GETDATE())]]>
+	</insert>
+</sqlMap>

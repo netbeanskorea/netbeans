@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="PCOM101" type="">
+    <bizUnitName>[PU]로케일</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>BPU</parentClassXd>
+    <componentId>com.COMBBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="pCOM10101" type="1">
+            <methodName>로케일변경처리</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMBBase#pCOM10101</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-11T17:11:46" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql/>
+    <history>
+        <created date="2013-09-11T17:11:18" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

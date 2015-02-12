@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
+<ejb-jar>
+<!-- ejb id : CODSBase -->
+
+ <enterprise-beans>
+     <session id="Session_abm.CODSBase">
+         <display-name>abm.CODSBase</display-name>
+         <ejb-name>abm.CODSBase</ejb-name>
+         <home>ams.abm.codsbase.ejb.CODSBaseHome</home>
+         <remote>ams.abm.codsbase.ejb.CODSBase</remote>
+         <ejb-class>ams.abm.codsbase.ejb.CODSBaseBean</ejb-class>
+         <session-type>Stateless</session-type>
+         <transaction-type>Container</transaction-type>
+     </session>
+ </enterprise-beans>
+
+ <assembly-descriptor>
+
+ </assembly-descriptor>
+</ejb-jar>

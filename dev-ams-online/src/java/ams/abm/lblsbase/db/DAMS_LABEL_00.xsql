@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_LABEL_00">
+	<select id="selectLabelList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_selectLabelList_2013-10-15T13:09:29(2013-12-06T17:08:04) */
+
+SELECT *
+
+FROM (
+
+		SELECT
+			ROW_NUMBER() OVER (ORDER BY LABEL_ID asc, LOCALE_ID asc) AS ROWNO
+ 		,   LABEL_ID AS LABEL_ID /*  */ 	
+   	  	,   LOCALE_ID AS LOCALE_ID /*  */ 	
+		,   LABEL_NAME AS LABEL_NAME /*  */ 	
+   	  	,   REG_USER_ID AS REG_USER_ID /*  */ 	
+     	,   REG_DATE AS REG_DATE /*  */ 	
+  	    ,   UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+  	    ,   UPDATE_DATE AS UPDATE_DATE /*  */ 	
+ 		
+ 		FROM  AMS_LABEL
+  
+  		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isNotEmpty prepend="AND" property="LABEL_ID"><![CDATA[
+  				LABEL_ID LIKE '%' || #LABEL_ID# || '%'
+			]]></isNotEmpty><![CDATA[
+			]]><isNotEmpty prepend="AND" property="LABEL_NAME"><![CDATA[
+				LABEL_NAME LIKE '%' || #LABEL_NAME# || '%'
+			]]></isNotEmpty><![CDATA[
+			]]><isNotEmpty prepend="AND" property="LOCALE_ID"><![CDATA[
+				LOCALE_ID LIKE '%' || #LOCALE_ID# || '%'
+			]]></isNotEmpty><![CDATA[
+		]]></dynamic><![CDATA[
+  
+  ) b
+  
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectLabelList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_selectLabelList_MSSQL_2013-10-15T13:09:29(2013-10-31T19:34:26) */
+SELECT *
+
+FROM (
+
+		SELECT
+			ROW_NUMBER() OVER (ORDER BY LABEL_ID asc, LOCALE_ID asc) AS ROWNO
+ 		,   LABEL_ID AS LABEL_ID /*  */ 	
+   	  	,   LOCALE_ID AS LOCALE_ID /*  */ 	
+		,   LABEL_NAME AS LABEL_NAME /*  */ 	
+   	  	,   REG_USER_ID AS REG_USER_ID /*  */ 	
+     	,   REG_DATE AS REG_DATE /*  */ 	
+  	    ,   UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+  	    ,   UPDATE_DATE AS UPDATE_DATE /*  */ 	
+ 		
+ 		FROM  AMS_LABEL
+  
+  		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isNotEmpty prepend="AND" property="LABEL_ID"><![CDATA[
+  				LABEL_ID LIKE '%' + #LABEL_ID# + '%'
+			]]></isNotEmpty><![CDATA[
+			]]><isNotEmpty prepend="AND" property="LABEL_NAME"><![CDATA[
+				LABEL_NAME LIKE '%' + #LABEL_NAME# + '%'
+			]]></isNotEmpty><![CDATA[
+			]]><isNotEmpty prepend="AND" property="LOCALE_ID"><![CDATA[
+				LOCALE_ID LIKE '%' + #LOCALE_ID# + '%'
+			]]></isNotEmpty><![CDATA[
+		]]></dynamic><![CDATA[
+  
+  ) b
+  
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectLabel" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_selectLabel_2013-10-15T13:09:29(2013-10-15T15:31:52) */
+
+SELECT
+        a.LABEL_ID AS LABEL_ID /*  */ 	
+     ,  a.LOCALE_ID AS LOCALE_ID /*  */ 	
+     ,  a.LABEL_NAME AS LABEL_NAME /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+  FROM  AMS_LABEL a
+ WHERE  a.LABEL_ID = #LABEL_ID#]]>
+	</select>
+	<select id="selectLabelListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_selectLabelListCount_2013-10-15T13:09:29(2013-12-06T16:27:20) */
+
+SELECT COUNT(*) as totalCount
+
+FROM AMS_LABEL
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="LABEL_ID"><![CDATA[
+  		LABEL_ID LIKE '%' || #LABEL_ID# || '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="LABEL_NAME"><![CDATA[
+		LABEL_NAME LIKE '%' || #LABEL_NAME# || '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="LOCALE_ID"><![CDATA[
+		LOCALE_ID LIKE '%' || #LOCALE_ID# || '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+	<select id="selectLabel_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_selectLabel_2013-10-15T13:09:29(2013-10-15T15:31:52) */
+
+SELECT
+        a.LABEL_ID AS LABEL_ID /*  */ 	
+     ,  a.LOCALE_ID AS LOCALE_ID /*  */ 	
+     ,  a.LABEL_NAME AS LABEL_NAME /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+  FROM  AMS_LABEL a
+ WHERE  a.LABEL_ID = #LABEL_ID#]]>
+	</select>
+	<insert id="insertLabel" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_insertLabel_2013-10-15T13:09:29(2013-12-06T16:28:14) */
+
+INSERT
+  INTO  AMS_LABEL
+        ( LABEL_ID /*  */ 	
+        , LOCALE_ID /*  */ 	
+        , LABEL_NAME /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */
+        )	
+VALUES  
+        ( #LABEL_ID#	
+        , #LOCALE_ID# 	
+        , #LABEL_NAME# 	
+        , #onlineContext.userInfo.USER_ID# 	
+        , SYSTIMESTAMP
+        )]]>
+	</insert>
+	<delete id="deleteLabel" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_deleteLabel_2013-10-15T13:09:29(2013-10-17T09:59:37) */
+
+DELETE
+  FROM  AMS_LABEL
+ WHERE  LABEL_ID = #LABEL_ID# /*  */]]>
+	</delete>
+	<select id="selectLabelListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_selectLabelListCount_2013-10-15T13:09:29(2013-10-31T19:35:05) */
+
+SELECT COUNT(*) as totalCount
+
+FROM AMS_LABEL
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="LABEL_ID"><![CDATA[
+  		LABEL_ID LIKE '%' + #LABEL_ID# + '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="LABEL_NAME"><![CDATA[
+		LABEL_NAME LIKE '%' + #LABEL_NAME# + '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="LOCALE_ID"><![CDATA[
+		LOCALE_ID LIKE '%' + #LOCALE_ID# + '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+	<insert id="insertLabel_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.lblsbase.DAMS_LABEL_00_insertLabel_2013-10-15T13:09:29(2013-10-17T09:58:29) */
+
+INSERT
+  INTO  AMS_LABEL
+        ( LABEL_ID /*  */ 	
+        , LOCALE_ID /*  */ 	
+        , LABEL_NAME /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */
+        )	
+VALUES  
+        ( #LABEL_ID#	
+        , #LOCALE_ID# 	
+        , #LABEL_NAME# 	
+        , #onlineContext.userInfo.USER_ID# 	
+        , GETDATE()
+        )]]>
+	</insert>
+</sqlMap>

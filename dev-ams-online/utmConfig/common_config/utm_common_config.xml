@@ -1,0 +1,21 @@
+<ProjectConfig>
+	<projName>dev-ams-online</projName>
+	<projCode />
+	<projCreateDate>2013-10-24</projCreateDate>
+	<projManage />
+	<testPath>src/test</testPath>
+	<testSuitePath />
+	<classPrefix />
+	<classPostfix>TestCase</classPostfix>
+	<funPrefix>test</funPrefix>
+	<funPostfix />
+	<projDominPath />
+	<testDataPath>utm/resources/testdata</testDataPath>
+	<templatePath>utm/resources/templates</templatePath>
+	<schedulePath />
+	<repositoryUrl />
+	<contextAnnotationPath />
+	<isScmIgnore />
+	<scmIgnoreFile />
+	<scmIgnoreText />
+</ProjectConfig>

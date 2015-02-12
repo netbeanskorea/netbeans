@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="FFWK997" type="">
+    <bizUnitName>[FU]캐쉬관리</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SFU</parentClassXd>
+    <componentId>asm.FWKSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="refreshCacheByWAS" type="1">
+            <methodName>WAS별 캐쉬refresh</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>asm.FWKSBase#refreshCacheByWAS</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-11-11T17:24:33" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql/>
+    <history>
+        <created date="2013-11-11T17:22:15" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

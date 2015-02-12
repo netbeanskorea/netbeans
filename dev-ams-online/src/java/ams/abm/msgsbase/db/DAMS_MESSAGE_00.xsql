@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_MESSAGE_00">
+	<select id="selectMessageList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_selectMessageList_MSSQL_2013-09-04T10:19:38(2013-09-10T16:41:23) */
+
+SELECT *
+FROM(
+
+
+SELECT 
+       	ROW_NUMBER() OVER (ORDER BY MESSAGE_ID desc) AS ROWNO
+     ,  a.MESSAGE_ID AS MESSAGE_ID /*  */ 	
+     ,  a.LOCALE_ID AS LOCALE_ID /*  */ 	
+     ,  a.MESSAGE_NAME AS MESSAGE_NAME /*  */ 	
+     ,  a.MESSAGE_TYPE AS MESSAGE_TYPE /*  */ 	
+     ,  a.DESCRIPTION AS DESCRIPTION /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+       
+FROM AMS_MESSAGE a
+
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MESSAGE_NAME"><![CDATA[
+		MESSAGE_NAME LIKE '%' + UPPER(#MESSAGE_NAME#) + '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MESSAGE_ID"><![CDATA[
+		MESSAGE_ID LIKE '%' + UPPER(#MESSAGE_ID#) + '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[		
+		
+) b
+
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectMessage" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_selectMessage_2013-09-04T10:19:38(2013-09-04T10:36:27) */
+
+SELECT
+        a.MESSAGE_ID AS MESSAGE_ID /*  */ 	
+     ,  a.LOCALE_ID AS LOCALE_ID /*  */ 	
+     ,  a.MESSAGE_NAME AS MESSAGE_NAME /*  */ 	
+     ,  a.MESSAGE_TYPE AS MESSAGE_TYPE /*  */ 	
+     ,  a.DESCRIPTION AS DESCRIPTION /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+  FROM  AMS_MESSAGE a
+ WHERE  a.MESSAGE_ID = #MESSAGE_ID#	
+   AND  a.LOCALE_ID = #LOCALE_ID#]]>
+	</select>
+	<insert id="insertMessage_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_insertMessage_MSSQL_2013-09-04T10:19:38(2013-09-10T16:41:40) */
+
+INSERT
+  INTO  AMS_MESSAGE
+        ( MESSAGE_ID /*  */ 	
+        , LOCALE_ID /*  */ 	
+        , MESSAGE_NAME /*  */ 	
+        , MESSAGE_TYPE /*  */ 	
+        , DESCRIPTION /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */ 	
+        , USE_FLAG /*  */ )	
+VALUES  
+        ( #MESSAGE_ID#	
+        , #LOCALE_ID# 	
+        , #MESSAGE_NAME# 	
+        , #MESSAGE_TYPE# 	
+        , #DESCRIPTION#	
+        , #onlineContext.userInfo.USER_ID#
+        , GETDATE()	
+        , #USE_FLAG#)]]>
+	</insert>
+	<update id="updateMessage_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_updateMessage_MSSQL_2013-09-04T10:19:38(2013-09-10T16:41:47) */
+
+UPDATE  AMS_MESSAGE
+   SET  MESSAGE_NAME = #MESSAGE_NAME# /*  */ 	
+     ,  MESSAGE_TYPE = #MESSAGE_TYPE# /*  */ 	
+     ,  DESCRIPTION = #DESCRIPTION# /*  */ 		
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = GETDATE() /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+ 
+ WHERE 	MESSAGE_ID = #MESSAGE_ID#	
+   AND 	LOCALE_ID = #LOCALE_ID#]]>
+	</update>
+	<delete id="deleteMessage" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_deleteMessage_2013-09-04T10:19:38(2013-09-04T11:08:43) */
+
+DELETE
+  FROM  AMS_MESSAGE
+ WHERE  MESSAGE_ID = #MESSAGE_ID# /*  */ 	
+   AND  LOCALE_ID = #LOCALE_ID# /*  */ ]]>
+	</delete>
+	<select id="selectMessageListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_selectMessageListCount_2013-09-04T10:19:38(2013-12-06T16:09:05) */
+
+
+SELECT 
+       	COUNT(*) AS totalCount	
+       
+FROM AMS_MESSAGE
+
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MESSAGE_NAME"><![CDATA[
+		MESSAGE_NAME LIKE '%' || UPPER(#MESSAGE_NAME#) || '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MESSAGE_ID"><![CDATA[
+		MESSAGE_ID LIKE '%' || UPPER(#MESSAGE_ID#) || '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+	<insert id="insertMessage" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_insertMessage_2013-09-04T10:19:38(2013-12-06T16:10:44) */
+
+INSERT
+  INTO  AMS_MESSAGE
+        ( MESSAGE_ID /*  */ 	
+        , LOCALE_ID /*  */ 	
+        , MESSAGE_NAME /*  */ 	
+        , MESSAGE_TYPE /*  */ 	
+        , DESCRIPTION /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */ 	
+        , USE_FLAG /*  */ )	
+VALUES  
+        ( #MESSAGE_ID#	
+        , #LOCALE_ID# 	
+        , #MESSAGE_NAME# 	
+        , #MESSAGE_TYPE# 	
+        , #DESCRIPTION#	
+        , #onlineContext.userInfo.USER_ID#
+        , SYSTIMESTAMP	
+        , #USE_FLAG#)]]>
+	</insert>
+	<update id="updateMessage" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_updateMessage_2013-09-04T10:19:38(2013-12-06T16:11:40) */
+
+UPDATE  AMS_MESSAGE
+   SET  MESSAGE_NAME = #MESSAGE_NAME# /*  */ 	
+     ,  MESSAGE_TYPE = #MESSAGE_TYPE# /*  */ 	
+     ,  DESCRIPTION = #DESCRIPTION# /*  */ 		
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = SYSTIMESTAMP /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+ 
+ WHERE 	MESSAGE_ID = #MESSAGE_ID#	
+   AND 	LOCALE_ID = #LOCALE_ID#]]>
+	</update>
+	<select id="selectMessageList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_selectMessageList_2013-09-04T10:19:38(2013-12-06T15:54:09) */
+
+SELECT *
+FROM(
+
+
+SELECT 
+       	ROW_NUMBER() OVER (ORDER BY MESSAGE_ID desc) AS ROWNO
+     ,  a.MESSAGE_ID AS MESSAGE_ID /*  */ 	
+     ,  a.LOCALE_ID AS LOCALE_ID /*  */ 	
+     ,  a.MESSAGE_NAME AS MESSAGE_NAME /*  */ 	
+     ,  a.MESSAGE_TYPE AS MESSAGE_TYPE /*  */ 	
+     ,  a.DESCRIPTION AS DESCRIPTION /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+       
+FROM AMS_MESSAGE a
+
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MESSAGE_NAME"><![CDATA[
+		MESSAGE_NAME LIKE '%' || UPPER(#MESSAGE_NAME#) || '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MESSAGE_ID"><![CDATA[
+		MESSAGE_ID LIKE '%' || UPPER(#MESSAGE_ID#) || '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[		
+		
+) b
+
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectMessageListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.msgsbase.DAMS_MESSAGE_00_selectMessageListCount_2013-09-04T10:19:38(2013-09-04T15:54:48) */
+
+
+SELECT 
+       	COUNT(*) AS totalCount	
+       
+FROM AMS_MESSAGE
+
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MESSAGE_NAME"><![CDATA[
+		MESSAGE_NAME LIKE '%' + UPPER(#MESSAGE_NAME#) + '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="MESSAGE_ID"><![CDATA[
+		MESSAGE_ID LIKE '%' + UPPER(#MESSAGE_ID#) + '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+</sqlMap>

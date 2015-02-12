@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="FFWK996" type="">
+    <bizUnitName>[FU]서버모니터링 스레드관리</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SFU</parentClassXd>
+    <componentId>asm.FWKSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="restartServerMonitoringProcessor" type="1">
+            <methodName>서버모니터링Processor 재기동</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>asm.FWKSBase#restartServerMonitoringProcessor</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-12-13T15:12:19" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+        <method id="stopServerMonitoringProcessor" type="1">
+            <methodName>서버모니터링Processor 정지</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>asm.FWKSBase#stopServerMonitoringProcessor</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-12-13T13:46:06" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql/>
+    <history>
+        <created date="2013-12-13T13:44:35" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jeus-ejb-dd xmlns="http://www.tmaxsoft.com/xml/ns/jeus">
+    <beanlist>
+        <jeus-bean>
+            <ejb-name>abm.USRBBase</ejb-name>
+            <export-name>ejb/abm/USRBBase</export-name>
+        </jeus-bean>
+    </beanlist>
+</jeus-ejb-dd>

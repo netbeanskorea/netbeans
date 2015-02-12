@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_ROLE_MENU_MAPPING_00">
+	<select id="selectMenuListByRole" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_selectMenuListByRole_2013-08-09T19:23:37(2013-12-06T18:07:47) */
+SELECT  
+                 LEVEL
+                ,M.MENU_DEPTH_NO
+                ,LPAD(M.MENU_ID, LEVEL*4, '_') AS MENU_ID_DEPTH
+                ,CASE 
+                     WHEN #LOCALE_LANG# ='ko' THEN SYS_CONNECT_BY_PATH(M.MENU_NAME, ' > ') 
+                     WHEN #LOCALE_LANG# ='en' THEN SYS_CONNECT_BY_PATH(M.MENU_NAME_EN, ' > ') 
+                 END NAVIGATOR
+                ,M.MENU_ID
+                ,M.MENU_CATEGORY
+                ,CASE 
+                     WHEN #LOCALE_LANG# ='ko' THEN M.MENU_NAME
+                     WHEN #LOCALE_LANG# ='en' THEN M.MENU_NAME_EN
+                 END AS MENU_NAME
+                ,M.PARENT_MENU_ID
+                ,M.PAGE_URI
+                ,M.DESCRIPTION
+                ,M.DISPLAY_INDEX
+                ,M.SCREEN_DISPLAY
+                ,M.SECRET_MODE
+                ,M.INTRNL_VIEW
+                ,M.POPUP_VIEW
+                ,MA.ROLE_SELECT
+                ,MA.ROLE_INSERT
+                ,MA.ROLE_UPDATE
+                ,MA.ROLE_DELETE
+                ,M.USE_FLAG
+                ,CASE WHEN LENGTH(M.PAGE_URI) > 1 THEN 'true'
+                      ELSE 'false'
+                 END AS leaf
+                ,'false' AS expand
+FROM AMS_MENU M
+INNER JOIN  (
+                      SELECT  ROLE_ID 
+                                     ,MENU_ID
+                                     ,ROLE_SELECT
+                                     ,ROLE_INSERT
+                                     ,ROLE_UPDATE
+                                     ,ROLE_DELETE
+                      FROM AMS_ROLE_MENU_MAPPING 
+                      ]]><dynamic prepend="WHERE"><![CDATA[
+						]]><isNotEmpty property="ROLE_ID_LIST"><![CDATA[
+							]]><iterate property="ROLE_ID_LIST" open="ROLE_ID in (" conjunction="," close=")"><![CDATA[
+								#ROLE_ID_LIST[].ROLE_ID#
+							]]></iterate><![CDATA[
+						]]></isNotEmpty><![CDATA[ 
+					  ]]></dynamic><![CDATA[
+                    ) MA
+ON M.MENU_ID = MA.MENU_ID                    
+WHERE M.USE_FLAG = 'Y' AND
+MENU_CATEGORY = #MENU_CATEGORY#
+]]><isEqual prepend="AND" property="SECRET_MODE" compareValue="Y"><![CDATA[
+            	M.SECRET_MODE <>'Y'
+]]></isEqual><![CDATA[
+START WITH M.PARENT_MENU_ID = 'ROOT'
+CONNECT BY PRIOR  M.MENU_ID =  M.PARENT_MENU_ID
+ORDER SIBLINGS BY  M.DISPLAY_INDEX ASC]]>
+	</select>
+	<select id="selectMenuListByRole_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_selectMenuListByRole_MSSQL_2013-08-09T19:23:37(2013-11-04T11:39:04) */
+
+DECLARE @MENU_CATEGORY VARCHAR(10)
+SET @MENU_CATEGORY = #MENU_CATEGORY#;
+DECLARE @USER_ID VARCHAR(10)
+SET @USER_ID = #USER_ID#;
+DECLARE @LOCALE VARCHAR(10)
+SET @LOCALE = #LOCALE_LANG#;
+
+WITH MENU1  			
+AS 	(			
+             SELECT 	
+					CAST(dbo.FN_LPAD(DISPLAY_INDEX, 3, '0') AS VARCHAR(100)) AS SORT,
+                    MENU_CATEGORY,
+                    MENU_ID AS MENU_ID, 
+                    PARENT_MENU_ID AS PARENT_MENU_ID, 
+                    DISPLAY_INDEX AS DISPLAY_INDEX, 
+                    CASE 
+					WHEN @LOCALE ='ko' then CONVERT(VARCHAR(2000), MENU_NAME) 
+					WHEN @LOCALE ='en' then CONVERT(VARCHAR(2000), MENU_NAME_EN)
+                    END AS MENU_NM,
+                    CASE 
+					WHEN @LOCALE ='ko' then MENU_NAME  
+					WHEN @LOCALE ='en' then MENU_NAME_EN 
+					END AS MENU_NAME,
+                    MENU_DEPTH_NO AS LEVEL, 
+                    PAGE_URI,
+                    INTRNL_VIEW,
+                    POPUP_VIEW 			
+             FROM	AMS_MENU 			
+             WHERE MENU_CATEGORY = @MENU_CATEGORY
+             		 AND PARENT_MENU_ID = 'ROOT'
+					 AND USE_FLAG = 'Y'	
+					 AND SCREEN_DISPLAY = 'Y'
+					 
+             ]]><isEqual prepend="AND" property="SECRET_MODE" compareValue="Y"><![CDATA[
+            	SECRET_MODE <>'Y'
+             ]]></isEqual><![CDATA[	
+					 	
+)
+,MENU2 AS (					 			
+             SELECT 
+					CAST(dbo.FN_LPAD(BB.DISPLAY_INDEX, 3, '0') AS VARCHAR(100)) + ISNULL(CAST(dbo.FN_LPAD(AA.DISPLAY_INDEX, 3, '0') AS VARCHAR(100)), SUBSTRING(AA.MENU_ID, 4, LEN(AA.MENU_ID))) AS SORT,                    AA.MENU_CATEGORY, 
+                    AA.MENU_ID, 
+                    AA.PARENT_MENU_ID, 
+                    AA.DISPLAY_INDEX, 
+                    CASE 
+					WHEN @LOCALE ='ko' then CONVERT(VARCHAR(2000), BB.MENU_NM +'>' + AA.MENU_NAME)
+                    WHEN @LOCALE ='en' then CONVERT(VARCHAR(2000), BB.MENU_NM +'>' + AA.MENU_NAME_EN)  
+                    END  AS MENU_NM, 
+                    CASE 
+					WHEN @LOCALE ='ko' then AA.MENU_NAME
+					WHEN @LOCALE ='en' then AA.MENU_NAME_EN
+					END AS MENU_NAME,
+                    AA.MENU_DEPTH_NO AS LEVEL, 
+                    AA.PAGE_URI,
+                    AA.INTRNL_VIEW,
+                    AA.POPUP_VIEW			
+             FROM   			
+                    AMS_MENU AA 			
+                    INNER JOIN MENU1 BB 			
+                    ON AA.PARENT_MENU_ID = BB.MENU_ID			
+             WHERE AA.MENU_CATEGORY = @MENU_CATEGORY
+             		AND AA.USE_FLAG = 'Y'
+             		AND AA.SCREEN_DISPLAY = 'Y'
+             		
+             ]]><isEqual prepend="AND" property="SECRET_MODE" compareValue="Y"><![CDATA[
+            			SECRET_MODE <>'Y'
+             ]]></isEqual><![CDATA[
+),
+MENU3 AS(                   
+            SELECT 
+					CONVERT(VARCHAR(100),BB.SORT) + ISNULL(CAST(dbo.FN_LPAD(AA.DISPLAY_INDEX, 3, '0') AS VARCHAR(100)), SUBSTRING(AA.MENU_ID, 4, LEN(AA.MENU_ID))) AS SORT,
+                    AA.MENU_CATEGORY, 
+                    AA.MENU_ID, 
+                    AA.PARENT_MENU_ID, 
+                    AA.DISPLAY_INDEX, 
+                    CASE 
+					WHEN @LOCALE ='ko' then CONVERT(NVARCHAR(2000), BB.MENU_NM +'>' + AA.MENU_NAME)
+                    WHEN @LOCALE ='en' then CONVERT(NVARCHAR(2000), BB.MENU_NM+'>' + AA.MENU_NAME_EN) 
+                    END AS MENU_NM, 
+                    CASE 
+					WHEN @LOCALE ='ko' then AA.MENU_NAME
+					WHEN @LOCALE ='en' then AA.MENU_NAME_EN
+					END AS MENU_NAME,
+                    AA.MENU_DEPTH_NO AS LEVEL, 
+                    AA.PAGE_URI,
+                    AA.INTRNL_VIEW,
+                    AA.POPUP_VIEW			
+             FROM   			
+                    AMS_MENU AA 			
+                    INNER JOIN MENU2 BB 			
+                    ON AA.PARENT_MENU_ID = BB.MENU_ID			
+             WHERE AA.MENU_CATEGORY = @MENU_CATEGORY 
+             		AND AA.USE_FLAG = 'Y'
+             		AND AA.SCREEN_DISPLAY = 'Y'
+            	
+             ]]><isEqual prepend="AND" property="SECRET_MODE" compareValue="Y"><![CDATA[
+            			SECRET_MODE <>'Y'
+             ]]></isEqual><![CDATA[	  
+) 	
+ SELECT    
+ 		   A.SORT,
+		   A.MENU_CATEGORY,
+		   A.MENU_ID,
+           A.PARENT_MENU_ID,
+           A.MENU_NAME,
+           A.MENU_NM AS NAVIGATOR,			
+           A.DISPLAY_INDEX,
+           A.PAGE_URI,
+		   A.INTRNL_VIEW,
+           A.POPUP_VIEW,
+           A.LEVEL AS _level_,
+           B.ROLE_SELECT, 
+           B.ROLE_INSERT,
+           B.ROLE_UPDATE,
+           B.ROLE_DELETE,
+           CASE WHEN LEN(A.PAGE_URI) > 1 THEN 'true'
+                                 ELSE 'false'
+           END AS _leaf_,
+           'false' AS _expand_
+FROM (
+		SELECT *
+		FROM MENU1
+		UNION ALL
+		SELECT *
+		FROM MENU2
+		UNION ALL
+		SELECT *
+		FROM MENU3
+) A
+INNER JOIN (
+			SELECT DISTINCT MENU_ID, ROLE_SELECT, ROLE_INSERT, ROLE_UPDATE, ROLE_DELETE
+			FROM AMS_ROLE_MENU_MAPPING
+			
+			
+			]]><isNotEmpty prepend="WHERE" property="ROLE_ID_LIST"><![CDATA[
+     			 ]]><iterate prepend="ROLE_ID IN " property="ROLE_ID_LIST" open="(" close=")" conjunction=","><![CDATA[
+       				 #ROLE_ID_LIST[].ROLE_ID#
+      			]]></iterate><![CDATA[
+    		]]></isNotEmpty><![CDATA[
+			
+)B
+ON A.MENU_ID = B.MENU_ID       
+ORDER BY A.SORT]]>
+	</select>
+	<select id="selectRoleMenuMappingList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_selectRoleMenuMappingList_2013-08-09T19:23:37(2013-12-09T19:41:11) */
+SELECT *
+FROM (
+	SELECT   
+		REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '')  AS  SORT,
+    	CASE 
+			WHEN LEVEL=1 THEN 'ROOT'
+			WHEN LEVEL=2 THEN SUBSTR( REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '') ,1 , (LEVEL-1)*3)
+			WHEN LEVEL=3 THEN SUBSTR( REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '') ,1 , (LEVEL-1)*3)
+		END  PARENT_SORT,
+		SYS_CONNECT_BY_PATH(A.MENU_ID,'/') AS PATH,
+		A.MENU_ID,
+    	A.PARENT_MENU_ID, 
+		A.MENU_CATEGORY,
+		A.MENU_DEPTH_NO,
+		A.DISPLAY_INDEX,
+		A.MENU_NAME,
+		A.MENU_NAME_EN,
+   		ROLE_SELECT, 
+		ROLE_INSERT, 
+		ROLE_UPDATE, 
+		ROLE_DELETE,
+		#ROLE_ID# AS ROLE_ID,
+    	CASE
+			WHEN 
+				(
+					SELECT COUNT (*) AS COUNT 
+					FROM AMS_MENU B
+					WHERE A.MENU_ID = B.PARENT_MENU_ID
+				) > 0 
+			THEN 'false'
+			ELSE 'true'
+		END AS LEAF_,
+		LEVEL-1 AS LEVEL_,
+		'false' AS EXPAND_,
+    	'true' AS LOADED
+	FROM 	AMS_MENU A
+        	LEFT OUTER JOIN (
+					SELECT 	MENU_ID, 
+							ROLE_SELECT, 
+							ROLE_INSERT, 
+							ROLE_UPDATE, 
+							ROLE_DELETE
+			
+					FROM 	AMS_ROLE_MENU_MAPPING
+			
+					WHERE	ROLE_ID = #ROLE_ID#
+					
+				) B ON A.MENU_ID = B.MENU_ID
+	WHERE	A.MENU_CATEGORY = #MENU_CATEGORY#
+
+	START WITH A.PARENT_MENU_ID = 'ROOT'
+	CONNECT BY PRIOR A.MENU_ID =  A.PARENT_MENU_ID
+	ORDER 	SIBLINGS BY A.DISPLAY_INDEX ASC
+) C]]>
+	</select>
+	<select id="selectRoleMenuMappingList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_selectRoleMenuMappingList_MSSQL_2013-08-09T19:23:37(2013-12-09T19:34:30) */
+
+DECLARE @MENU_CATEGORY NVARCHAR(100)
+SET @MENU_CATEGORY = #MENU_CATEGORY#;
+DECLARE @ROLE_ID NVARCHAR(100)
+SET @ROLE_ID = #ROLE_ID#;
+
+
+WITH MENUTREE1 (SORT,
+				PARENT_SORT,
+				PATH,
+				MENU_ID,
+				PARENT_MENU_ID, 
+				MENU_CATEGORY,
+				MENU_DEPTH_NO,
+				DISPLAY_INDEX,
+				MENU_NAME,
+				MENU_NAME_EN
+				) AS 
+(
+     SELECT 
+			CASE 
+				WHEN LEN(CAST(ISNULL(DISPLAY_INDEX,0) AS NVARCHAR(max)))=2 
+				THEN '0'+CAST(ISNULL(DISPLAY_INDEX,0)AS NVARCHAR(max)) 
+				WHEN LEN(CAST(ISNULL(DISPLAY_INDEX,0)AS NVARCHAR(max)))=1 
+				THEN '00'+CAST(ISNULL(DISPLAY_INDEX,0)AS NVARCHAR(max)) 
+				ELSE CAST(ISNULL(DISPLAY_INDEX,0) AS NVARCHAR(max)) 
+			END AS SORT,
+			CAST('ROOT' AS NVARCHAR(max)) AS PARENT_SORT,
+			'/'+CAST(MENU_ID AS NVARCHAR(200)) AS PATH,
+            MENU_ID,
+			PARENT_MENU_ID,
+			MENU_CATEGORY,
+			MENU_DEPTH_NO,
+			DISPLAY_INDEX,
+			MENU_NAME,
+			MENU_NAME_EN
+     FROM	AMS_MENU
+     WHERE	PARENT_MENU_ID = 'ROOT' 
+
+	UNION ALL
+            
+     SELECT 
+			CASE 
+				WHEN LEN(CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)))=2 
+				THEN BB.SORT + '0'+CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)) 
+				WHEN LEN(CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)))=1 
+				THEN BB.SORT + '00'+CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)) 
+				ELSE BB.SORT + CAST(ISNULL(AA.DISPLAY_INDEX,0) AS NVARCHAR(max)) 
+			END AS SORT,
+			BB.SORT AS PARENT_SORT,
+			CAST(BB.PATH +'/'+ CAST(AA.MENU_ID AS NVARCHAR(200)) AS NVARCHAR(201)) AS PATH,
+			AA.MENU_ID,
+			AA.PARENT_MENU_ID,
+			AA.MENU_CATEGORY,
+			AA.MENU_DEPTH_NO,
+			AA.DISPLAY_INDEX,
+			AA.MENU_NAME,
+			AA.MENU_NAME_EN
+
+     FROM   AMS_MENU AA                   
+            INNER JOIN MENUTREE1 BB               
+            ON AA.PARENT_MENU_ID = BB.MENU_ID
+                          
+)
+		
+
+SELECT	DISTINCT *
+FROM	(
+		SELECT
+			A.SORT,
+			A.PARENT_SORT,
+			A.PATH,
+			A.MENU_ID,
+			A.MENU_CATEGORY,
+			A.PARENT_MENU_ID, 
+			A.MENU_DEPTH_NO,
+			A.DISPLAY_INDEX,
+			A.MENU_NAME,
+			A.MENU_NAME_EN,
+			ROLE_SELECT, 
+			ROLE_INSERT, 
+			ROLE_UPDATE, 
+			ROLE_DELETE,
+			@ROLE_ID AS ROLE_ID,
+			CASE 
+			WHEN 
+				(
+					SELECT COUNT (*) AS COUNT 
+					FROM AMS_MENU 
+					WHERE A.MENU_ID = PARENT_MENU_ID
+				) > 0 
+				THEN 'false'
+				ELSE 'true'
+			END AS LEAF_,
+			A.MENU_DEPTH_NO AS LEVEL_,
+			'true' AS EXPAND_, 
+			'true' 	AS LOADED
+		FROM	MENUTREE1 A 
+				LEFT OUTER JOIN (
+					SELECT 	MENU_ID, 
+							ROLE_SELECT, 
+							ROLE_INSERT, 
+							ROLE_UPDATE, 
+							ROLE_DELETE
+			
+					FROM 	AMS_ROLE_MENU_MAPPING
+			
+					WHERE	ROLE_ID = @ROLE_ID
+					
+
+				) B ON A.MENU_ID = B.MENU_ID
+		) T 
+		
+WHERE T.MENU_CATEGORY = @MENU_CATEGORY
+
+ORDER BY SORT]]>
+	</select>
+	<insert id="insertRoleMenu" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_insertRoleMenu_2013-08-09T19:23:37(2013-09-17T14:52:56) */
+
+INSERT
+  INTO  AMS_ROLE_MENU_MAPPING
+        ( ROLE_ID /*  */ 	
+        , ROLE_SELECT /*  */ 	
+        , ROLE_INSERT /*  */ 	
+        , ROLE_UPDATE /*  */ 	
+        , ROLE_DELETE /*  */ 	
+        , MENU_ID /*  */ )	
+VALUES  
+        ( #ROLE_ID#	
+        , #ROLE_SELECT# 	
+        , #ROLE_INSERT# 	
+        , #ROLE_UPDATE# 	
+        , #ROLE_DELETE# 	
+        , #MENU_ID#)]]>
+	</insert>
+	<delete id="deleteRoleMenu" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.autsbase.DAMS_ROLE_MENU_MAPPING_00_deleteRoleMenu_2013-08-09T19:23:37(2013-10-21T14:46:26) */
+
+DELETE
+
+FROM  	AMS_ROLE_MENU_MAPPING 
+
+WHERE  	ROLE_ID = #ROLE_ID#
+ AND	MENU_ID IN (
+			SELECT	MENU_ID
+			FROM	AMS_MENU
+			WHERE	MENU_CATEGORY = #MENU_CATEGORY#
+		)]]>
+	</delete>
+</sqlMap>

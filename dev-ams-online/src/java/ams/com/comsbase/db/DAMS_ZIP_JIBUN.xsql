@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_ZIP_JIBUN">
+	<select id="selectAddressByDongRi" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.com.comsbase.DAMS_ZIP_JIBUN_selectAddressByDongRi_2013-10-04T18:05:25(2013-12-11T14:59:27) */
+
+SELECT ZIPCODE
+	  ,SIDO
+      ,GUGUN
+      ,DONG
+      ,RI
+      ,BLDG
+      ,ST_BUNJI
+      ,ED_BUNJI
+      ,(
+		NVL(SIDO,'')  ||' '||
+		NVL(GUGUN,'') ||' '||
+		NVL(DONG,'')  ||' '||
+		NVL(RI,'')   ||' '||
+		NVL(BLDG,'')  ||' '||
+		NVL(ST_BUNJI,'')||
+		CASE WHEN ST_BUNJI IS NULL THEN ''
+		ELSE '~'
+		END
+		|| NVL(ED_BUNJI,'')
+		) as ADDR
+  FROM AMS_ZIP_JIBUN 
+WHERE DONG LIKE '%' || #DONGRI# || '%' 
+   OR RI LIKE '%'||#DONGRI#||'%' ]]>
+	</select>
+	<select id="selectAddressByDongRi_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.com.comsbase.DAMS_ZIP_JIBUN_selectAddressByDongRi_2013-10-04T18:05:25(2013-10-04T18:33:46) */
+DECLARE @DONGRI VARCHAR(20)
+SET @DONGRI =#DONGRI#;
+SELECT ZIPCODE
+	  ,SIDO
+      ,GUGUN
+      ,DONG
+      ,RI
+      ,BLDG
+      ,ST_BUNJI
+      ,ED_BUNJI
+      ,(
+		ISNULL(SIDO,'')  +' '+
+		ISNULL(GUGUN,'') +' '+
+		ISNULL(DONG,'')  +' '+
+		ISNULL(RI, '')   +' '+
+		ISNULL(BLDG,'')  +' '+
+		ISNULL(ST_BUNJI,'')+
+		CASE WHEN ST_BUNJI IS NULL THEN ''
+		ELSE '~'
+		END
+		+ ISNULL(ED_BUNJI,'')
+		) as ADDR
+  FROM AMS_ZIP_JIBUN 
+WHERE DONG LIKE '%'+@DONGRI+'%' 
+		OR RI LIKE '%'+@DONGRI+'%' ]]>
+	</select>
+</sqlMap>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Deploy AMS UI deploy" default="deploy.ams.ui.all" basedir="..">
+
+	<!-- ################################################################## -->
+	<!-- ## [NEXCORE_HOME] common build property ########################## -->
+	<!-- ################################################################## -->
+	<!-- default build.properties -->
+	<property file="${NEXCORE_HOME_ANT}/script/build/nexcore.build.properties" />
+
+	<!-- default for CI tool (Continuous Integration : quickBuild etc) -->
+	<property file="${ant.home}/nexcore.build.properties" />
+
+	<!-- Web Source path-->
+	<property name="AMS_WEB_APP_HOME" value="C:/projects/ams-enhance/workspace/dev-ams-online" />
+	<property name="preservelastmodified" value="false" />
+	<!-- ################################################################## -->
+	<!-- ## copy                                                           			## -->
+	<!-- ##   [from]                                                      			## -->
+	<!-- ##      dev-ams-online/ui/ams.war                        				## -->
+	<!-- ##   [to]                                                         				## -->
+	<!-- ##      ${NEXCORE_HOME}/EarContent/webapp/ams.war     ## -->
+	<!-- ################################################################## -->
+	<target name="deploy.ams.ui.all" description="" >
+		<echo>Runtime Webapp Path =${app.ear.webroot.path}</echo>
+		<echo>AMS Web app Home =${AMS_WEB_APP_HOME}</echo>
+		
+		<copy todir="${app.ear.webroot.path}/ams.war" preservelastmodified="${preservelastmodified}" includeemptydirs="true">
+			<fileset dir="${AMS_WEB_APP_HOME}/ui/ams.war">
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+	</target>
+</project>

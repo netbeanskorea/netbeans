@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DACR_MONITORING_00" type="">
+    <bizUnitName>[DU]Acra 모니터링</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>BDU</parentClassXd>
+    <componentId>mtr.ACRBBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="insertAcraMonitoring" type="1">
+            <methodName>Acra Monitoring 등록</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>mtr.ACRBBase#insertAcraMonitoring</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2015-02-10T09:38:41" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+        <method id="selectAcraMonitoring" type="1">
+            <methodName>Acra Monitoring 조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>mtr.ACRBBase#selectAcraMonitoring</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2015-02-09T21:47:01" user="강훈기 (hunkee)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DACR_MONITORING_00.xsql</name>
+        <history>
+            <created date="2015-02-10T09:39:08" user="강훈기(hunkee)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2015-02-09T21:36:43" user="강훈기 (hunkee)"/>
+    </history>
+</bizUnit>

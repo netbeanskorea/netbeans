@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DACR_MONITORING_00">
+	<select id="selectAcraMonitoring" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.mtr.acrbbase.DACR_MONITORING_00_selectAcraMonitoring_2015-02-10T09:39:08(2015-02-10T14:04:30) */
+
+SELECT 	*
+
+FROM	ACRA_DB
+
+ORDER BY NUM DESC]]>
+	</select>
+	<insert id="insertAcraMonitoring" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.mtr.acrbbase.DACR_MONITORING_00_insertAcraMonitoring_2015-02-10T09:39:08(2015-02-10T09:41:39) */
+
+INSERT
+  INTO  ACRA_DB
+        (  
+          NUM	
+        , APP_VER 	
+        , ANDROID_VER 	
+        , PHONE_MODEL 	
+        , ERR_MSG 	
+        
+        )	
+VALUES  
+        (	
+          SEQ_ACRA_DB_00.NEXTVAL         	
+        , #APP_VER# 	
+        , #ANDROID_VER# 	
+        , #PHONE_MODEL# 	
+        , #ERR_MSG# 	
+        )]]>
+	</insert>
+</sqlMap>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_GROUP_ROLE_MAPPING_00">
+	<select id="selectRoleInfoByGroup" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_selectRoleInfoByGroup_2013-08-05T18:54:58(2013-09-02T11:09:55) */
+SELECT
+        a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.ROLE_ID AS ROLE_ID /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+  FROM  AMS_GROUP_ROLE_MAPPING a
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty property="GROUP_ID_LIST"><![CDATA[
+		]]><iterate property="GROUP_ID_LIST" open="a.GROUP_ID in (" conjunction="," close=")"><![CDATA[
+			#GROUP_ID_LIST[].GROUP_ID#
+		]]></iterate><![CDATA[
+	]]></isNotEmpty><![CDATA[ 
+]]></dynamic><![CDATA[]]>
+	</select>
+	<select id="selectUserGroupMappingByUser" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_selectUserGroupMappingByUser_2013-08-05T18:54:58(2013-10-18T18:12:35) */
+SELECT ROLE_ID
+FROM AMS_GROUP_ROLE_MAPPING
+WHERE GROUP_ID IN (
+                    SELECT GROUP_ID
+                    FROM AMS_USER_GROUP_MAPPING 
+                    WHERE USER_ID = #USER_ID#
+                  )]]>
+	</select>
+	<select id="selectGroupRoleMappingList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_selectGroupRoleMappingList_2013-08-05T18:54:58(2013-10-04T15:48:57) */
+
+SELECT
+        a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.ROLE_ID AS ROLE_ID /*  */
+     ,	b.ROLE_NAME AS ROLE_NAME
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+FROM  	AMS_GROUP_ROLE_MAPPING a,
+  		AMS_ROLE b
+WHERE  a.GROUP_ID = #GROUP_ID#
+AND	   a.ROLE_ID = b.ROLE_ID]]>
+	</select>
+	<select id="selectRoleListByGroup" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_selectRoleListByGroup_2013-08-05T18:54:58(2014-01-07T13:51:18) */
+
+SELECT *
+
+FROM (
+	SELECT
+		   ROW_NUMBER() OVER (ORDER BY ROLE_ID asc) AS ROWNO
+		,  ROLE_ID AS ROLE_ID /*  */ 
+		,  ROLE_NAME AS ROLE_NAME
+		 	
+	FROM	AMS_ROLE
+  
+	WHERE 	USE_FLAG = 'Y'
+	  AND	ROLE_ID NOT IN 
+	  		(
+	  			SELECT 	ROLE_ID 
+	  			FROM 	AMS_GROUP_ROLE_MAPPING 
+	  			WHERE 	GROUP_ID = #GROUP_ID#
+	  		)
+	  		
+		]]><isNotEmpty prepend="AND" property="ROLE_ID"><![CDATA[
+			ROLE_ID LIKE '%' || #ROLE_ID# || '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="ROLE_NAME"><![CDATA[
+			ROLE_NAME LIKE '%' || #ROLE_NAME# || '%'
+		]]></isNotEmpty><![CDATA[
+) A
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectRoleListByGroupCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_selectRoleListByGroupCount_2013-08-05T18:54:58(2014-01-07T14:04:44) */
+
+SELECT COUNT(*) AS totalCount
+		 	
+FROM	AMS_ROLE
+  
+WHERE 	USE_FLAG = 'Y'
+AND		ROLE_ID NOT IN 
+	  	(
+	  		SELECT 	ROLE_ID 
+	  		FROM 	AMS_GROUP_ROLE_MAPPING 
+	  		WHERE 	GROUP_ID = #GROUP_ID#
+	  	)
+	  		
+]]><isNotEmpty prepend="AND" property="ROLE_ID"><![CDATA[
+	ROLE_ID LIKE '%' || #ROLE_ID# || '%'
+]]></isNotEmpty><![CDATA[
+]]><isNotEmpty prepend="AND" property="ROLE_NAME"><![CDATA[
+	ROLE_NAME LIKE '%' || #ROLE_NAME# || '%'
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+	<select id="selectRoleListByGroup_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_selectRoleListByGroup_2013-08-05T18:54:58(2013-10-04T11:03:49) */
+
+SELECT *
+
+FROM (
+	SELECT
+		   ROW_NUMBER() OVER (ORDER BY ROLE_ID asc) AS ROWNO
+		,  ROLE_ID AS ROLE_ID /*  */ 
+		,  ROLE_NAME AS ROLE_NAME
+		 	
+	FROM	AMS_ROLE
+  
+	WHERE 	USE_FLAG = 'Y'
+	  AND	ROLE_ID NOT IN 
+	  		(
+	  			SELECT 	ROLE_ID 
+	  			FROM 	AMS_GROUP_ROLE_MAPPING 
+	  			WHERE 	GROUP_ID = #GROUP_ID#
+	  		)
+	  		
+		]]><isNotEmpty prepend="AND" property="ROLE_ID"><![CDATA[
+			ROLE_ID LIKE '%' + #ROLE_ID# + '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="ROLE_NAME"><![CDATA[
+			ROLE_NAME LIKE '%' + #ROLE_NAME# + '%'
+		]]></isNotEmpty><![CDATA[
+) A
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectGroupRoleMappingList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_selectGroupRoleMappingList_MSSQL_2013-08-05T18:54:58(2013-10-04T15:49:03) */
+
+SELECT
+        a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.ROLE_ID AS ROLE_ID /*  */
+     ,	b.ROLE_NAME AS ROLE_NAME
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+FROM  	AMS_GROUP_ROLE_MAPPING a,
+  		AMS_ROLE b
+WHERE  a.GROUP_ID = #GROUP_ID#
+AND	   a.ROLE_ID = b.ROLE_ID]]>
+	</select>
+	<insert id="insertGroupRoleMapping_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_insertGroupRoleMapping_MSSQL_2013-08-05T18:54:58(2013-10-04T13:51:44) */
+
+INSERT
+  INTO  AMS_GROUP_ROLE_MAPPING
+        ( GROUP_ID /*  */ 	
+        , ROLE_ID /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */)	
+VALUES  
+        ( #GROUP_ID#	
+        , #ROLE_ID# 	
+        , #onlineContext.userInfo.USER_ID# 	
+        , GETDATE()
+        )]]>
+	</insert>
+	<delete id="deleteGroupRoleMapping_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_deleteGroupRoleMapping_MSSQL_2013-08-05T18:54:58(2013-10-04T13:53:51) */
+
+DELETE
+  FROM  AMS_GROUP_ROLE_MAPPING
+ WHERE  GROUP_ID = #GROUP_ID# /*  */ 	
+   AND  ROLE_ID = #ROLE_ID# /*  */ ]]>
+	</delete>
+	<insert id="insertGroupRoleMapping" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_insertGroupRoleMapping_2013-08-05T18:54:58(2013-12-06T15:52:37) */
+
+INSERT
+  INTO  AMS_GROUP_ROLE_MAPPING
+        ( GROUP_ID /*  */ 	
+        , ROLE_ID /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */)	
+VALUES  
+        ( #GROUP_ID#	
+        , #ROLE_ID# 	
+        , #onlineContext.userInfo.USER_ID# 	
+        , SYSTIMESTAMP
+        )]]>
+	</insert>
+	<delete id="deleteGroupRoleMapping" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_deleteGroupRoleMapping_MSSQL_2013-08-05T18:54:58(2013-10-04T13:53:51) */
+
+DELETE
+  FROM  AMS_GROUP_ROLE_MAPPING
+ WHERE  GROUP_ID = #GROUP_ID# /*  */ 	
+   AND  ROLE_ID = #ROLE_ID# /*  */ ]]>
+	</delete>
+	<select id="selectRoleListByGroupCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_ROLE_MAPPING_00_selectRoleListByGroupCount_2013-08-05T18:54:58(2013-10-04T13:20:46) */
+
+SELECT COUNT(*) AS totalCount
+		 	
+FROM	AMS_ROLE
+  
+WHERE 	USE_FLAG = 'Y'
+AND		ROLE_ID NOT IN 
+	  	(
+	  		SELECT 	ROLE_ID 
+	  		FROM 	AMS_GROUP_ROLE_MAPPING 
+	  		WHERE 	GROUP_ID = #GROUP_ID#
+	  	)
+	  		
+]]><isNotEmpty prepend="AND" property="ROLE_ID"><![CDATA[
+	ROLE_ID LIKE '%' + #ROLE_ID# + '%'
+]]></isNotEmpty><![CDATA[
+]]><isNotEmpty prepend="AND" property="ROLE_NAME"><![CDATA[
+	ROLE_NAME LIKE '%' + #ROLE_NAME# + '%'
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+</sqlMap>

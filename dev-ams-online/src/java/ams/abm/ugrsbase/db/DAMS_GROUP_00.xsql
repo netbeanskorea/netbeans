@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_GROUP_00">
+	<select id="selectUserGroupList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_selectUserGroupList_2013-09-26T15:11:11(2013-12-06T15:07:03) */
+
+SELECT *
+
+FROM (
+		SELECT
+			ROW_NUMBER() OVER (ORDER BY DISPLAY_INDEX asc) AS ROWNO
+    		,  a.GROUP_ID AS GROUP_ID /*  */ 	
+			,  a.GROUP_NAME AS GROUP_NAME /*  */ 	
+	    	,  a.GROUP_NAME_EN AS GROUP_NAME_EN /*  */ 	
+   	 		,  a.USE_FLAG AS USE_FLAG /*  */ 	
+   	 		,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+  	 		,  a.REG_DATE AS REG_DATE /*  */ 	
+   	  		,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+   	  		,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+   	  		,  a.DISPLAY_INDEX AS DISPLAY_INDEX /*  */ 	
+  		FROM	AMS_GROUP a
+  		
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isNotEmpty prepend="AND" property="GROUP_ID"><![CDATA[
+  				GROUP_ID LIKE '%' || #GROUP_ID# || '%'
+			]]></isNotEmpty><![CDATA[
+			]]><isNotEmpty prepend="AND" property="GROUP_NAME"><![CDATA[
+				GROUP_NAME LIKE '%' || #GROUP_NAME# || '%'
+			]]></isNotEmpty><![CDATA[
+		]]></dynamic><![CDATA[
+  	
+  	)b
+  	
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectUserGroup" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_selectUserGroup_2013-09-26T15:11:11(2013-09-26T15:15:06) */
+
+SELECT
+        a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.GROUP_NAME AS GROUP_NAME /*  */ 	
+     ,  a.GROUP_NAME_EN AS GROUP_NAME_EN /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.DISPLAY_INDEX AS DISPLAY_INDEX /*  */ 	
+  FROM  AMS_GROUP a
+ WHERE  a.GROUP_ID = #GROUP_ID#]]>
+	</select>
+	<insert id="insertUserGroup_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_insertUserGroup_MSSQL_2013-09-26T15:11:11(2013-09-26T15:17:38) */
+
+INSERT
+  INTO  AMS_GROUP
+        (GROUP_ID /*  */ 	
+        , GROUP_NAME /*  */ 	
+        , GROUP_NAME_EN /*  */ 	
+        , USE_FLAG /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE
+        , DISPLAY_INDEX /*  */ )	
+VALUES  
+        ( #GROUP_ID#	
+        , #GROUP_NAME# 	
+        , #GROUP_NAME_EN# 	
+        , #USE_FLAG# 	
+        , #onlineContext.userInfo.USER_ID#
+        , GETDATE() 	
+        , #DISPLAY_INDEX#)]]>
+	</insert>
+	<update id="updateUserGroup" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_updateUserGroup_2013-09-26T15:11:11(2013-12-06T15:52:21) */
+
+UPDATE  AMS_GROUP
+
+   SET  GROUP_NAME = #GROUP_NAME# /*  */ 	
+     ,  GROUP_NAME_EN = #GROUP_NAME_EN# /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = SYSTIMESTAMP /*  */ 	
+     ,  DISPLAY_INDEX = #DISPLAY_INDEX# /*  */ 	
+     
+ WHERE 	GROUP_ID = #GROUP_ID#]]>
+	</update>
+	<insert id="insertUserGroup" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_insertUserGroup_2013-09-26T15:11:11(2013-12-09T23:02:31) */
+INSERT
+  INTO  AMS_GROUP
+        ( GROUP_ID /*  */ 	
+        , GROUP_NAME /*  */ 	
+        , GROUP_NAME_EN /*  */ 	
+        , USE_FLAG /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */ 
+        , DISPLAY_INDEX /*  */ )	
+VALUES  
+        ( #GROUP_ID#	
+        , #GROUP_NAME# 	
+        , #GROUP_NAME_EN# 	
+        , #USE_FLAG# 	
+        , #onlineContext.userInfo.USER_ID#	
+        , SYSTIMESTAMP 	
+        , #DISPLAY_INDEX#)]]>
+	</insert>
+	<update id="updateUserGroup_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_updateUserGroup_MSSQL_2013-09-26T15:11:11(2013-09-27T14:43:18) */
+
+UPDATE  AMS_GROUP
+   SET  GROUP_NAME = #GROUP_NAME# /*  */ 	
+     ,  GROUP_NAME_EN = #GROUP_NAME_EN# /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = GETDATE() /*  */ 	
+     ,  DISPLAY_INDEX = #DISPLAY_INDEX# /*  */ 	
+     
+ WHERE 	GROUP_ID = #GROUP_ID#]]>
+	</update>
+	<delete id="deleteUserGroup" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_deleteUserGroup_2013-09-26T15:11:11(2013-09-26T15:24:44) */
+
+DELETE
+  FROM  AMS_GROUP
+ WHERE  GROUP_ID = #GROUP_ID# /*  */ ]]>
+	</delete>
+	<select id="selectUserGroupListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_selectUserGroupListCount_2013-09-26T15:11:11(2013-09-26T17:49:01) */
+
+SELECT 
+       	COUNT(*) AS totalCount	
+       
+FROM 	AMS_GROUP]]>
+	</select>
+	<select id="selectUserGroupList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.ugrsbase.DAMS_GROUP_00_selectUserGroupList_MSSQL_2013-09-26T15:11:11(2013-09-30T10:36:46) */
+
+SELECT *
+
+FROM (
+		SELECT
+			ROW_NUMBER() OVER (ORDER BY DISPLAY_INDEX asc) AS ROWNO
+    		,  a.GROUP_ID AS GROUP_ID /*  */ 	
+			,  a.GROUP_NAME AS GROUP_NAME /*  */ 	
+	    	,  a.GROUP_NAME_EN AS GROUP_NAME_EN /*  */ 	
+   	 		,  a.USE_FLAG AS USE_FLAG /*  */ 	
+   	 		,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+  	 		,  a.REG_DATE AS REG_DATE /*  */ 	
+   	  		,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+   	  		,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+   	  		,  a.DISPLAY_INDEX AS DISPLAY_INDEX /*  */ 	
+  		FROM	AMS_GROUP a
+  		
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isNotEmpty prepend="AND" property="GROUP_ID"><![CDATA[
+  				GROUP_ID LIKE '%' + #GROUP_ID# + '%'
+			]]></isNotEmpty><![CDATA[
+			]]><isNotEmpty prepend="AND" property="GROUP_NAME"><![CDATA[
+				GROUP_NAME LIKE '%' + #GROUP_NAME# + '%'
+			]]></isNotEmpty><![CDATA[
+		]]></dynamic><![CDATA[
+  	
+  	)b
+  	
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+</sqlMap>

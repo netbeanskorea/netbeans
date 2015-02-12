@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
+<ejb-jar>
+<!-- ejb id : COMSBase -->
+
+ <enterprise-beans>
+     <session id="Session_com.COMSBase">
+         <display-name>com.COMSBase</display-name>
+         <ejb-name>com.COMSBase</ejb-name>
+         <home>ams.com.comsbase.ejb.COMSBaseHome</home>
+         <remote>ams.com.comsbase.ejb.COMSBase</remote>
+         <ejb-class>ams.com.comsbase.ejb.COMSBaseBean</ejb-class>
+         <session-type>Stateless</session-type>
+         <transaction-type>Container</transaction-type>
+     </session>
+ </enterprise-beans>
+
+ <assembly-descriptor>
+
+ </assembly-descriptor>
+</ejb-jar>

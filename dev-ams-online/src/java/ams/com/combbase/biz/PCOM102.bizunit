@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="PCOM102" type="">
+    <bizUnitName>[PU]달력관리</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>BDU</parentClassXd>
+    <componentId>com.COMBBase</componentId>
+    <interface-list/>
+    <description>STAR UI FWK Calendar 컴포넌트와 연동.&#13;
+달력 정보를 반환 한다.</description>
+    <method-list>
+        <method id="pCOM10201" type="1">
+            <methodName>영업일조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMBBase#pCOM10201</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-30T14:51:45" user="성지호 (SungJiHo)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql/>
+    <history>
+        <created date="2013-09-30T14:50:48" user="성지호 (SungJiHo)"/>
+    </history>
+</bizUnit>

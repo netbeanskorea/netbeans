@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component fqId="abm.CODBBase" id="CODBBase" version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://nexcore.skcc.com/schema/nexcore-biz-component-1-0.xsd">
+    <componentName>[BC]코드</componentName>
+    <componentEngName/>
+    <bizGroupXd>ams-biz</bizGroupXd>
+    <ejbVersion>2.1</ejbVersion>
+    <jndiName>ejb/abm/CODBBase</jndiName>
+    <packageName>ams.abm.codbbase</packageName>
+    <ejbFlagXd>1</ejbFlagXd>
+    <transactionTimeoutSeconds>30</transactionTimeoutSeconds>
+    <componentTypeXd>BC</componentTypeXd>
+    <nationName>Not Defined</nationName>
+    <customerName>Not Defined</customerName>
+    <systemName>Not Defined</systemName>
+    <developmentLanguage>Java</developmentLanguage>
+    <componentCategory>OnLine</componentCategory>
+    <description/>
+    <bizUnit-list filescan="true"/>
+    <custom-props/>
+    <history>
+        <created date="2013-07-09T11:01:34" user="박세일 (ParkSeIl)"/>
+    </history>
+</component>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_USER_GROUP_MAPPING_00">
+	<select id="selectUserGroupListByUser" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_selectUserGroupListByUser_2013-08-05T17:26:06(2013-09-02T11:03:33) */
+SELECT
+        a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+  FROM  AMS_USER_GROUP_MAPPING a
+ WHERE  a.USER_ID = #USER_ID#]]>
+	</select>
+	<insert id="insertUserGroupMapping" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_insertUserGroupMapping_2013-08-05T17:26:06(2013-12-05T17:57:27) */
+
+INSERT
+  INTO  AMS_USER_GROUP_MAPPING
+        ( USER_ID /*  */ 	
+        , GROUP_ID /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */
+        )	
+VALUES  
+        ( #USER_ID#	
+        , #GROUP_ID# 	
+        , #onlineContext.userInfo.USER_ID# 	
+        , sysdate 	
+        )]]>
+	</insert>
+	<delete id="deleteUserGroupMapping" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_deleteUserGroupMapping_2013-08-05T17:26:06(2013-10-02T13:56:13) */
+
+
+DELETE
+
+FROM  	AMS_USER_GROUP_MAPPING
+
+WHERE  	GROUP_ID = #GROUP_ID# /*  */ 
+  AND	USER_ID = #USER_ID#]]>
+	</delete>
+	<select id="selectUserGroupMappingList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_selectUserGroupMappingList_2013-08-05T17:26:06(2013-10-01T13:17:50) */
+
+SELECT 	a.GROUP_ID,
+		a.USER_ID,
+		b.USER_NAME
+FROM	AMS_USER_GROUP_MAPPING a, AMS_USER b
+
+WHERE	GROUP_ID = #GROUP_ID#
+AND		a.USER_ID = b.USER_ID]]>
+	</select>
+	<select id="selectUserListByGroup" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_selectUserListByGroup_2013-08-05T17:26:06(2013-12-06T15:36:29) */
+
+
+SELECT *
+
+FROM (
+	SELECT
+		   ROW_NUMBER() OVER (ORDER BY USER_ID asc) AS ROWNO
+		,  USER_ID AS USER_ID /*  */ 
+		,  USER_NAME AS USER_NAME
+		 	
+	FROM	AMS_USER
+  
+	WHERE 	USE_FLAG = 'Y'
+	  AND	USER_ID NOT IN 
+	  		(
+	  			SELECT 	USER_ID 
+	  			FROM 	AMS_USER_GROUP_MAPPING 
+	  			WHERE 	GROUP_ID = #GROUP_ID#
+	  		)
+	  		
+		]]><isNotEmpty prepend="AND" property="USER_ID"><![CDATA[
+			USER_ID LIKE '%' || #USER_ID# || '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="USER_NAME"><![CDATA[
+			USER_NAME LIKE '%' || #USER_NAME# || '%'
+		]]></isNotEmpty><![CDATA[
+) A
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectUserListByGroupCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_selectUserListByGroupCount_2013-08-05T17:26:06(2013-12-06T15:37:08) */
+
+
+
+SELECT	COUNT(*) AS totalCount
+		 	
+FROM	AMS_USER
+  
+WHERE 	USE_FLAG = 'Y'
+  AND	USER_ID NOT IN 
+(
+	SELECT 	USER_ID 
+	FROM 	AMS_USER_GROUP_MAPPING 
+	WHERE 	GROUP_ID = #GROUP_ID#
+)
+]]><isNotEmpty prepend="AND" property="USER_ID"><![CDATA[
+	USER_ID LIKE '%' || #USER_ID# || '%'
+]]></isNotEmpty><![CDATA[
+]]><isNotEmpty prepend="AND" property="USER_NAME"><![CDATA[
+	USER_NAME LIKE '%' || #USER_NAME# || '%'
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+	<insert id="insertUserGroupMapping_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_insertUserGroupMapping_2013-08-05T17:26:06(2013-09-30T13:24:06) */
+
+INSERT
+  INTO  AMS_USER_GROUP_MAPPING
+        ( USER_ID /*  */ 	
+        , GROUP_ID /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */
+        )	
+VALUES  
+        ( #USER_ID#	
+        , #GROUP_ID# 	
+        , #onlineContext.userInfo.USER_ID# 	
+        , GETDATE() 	
+        )]]>
+	</insert>
+	<select id="selectUserListByGroup_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_selectUserListByGroup_2013-08-05T17:26:06(2013-12-05T17:54:30) */
+
+
+SELECT *
+
+FROM (
+	SELECT
+		   ROW_NUMBER() OVER (ORDER BY USER_ID asc) AS ROWNO
+		,  USER_ID AS USER_ID /*  */ 
+		,  USER_NAME AS USER_NAME
+		 	
+	FROM	AMS_USER
+  
+	WHERE 	USE_FLAG = 'Y'
+	  AND	USER_ID NOT IN 
+	  		(
+	  			SELECT 	USER_ID 
+	  			FROM 	AMS_USER_GROUP_MAPPING 
+	  			WHERE 	GROUP_ID = #GROUP_ID#
+	  		)
+	  		
+		]]><isNotEmpty prepend="AND" property="USER_ID"><![CDATA[
+			USER_ID LIKE '%' + #USER_ID# + '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="USER_NAME"><![CDATA[
+			USER_NAME LIKE '%' + #USER_NAME# + '%'
+		]]></isNotEmpty><![CDATA[
+) A
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectUserListByGroupCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_GROUP_MAPPING_00_selectUserListByGroupCount_2013-08-05T17:26:06(2013-10-02T10:39:14) */
+
+
+
+SELECT	COUNT(*) AS totalCount
+		 	
+FROM	AMS_USER
+  
+WHERE 	USE_FLAG = 'Y'
+  AND	USER_ID NOT IN 
+(
+	SELECT 	USER_ID 
+	FROM 	AMS_USER_GROUP_MAPPING 
+	WHERE 	GROUP_ID = #GROUP_ID#
+)
+]]><isNotEmpty prepend="AND" property="USER_ID"><![CDATA[
+	USER_ID LIKE '%' + #USER_ID# + '%'
+]]></isNotEmpty><![CDATA[
+]]><isNotEmpty prepend="AND" property="USER_NAME"><![CDATA[
+	USER_NAME LIKE '%' + #USER_NAME# + '%'
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+</sqlMap>

@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_QNA_00">
+	<select id="selectQNA" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infbbase.DAMS_QNA_00_selectQNA_2013-09-25T11:41:40(2013-09-25T11:43:50) */
+
+
+SELECT
+		QNA_SEQ_NO,
+		QNA_DT,
+		TITLE,
+		CONTENTS,
+		PARENT_SEQ_NO,
+		FILE_SEQ_NO,
+		VIEW_CNT,
+		REG_USER_ID,
+		REG_DATE,
+		UPDATE_USER_ID,
+		UPDATE_DATE
+		
+FROM
+		AMS_QNA
+		
+WHERE	
+		QNA_SEQ_NO = #QNA_SEQ_NO#
+AND		QNA_DT = #QNA_DT#]]>
+	</select>
+	<select id="selectQNACommentList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_selectQNACommentList_2013-09-25T16:18:01(2013-12-09T22:31:27) */
+
+SELECT  SYS_CONNECT_BY_PATH(LPAD(comment_seq_no, 20, '0'), '/') AS QNA_COMMENT_TREE,
+        COMMENT_SEQ_NO,
+        QNA_SEQ_NO,
+        QNA_DT,
+        COMMENT_CONTENT,
+        PARENT_COMMENT_SEQ,
+        REG_USER_ID,
+		REG_DATE,
+		UPDATE_USER_ID,
+		UPDATE_DATE,
+        LEVEL AS QNA_COMMENT_LEVEL
+        
+FROM    AMS_QNA_COMMENT
+
+WHERE	QNA_SEQ_NO = #QNA_SEQ_NO#
+  AND	QNA_DT = #QNA_DT#
+
+START WITH  PARENT_COMMENT_SEQ IS NULL
+CONNECT BY PRIOR COMMENT_SEQ_NO =  PARENT_COMMENT_SEQ]]>
+	</select>
+	<select id="selectQNACommentList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infbbase.DAMS_QNA_00_selectQNACommentList_2013-09-25T11:41:40(2013-09-25T11:47:36) */
+
+WITH Z(	
+		COMMENT_SEQ_NO, 
+		QNA_SEQ_NO, 
+		QNA_DT,
+		COMMENT_CONTENT,
+		REG_USER_ID,
+		REG_DATE,
+		UPDATE_USER_ID,
+		UPDATE_DATE,
+		QNA_COMMENT_LEVEL,
+		QNA_COMMENT_TREE
+		) AS 
+   (
+    SELECT	COMMENT_SEQ_NO, 
+			QNA_SEQ_NO,
+			QNA_DT,
+			COMMENT_CONTENT,
+			REG_USER_ID,
+			REG_DATE,
+			UPDATE_USER_ID,
+			UPDATE_DATE,
+			1 AS QNA_COMMENT_LEVEL, 
+			cast(dbo.FN_LPAD(COMMENT_SEQ_NO, 10, '0') AS VARCHAR(max)) AS QNA_COMMENT_TREE
+    FROM	AMS_QNA_COMMENT
+    WHERE	PARENT_COMMENT_SEQ IS NULL
+        UNION ALL
+    SELECT	nplus1.COMMENT_SEQ_NO,
+			nplus1.QNA_SEQ_NO,
+			nplus1.QNA_DT,
+			nplus1.COMMENT_CONTENT,
+			nplus1.REG_USER_ID,
+			nplus1.REG_DATE,
+			nplus1.UPDATE_USER_ID,
+			nplus1.UPDATE_DATE,
+			QNA_COMMENT_LEVEL + 1 AS QNA_COMMENT_LEVEL, 
+			CAST((QNA_COMMENT_TREE + '/' + CONVERT(varchar, nplus1.REG_DATE, 20)) AS VARCHAR(max)) AS QNA_COMMENT_TREE
+    FROM	AMS_QNA_COMMENT as nplus1
+    INNER JOIN Z B ON nplus1.PARENT_COMMENT_SEQ = B.COMMENT_SEQ_NO
+    
+    )
+    
+SELECT 	
+		ROW_NUMBER() OVER (ORDER BY QNA_COMMENT_TREE) AS ROWNO,
+		COMMENT_SEQ_NO, 
+		QNA_SEQ_NO, 
+		QNA_DT,
+		/*REPLICATE('&nbsp;&nbsp;&nbsp;', QNA_COMMENT_LEVEL-1) + COMMENT_CONTENT AS COMMENT_CONTENT,*/
+		COMMENT_CONTENT,
+		REG_USER_ID,
+		REG_DATE,
+		UPDATE_USER_ID,
+		UPDATE_DATE, 
+		QNA_COMMENT_TREE,
+		QNA_COMMENT_LEVEL
+
+FROM 	Z
+
+WHERE	QNA_SEQ_NO = #QNA_SEQ_NO#
+  AND	QNA_DT = #QNA_DT#]]>
+	</select>
+	<select id="selectQNACommentListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_selectQNACommentListCount_2013-09-25T16:18:01(2013-09-25T18:38:11) */
+    
+SELECT 	
+		COUNT(COMMENT_SEQ_NO) AS totalCount
+
+FROM 	AMS_QNA_COMMENT
+
+WHERE	QNA_SEQ_NO = #QNA_SEQ_NO#
+  AND	QNA_DT = #QNA_DT#]]>
+	</select>
+	<select id="selectQNAList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_selectQNAList_MSSQL_2013-09-25T16:18:01(2013-12-09T21:30:54) */
+
+WITH N(	QNA_SEQ_NO, 
+		TITLE, 
+		QNA_LEVEL, 
+		QNA_TREE, 
+		QNA_DT,
+		CONTENTS, 
+		PARENT_SEQ_NO, 
+		FILE_SEQ_NO, 
+		VIEW_CNT, 
+		REG_USER_ID, 
+		REG_DATE, 
+		UPDATE_USER_ID, 
+		UPDATE_DATE		
+		
+		) AS 
+   
+   (SELECT	QNA_SEQ_NO, 
+   			TITLE, 
+   			1 AS QNA_LEVEL, 
+   			CAST(dbo.FN_LPAD(QNA_SEQ_NO, 10, '0') AS VARCHAR(max)) AS QNA_TREE,
+   			QNA_DT, 
+   			CONTENTS, 
+   			PARENT_SEQ_NO, 
+   			FILE_SEQ_NO,
+			VIEW_CNT,
+			REG_USER_ID,
+			REG_DATE,
+			UPDATE_USER_ID,
+			UPDATE_DATE	
+    
+    FROM	AMS_QNA
+    
+    WHERE	PARENT_SEQ_NO IS NULL
+    
+        UNION ALL
+    
+    SELECT	nplus1.QNA_SEQ_NO AS QNA_SEQ_NO, 
+    		nplus1.TITLE, 
+    		QNA_LEVEL + 1 AS QNA_LEVEL, 
+    		CAST((QNA_TREE + '/' + CONVERT(varchar, nplus1.REG_DATE, 20)) AS VARCHAR(max)) AS QNA_TREE,
+    		nplus1.QNA_DT,
+			nplus1.CONTENTS,
+			nplus1.PARENT_SEQ_NO,
+			nplus1.FILE_SEQ_NO,
+			nplus1.VIEW_CNT,
+			nplus1.REG_USER_ID,
+			nplus1.REG_DATE,
+			nplus1.UPDATE_USER_ID,
+			nplus1.UPDATE_DATE	
+    		
+    FROM	AMS_QNA as nplus1
+    
+    INNER JOIN N B ON nplus1.PARENT_SEQ_NO = B.QNA_SEQ_NO
+    
+    )
+
+
+SELECT 	ROWNO,
+		QNA_SEQ_NO,
+		QNA_DT,
+		TITLE,
+		CONTENTS,
+		PARENT_SEQ_NO,
+		FILE_SEQ_NO,
+		VIEW_CNT,
+		REG_USER_ID,
+		REG_DATE,
+		UPDATE_USER_ID,
+		UPDATE_DATE,
+		QNA_TREE
+
+FROM(
+
+		SELECT 
+				ROW_NUMBER() OVER (ORDER BY SUBSTRING(QNA_TREE, 1, 10) desc, QNA_TREE) AS ROWNO,
+				QNA_SEQ_NO,
+				QNA_DT,
+				REPLICATE('&nbsp;&nbsp;&nbsp;', QNA_LEVEL-1) + TITLE AS TITLE,
+				CONTENTS,
+				PARENT_SEQ_NO,
+				FILE_SEQ_NO,
+				VIEW_CNT,				
+				REG_USER_ID,
+				REG_DATE,
+				UPDATE_USER_ID,
+				UPDATE_DATE,
+				QNA_TREE
+		FROM 
+				N
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+				TITLE LIKE '%' + #schWord# + '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+				CONTENTS LIKE '%' + #schWord# + '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+				(TITLE LIKE '%' + #schWord# + '%'
+			or	CONTENTS LIKE '%' + #schWord# + '%')
+			]]></isEqual><![CDATA[
+		]]></dynamic><![CDATA[
+	) A
+		
+WHERE		
+		ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectQNAListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_selectQNAListCount_2013-09-25T16:18:01(2013-12-09T21:30:26) */
+
+
+SELECT 	COUNT(QNA_SEQ_NO) AS totalCount
+
+FROM(
+
+		SELECT 
+				ROW_NUMBER() OVER (ORDER BY QNA_SEQ_NO) AS ROWNO,
+				QNA_SEQ_NO,
+				QNA_DT,
+				PARENT_SEQ_NO
+		FROM 
+				AMS_QNA
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+				TITLE LIKE '%' || #schWord# || '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+				CONTENTS LIKE '%' || #schWord# || '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+				(TITLE LIKE '%' || #schWord# || '%'
+			or	CONTENTS LIKE '%' || #schWord# || '%')
+			]]></isEqual><![CDATA[
+		]]></dynamic><![CDATA[
+	) A]]>
+	</select>
+	<select id="selectQNAListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_selectQNAListCount_MSSQL_2013-09-25T16:18:01(2013-12-09T21:30:42) */
+
+
+SELECT 	COUNT(QNA_SEQ_NO) AS totalCount
+
+FROM(
+
+		SELECT 
+				ROW_NUMBER() OVER (ORDER BY QNA_SEQ_NO) AS ROWNO,
+				QNA_SEQ_NO,
+				QNA_DT,
+				PARENT_SEQ_NO
+		FROM 
+				AMS_QNA
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+				TITLE LIKE '%' + #schWord# + '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+				CONTENTS LIKE '%' + #schWord# + '%'
+			]]></isEqual><![CDATA[
+			]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+				(TITLE LIKE '%' + #schWord# + '%'
+			or	CONTENTS LIKE '%' + #schWord# + '%')
+			]]></isEqual><![CDATA[
+		]]></dynamic><![CDATA[
+	) A]]>
+	</select>
+	<insert id="insertQNA" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_insertQNA_2013-09-25T16:18:01(2013-12-09T22:43:10) */
+
+
+INSERT
+  INTO  AMS_QNA
+        (
+        	QNA_SEQ_NO,
+        	QNA_DT,
+        	TITLE,
+			CONTENTS,
+			PARENT_SEQ_NO,
+			FILE_SEQ_NO,
+			VIEW_CNT,
+			REG_USER_ID,
+			REG_DATE
+			
+        )	
+VALUES  
+        (
+        	SEQ_AMS_QNA_00.NEXTVAL,
+        	TO_CHAR(SYSDATE, 'YYYYMMDD'),
+        	#TITLE#,
+			#CONTENTS#,
+			#PARENT_SEQ_NO#,
+			#FILE_SEQ_NO#,
+			0,
+			#onlineContext.userInfo.USER_ID#,
+			SYSTIMESTAMP
+			)]]>
+	</insert>
+	<insert id="insertQNA_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infbbase.DAMS_QNA_00_insertQNA_2013-09-25T11:41:40(2013-09-25T11:48:34) */
+
+
+INSERT
+  INTO  AMS_QNA
+        (
+        	QNA_DT,
+        	TITLE,
+			CONTENTS,
+			PARENT_SEQ_NO,
+			FILE_SEQ_NO,
+			VIEW_CNT,
+			REG_USER_ID,
+			REG_DATE
+			
+        )	
+VALUES  
+        (
+        	CONVERT(VARCHAR(8), GETDATE(), 112),
+        	#TITLE#,
+			#CONTENTS#,
+			#PARENT_SEQ_NO#,
+			#FILE_SEQ_NO#,
+			0,
+			#onlineContext.userInfo.USER_ID#,
+			GETDATE()
+			)]]>
+	</insert>
+	<insert id="insertQNAComment" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_insertQNAComment_2013-09-25T16:18:01(2013-12-09T22:44:28) */
+
+
+INSERT 
+	INTO AMS_QNA_COMMENT
+	(
+		COMMENT_SEQ_NO,
+		QNA_SEQ_NO,
+		QNA_DT,
+		COMMENT_CONTENT,
+		PARENT_COMMENT_SEQ,
+		REG_USER_ID,
+		REG_DATE		
+	)
+
+VALUES
+	(
+		SEQ_AMS_QNA_COMMENT_00.NEXTVAL,
+		#QNA_SEQ_NO#,
+		#QNA_DT#,
+		#COMMENT_CONTENT#,
+		#PARENT_COMMENT_SEQ#,
+		#onlineContext.userInfo.USER_ID#,
+		SYSTIMESTAMP
+	)]]>
+	</insert>
+	<insert id="insertQNAComment_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infbbase.DAMS_QNA_00_insertQNAComment_2013-09-25T11:41:40(2013-09-25T11:48:19) */
+
+
+INSERT 
+	INTO AMS_QNA_COMMENT
+	(
+		QNA_SEQ_NO,
+		QNA_DT,
+		COMMENT_CONTENT,
+		PARENT_COMMENT_SEQ,
+		REG_USER_ID,
+		REG_DATE		
+	)
+
+VALUES
+	(
+		#QNA_SEQ_NO#,
+		#QNA_DT#,
+		#COMMENT_CONTENT#,
+		#PARENT_COMMENT_SEQ#,
+		#onlineContext.userInfo.USER_ID#,
+		GETDATE()
+	)]]>
+	</insert>
+	<update id="updateQNA" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_updateQNA_2013-09-25T16:18:01(2013-12-09T21:37:49) */
+
+
+UPDATE  AMS_QNA
+
+   SET  TITLE = #TITLE# 	
+     ,  CONTENTS = #CONTENTS#
+     ,	UPDATE_USER_ID = #onlineContext.userInfo.USER_ID#
+     ,	UPDATE_DATE = SYSTIMESTAMP
+     
+ WHERE 	QNA_SEQ_NO = #QNA_SEQ_NO#
+ AND	QNA_DT = #QNA_DT#]]>
+	</update>
+	<update id="updateQNA_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infbbase.DAMS_QNA_00_updateQNA_2013-09-25T11:41:40(2013-09-25T11:49:47) */
+
+
+UPDATE  AMS_QNA
+
+   SET  TITLE = #TITLE# 	
+     ,  CONTENTS = #CONTENTS#
+     ,	UPDATE_USER_ID = #onlineContext.userInfo.USER_ID#
+     ,	UPDATE_DATE = GETDATE()
+     
+ WHERE 	QNA_SEQ_NO = #QNA_SEQ_NO#
+ AND	QNA_DT = #QNA_DT#]]>
+	</update>
+	<update id="updateQNAComment" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_updateQNAComment_2013-09-25T16:18:01(2013-12-09T21:38:26) */
+
+UPDATE	AMS_QNA_COMMENT
+
+SET		COMMENT_CONTENT = #COMMENT_CONTENT#,
+		UPDATE_USER_ID = #onlineContext.userInfo.USER_ID#,
+		UPDATE_DATE = SYSTIMESTAMP
+
+WHERE	COMMENT_SEQ_NO = #COMMENT_SEQ_NO#
+AND		QNA_SEQ_NO = #QNA_SEQ_NO#
+AND		QNA_DT = #QNA_DT#]]>
+	</update>
+	<update id="updateQNAComment_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infbbase.DAMS_QNA_00_updateQNAComment_2013-09-25T11:41:40(2013-09-25T11:50:06) */
+
+UPDATE	AMS_QNA_COMMENT
+
+SET		COMMENT_CONTENT = #COMMENT_CONTENT#,
+		UPDATE_USER_ID = #onlineContext.userInfo.USER_ID#,
+		UPDATE_DATE = GETDATE()
+
+WHERE	COMMENT_SEQ_NO = #COMMENT_SEQ_NO#
+AND		QNA_SEQ_NO = #QNA_SEQ_NO#
+AND		QNA_DT = #QNA_DT#]]>
+	</update>
+	<update id="updateQNAViewCount" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_updateQNAViewCount_2013-09-25T16:18:01(2013-09-25T19:17:04) */
+
+UPDATE 	AMS_QNA
+SET		VIEW_CNT = VIEW_CNT + 1
+WHERE	QNA_SEQ_NO = #QNA_SEQ_NO#]]>
+	</update>
+	<delete id="deleteQNA" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infbbase.DAMS_QNA_00_deleteQNA_2013-09-25T11:41:40(2013-09-25T11:50:23) */
+
+
+DELETE
+  
+  FROM  AMS_QNA
+  
+ WHERE  QNA_SEQ_NO = #QNA_SEQ_NO#
+ AND	QNA_DT	=	#QNA_DT#]]>
+	</delete>
+	<delete id="deleteQNAComment" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infbbase.DAMS_QNA_00_deleteQNAComment_2013-09-25T11:41:40(2013-09-25T11:51:11) */
+
+
+DELETE	
+FROM	AMS_QNA_COMMENT
+WHERE	COMMENT_SEQ_NO = #COMMENT_SEQ_NO#
+AND		QNA_SEQ_NO = #QNA_SEQ_NO#
+AND		QNA_DT = #QNA_DT#]]>
+	</delete>
+	<select id="selectQNAList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.infsbase.DAMS_QNA_00_selectQNAList_2013-09-25T16:18:01(2013-12-19T18:07:14) */
+
+
+SELECT  SYS_CONNECT_BY_PATH(LPAD(QNA_SEQ_NO, 20, '0'), '/') AS QNA_TREE,
+        QNA_SEQ_NO,
+        (SYS_CONNECT_BY_PATH('', '&nbsp;&nbsp;&nbsp;') || TITLE) AS TITLE,	
+		QNA_DT,
+		CONTENTS, 
+		PARENT_SEQ_NO, 
+		FILE_SEQ_NO, 
+		VIEW_CNT, 
+		REG_USER_ID, 
+		REG_DATE, 
+		UPDATE_USER_ID, 
+		UPDATE_DATE,
+        LEVEL AS QNA_LEVEL
+        
+FROM    AMS_QNA
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="TITLE"><![CDATA[
+		TITLE LIKE '%' || #schWord# || '%'
+	]]></isEqual><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="CONTENTS"><![CDATA[
+		CONTENTS LIKE '%' || #schWord# || '%'
+	]]></isEqual><![CDATA[
+	]]><isEqual prepend="AND" property="schKind" compareValue="ALL"><![CDATA[
+		(TITLE LIKE '%' || #schWord# || '%'
+		or	CONTENTS LIKE '%' || #schWord# || '%')
+	]]></isEqual><![CDATA[
+]]></dynamic><![CDATA[
+
+START WITH  PARENT_SEQ_NO IS NULL
+CONNECT BY PRIOR QNA_SEQ_NO =  PARENT_SEQ_NO
+ORDER SIBLINGS BY QNA_SEQ_NO desc]]>
+	</select>
+</sqlMap>

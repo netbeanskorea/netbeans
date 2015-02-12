@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_ERR_LOG_00">
+	<insert id="insertErrLog" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.asm.fwksbase.DAMS_ERR_LOG_00_insertErrLog_2013-08-13T17:01:20(2013-09-02T10:59:23) */
+INSERT
+  INTO  AMS_ERR_LOG
+        ( SEQ_NO
+        , LOG_DT /*  */ 	
+        , GLOB_ID /*  */ 	
+        , MENU_ID /*  */ 	
+        , IPAD /*  */ 	
+        , TRN_CD /*  */ 	
+        , USER_ID /*  */ 	
+        , SVC_STRN_DTTM /*  */ 	
+        , SVC_END_DTTM /*  */ 	
+        , RSLT_MSG_CD1 /*  */ 	
+        , RSLT_MSG1 /*  */ 	
+        , ERR_PRGM_NM1 /*  */ 	
+        , ERR_PRGM_LN1 /*  */ 	
+        , RSLT_MSG_CD2 /*  */ 	
+        , RSLT_MSG2 /*  */ 	
+        , ERR_PRGM_NM2 /*  */ 	
+        , ERR_PRGM_LN2 /*  */ 	
+        , RSLT_MSG_CD3 /*  */ 	
+        , RSLT_MSG3 /*  */ 	
+        , ERR_PRGM_NM3 /*  */ 	
+        , ERR_PRGM_LN3 /*  */ 	
+        , RSLT_MSG_CD4 /*  */ 	
+        , RSLT_MSG4 /*  */ 	
+        , ERR_PRGM_NM4 /*  */ 	
+        , ERR_PRGM_LN4 /*  */ 	
+        , RSLT_MSG_CD5 /*  */ 	
+        , RSLT_MSG5 /*  */ 	
+        , ERR_PRGM_NM5 /*  */ 	
+        , ERR_PRGM_LN5 /*  */ 
+        , OS_VER
+        , AGENT_VER
+        , WAS_INSTANCE_ID )	
+VALUES  
+        ( SEQ_AMS_ERR_LOG_00.NEXTVAL
+        , #LOG_DT#		
+        , #GLOB_ID# 	
+        , #MENU_ID# 	
+        , #IPAD# 	
+        , #TRN_CD# 	
+        , #USER_ID# 	
+        , #SVC_STRN_DTTM# 	
+        , #SVC_END_DTTM# 	
+        , #RSLT_MSG_CD1# 	
+        , CASE WHEN LENGTH(#RSLT_MSG1#) > 4000 THEN SUBSTR(#RSLT_MSG1#,1,4000) ELSE #RSLT_MSG1# END  	
+        , #ERR_PRGM_NM1# 
+        , CASE WHEN LENGTH(#ERR_PRGM_LN1#) = 0 THEN NULL ELSE #ERR_PRGM_LN1# END
+        , #RSLT_MSG_CD2# 	
+        , CASE WHEN LENGTH(#RSLT_MSG2#) > 4000 THEN SUBSTR(#RSLT_MSG2#,1,4000) ELSE #RSLT_MSG2# END 	
+        , #ERR_PRGM_NM2# 	
+        , CASE WHEN LENGTH(#ERR_PRGM_LN2#) = 0 THEN NULL ELSE #ERR_PRGM_LN2# END
+        , #RSLT_MSG_CD3# 	
+        , CASE WHEN LENGTH(#RSLT_MSG3#) > 4000 THEN SUBSTR(#RSLT_MSG3#,1,4000) ELSE #RSLT_MSG3# END	
+        , #ERR_PRGM_NM3# 	
+        , CASE WHEN LENGTH(#ERR_PRGM_LN3#) = 0 THEN NULL ELSE #ERR_PRGM_LN3# END	
+        , #RSLT_MSG_CD4# 	
+        , CASE WHEN LENGTH(#RSLT_MSG4#) > 4000 THEN SUBSTR(#RSLT_MSG4#,1,4000) ELSE #RSLT_MSG4# END 	
+        , #ERR_PRGM_NM4# 	
+        , CASE WHEN LENGTH(#ERR_PRGM_LN4#) = 0 THEN NULL ELSE #ERR_PRGM_LN4# END
+        , #RSLT_MSG_CD5# 	
+        , CASE WHEN LENGTH(#RSLT_MSG5#) > 4000 THEN SUBSTR(#RSLT_MSG5#,1,4000) ELSE #RSLT_MSG5# END 	
+        , #ERR_PRGM_NM5# 	
+        , CASE WHEN LENGTH(#ERR_PRGM_LN5#) = 0 THEN NULL ELSE #ERR_PRGM_LN5# END
+        , #OS_VER#
+        , #AGENT_VER#
+        , #WAS_INSTANCE_ID#
+)]]>
+	</insert>
+	<insert id="insertErrLog_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.asm.fwksbase.DAMS_ERR_LOG_00_insertErrLog_MSSQL_2013-08-13T17:01:20(2013-09-02T10:59:36) */
+INSERT
+  INTO  AMS_ERR_LOG
+        ( 
+          LOG_DT /*  */ 	
+        , GLOB_ID /*  */ 	
+        , MENU_ID /*  */ 	
+        , IPAD /*  */ 	
+        , TRN_CD /*  */ 	
+        , USER_ID /*  */ 	
+        , SVC_STRN_DTTM /*  */ 	
+        , SVC_END_DTTM /*  */ 	
+        , RSLT_MSG_CD1 /*  */ 	
+        , RSLT_MSG1 /*  */ 	
+        , ERR_PRGM_NM1 /*  */ 	
+        , ERR_PRGM_LN1 /*  */ 	
+        , RSLT_MSG_CD2 /*  */ 	
+        , RSLT_MSG2 /*  */ 	
+        , ERR_PRGM_NM2 /*  */ 	
+        , ERR_PRGM_LN2 /*  */ 	
+        , RSLT_MSG_CD3 /*  */ 	
+        , RSLT_MSG3 /*  */ 	
+        , ERR_PRGM_NM3 /*  */ 	
+        , ERR_PRGM_LN3 /*  */ 	
+        , RSLT_MSG_CD4 /*  */ 	
+        , RSLT_MSG4 /*  */ 	
+        , ERR_PRGM_NM4 /*  */ 	
+        , ERR_PRGM_LN4 /*  */ 	
+        , RSLT_MSG_CD5 /*  */ 	
+        , RSLT_MSG5 /*  */ 	
+        , ERR_PRGM_NM5 /*  */ 	
+        , ERR_PRGM_LN5 /*  */ 
+        , OS_VER
+        , AGENT_VER
+        , WAS_INSTANCE_ID )	
+VALUES  
+        ( 
+          #LOG_DT#		
+        , #GLOB_ID# 	
+        , #MENU_ID# 	
+        , #IPAD# 	
+        , #TRN_CD# 	
+        , #USER_ID# 	
+        , #SVC_STRN_DTTM# 	
+        , #SVC_END_DTTM# 	
+        , #RSLT_MSG_CD1# 	
+        , CASE WHEN LEN(#RSLT_MSG1#) > 4000 THEN SUBSTRING(#RSLT_MSG1#,1,4000) ELSE #RSLT_MSG1# END  	
+        , #ERR_PRGM_NM1# 
+        , CASE WHEN LEN(#ERR_PRGM_LN1#) = 0 THEN NULL ELSE #ERR_PRGM_LN1# END
+        , #RSLT_MSG_CD2# 	
+        , CASE WHEN LEN(#RSLT_MSG2#) > 4000 THEN SUBSTRING(#RSLT_MSG2#,1,4000) ELSE #RSLT_MSG2# END 	
+        , #ERR_PRGM_NM2# 	
+        , CASE WHEN LEN(#ERR_PRGM_LN2#) = 0 THEN NULL ELSE #ERR_PRGM_LN2# END
+        , #RSLT_MSG_CD3# 	
+        , CASE WHEN LEN(#RSLT_MSG3#) > 4000 THEN SUBSTRING(#RSLT_MSG3#,1,4000) ELSE #RSLT_MSG3# END	
+        , #ERR_PRGM_NM3# 	
+        , CASE WHEN LEN(#ERR_PRGM_LN3#) = 0 THEN NULL ELSE #ERR_PRGM_LN3# END	
+        , #RSLT_MSG_CD4# 	
+        , CASE WHEN LEN(#RSLT_MSG4#) > 4000 THEN SUBSTRING(#RSLT_MSG4#,1,4000) ELSE #RSLT_MSG4# END 	
+        , #ERR_PRGM_NM4# 	
+        , CASE WHEN LEN(#ERR_PRGM_LN4#) = 0 THEN NULL ELSE #ERR_PRGM_LN4# END
+        , #RSLT_MSG_CD5# 	
+        , CASE WHEN LEN(#RSLT_MSG5#) > 4000 THEN SUBSTRING(#RSLT_MSG5#,1,4000) ELSE #RSLT_MSG5# END 	
+        , #ERR_PRGM_NM5# 	
+        , CASE WHEN LEN(#ERR_PRGM_LN5#) = 0 THEN NULL ELSE #ERR_PRGM_LN5# END
+        , #OS_VER#
+        , #AGENT_VER#
+        , #WAS_INSTANCE_ID#
+)]]>
+	</insert>
+	<select id="selectErrLogList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(박세일) */
+/* IO: ams.asm.fwksbase.DAMS_ERR_LOG_00_selectErrLogList_2013-08-13T17:01:20(2013-12-23T17:25:47) */
+
+SELECT *
+
+FROM 
+(
+
+	SELECT
+		ROW_NUMBER() OVER (ORDER BY a.LOG_DT desc) AS ROWNO
+	 ,  a.LOG_DT AS LOG_DT /*  */ 	
+     ,  a.SEQ_NO AS SEQ_NO /*  */ 	
+     ,  a.GLOB_ID AS GLOB_ID /*  */ 	
+     ,  a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.IPAD AS IPAD /*  */ 	
+     ,  a.TRN_CD AS TRN_CD /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.OS_VER AS OS_VER /*  */ 	
+     ,  a.AGENT_VER AS AGENT_VER /*  */ 	
+     ,  a.SVC_STRN_DTTM AS SVC_STRN_DTTM /*  */ 	
+     ,  a.SVC_END_DTTM AS SVC_END_DTTM /*  */ 	
+     ,  a.RSLT_MSG_CD1 AS RSLT_MSG_CD1 /*  */ 	
+     ,  a.RSLT_MSG1 AS RSLT_MSG1 /*  */ 	
+     ,  a.ERR_PRGM_NM1 AS ERR_PRGM_NM1 /*  */ 	
+     ,  a.ERR_PRGM_LN1 AS ERR_PRGM_LN1 /*  */ 	
+     ,  a.RSLT_MSG_CD2 AS RSLT_MSG_CD2 /*  */ 	
+     ,  a.RSLT_MSG2 AS RSLT_MSG2 /*  */ 	
+     ,  a.ERR_PRGM_NM2 AS ERR_PRGM_NM2 /*  */ 	
+     ,  a.ERR_PRGM_LN2 AS ERR_PRGM_LN2 /*  */ 	
+     ,  a.RSLT_MSG_CD3 AS RSLT_MSG_CD3 /*  */ 	
+     ,  a.RSLT_MSG3 AS RSLT_MSG3 /*  */ 	
+     ,  a.ERR_PRGM_NM3 AS ERR_PRGM_NM3 /*  */ 	
+     ,  a.ERR_PRGM_LN3 AS ERR_PRGM_LN3 /*  */ 	
+     ,  a.RSLT_MSG_CD4 AS RSLT_MSG_CD4 /*  */ 	
+     ,  a.RSLT_MSG4 AS RSLT_MSG4 /*  */ 	
+     ,  a.ERR_PRGM_NM4 AS ERR_PRGM_NM4 /*  */ 	
+     ,  a.ERR_PRGM_LN4 AS ERR_PRGM_LN4 /*  */ 	
+     ,  a.RSLT_MSG_CD5 AS RSLT_MSG_CD5 /*  */ 	
+     ,  a.RSLT_MSG5 AS RSLT_MSG5 /*  */ 	
+     ,  a.ERR_PRGM_NM5 AS ERR_PRGM_NM5 /*  */ 	
+     ,  a.ERR_PRGM_LN5 AS ERR_PRGM_LN5 /*  */ 	
+     ,  a.WAS_INSTANCE_ID AS WAS_INSTANCE_ID /*  */ 	
+  	FROM  	AMS_ERR_LOG a
+
+	WHERE   LOG_DT BETWEEN #START_DT# AND #END_DT#
+	]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+		$schKind$ LIKE '%' || #schWord# || '%'
+	]]></isNotEmpty><![CDATA[
+	ORDER BY ROWNO, SVC_END_DTTM DESC
+)B
+
+WHERE ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectErrLogList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_ERR_LOG_00_selectErrLogList_MSSQL_2013-08-13T17:01:20(2013-11-05T16:42:35) */
+SELECT *
+
+FROM 
+(
+
+	SELECT
+		ROW_NUMBER() OVER (ORDER BY a.LOG_DT desc) AS ROWNO
+	 ,  a.LOG_DT AS LOG_DT /*  */ 	
+     ,  a.SEQ_NO AS SEQ_NO /*  */ 	
+     ,  a.GLOB_ID AS GLOB_ID /*  */ 	
+     ,  a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.IPAD AS IPAD /*  */ 	
+     ,  a.TRN_CD AS TRN_CD /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.OS_VER AS OS_VER /*  */ 	
+     ,  a.AGENT_VER AS AGENT_VER /*  */ 	
+     ,  a.SVC_STRN_DTTM AS SVC_STRN_DTTM /*  */ 	
+     ,  a.SVC_END_DTTM AS SVC_END_DTTM /*  */ 	
+     ,  a.RSLT_MSG_CD1 AS RSLT_MSG_CD1 /*  */ 	
+     ,  a.RSLT_MSG1 AS RSLT_MSG1 /*  */ 	
+     ,  a.ERR_PRGM_NM1 AS ERR_PRGM_NM1 /*  */ 	
+     ,  a.ERR_PRGM_LN1 AS ERR_PRGM_LN1 /*  */ 	
+     ,  a.RSLT_MSG_CD2 AS RSLT_MSG_CD2 /*  */ 	
+     ,  a.RSLT_MSG2 AS RSLT_MSG2 /*  */ 	
+     ,  a.ERR_PRGM_NM2 AS ERR_PRGM_NM2 /*  */ 	
+     ,  a.ERR_PRGM_LN2 AS ERR_PRGM_LN2 /*  */ 	
+     ,  a.RSLT_MSG_CD3 AS RSLT_MSG_CD3 /*  */ 	
+     ,  a.RSLT_MSG3 AS RSLT_MSG3 /*  */ 	
+     ,  a.ERR_PRGM_NM3 AS ERR_PRGM_NM3 /*  */ 	
+     ,  a.ERR_PRGM_LN3 AS ERR_PRGM_LN3 /*  */ 	
+     ,  a.RSLT_MSG_CD4 AS RSLT_MSG_CD4 /*  */ 	
+     ,  a.RSLT_MSG4 AS RSLT_MSG4 /*  */ 	
+     ,  a.ERR_PRGM_NM4 AS ERR_PRGM_NM4 /*  */ 	
+     ,  a.ERR_PRGM_LN4 AS ERR_PRGM_LN4 /*  */ 	
+     ,  a.RSLT_MSG_CD5 AS RSLT_MSG_CD5 /*  */ 	
+     ,  a.RSLT_MSG5 AS RSLT_MSG5 /*  */ 	
+     ,  a.ERR_PRGM_NM5 AS ERR_PRGM_NM5 /*  */ 	
+     ,  a.ERR_PRGM_LN5 AS ERR_PRGM_LN5 /*  */ 	
+     ,  a.WAS_INSTANCE_ID AS WAS_INSTANCE_ID /*  */ 	
+  	FROM  	AMS_ERR_LOG a
+
+	WHERE   LOG_DT BETWEEN #START_DT# AND #END_DT#
+	]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+		$schKind$ LIKE '%' + #schWord# + '%'
+	]]></isNotEmpty><![CDATA[
+	
+)B
+
+WHERE ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectErrLogListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_ERR_LOG_00_selectErrLogListCount_2013-08-13T17:01:20(2013-12-06T17:19:24) */
+
+SELECT	COUNT(*) as totalCount
+		
+FROM  	AMS_ERR_LOG a
+
+WHERE   LOG_DT BETWEEN #START_DT# AND #END_DT#
+]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+	$schKind$ LIKE '%' || #schWord# || '%'
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+	<select id="selectErrLogListToExcel" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_ERR_LOG_00_selectErrLogListToExcel_2013-08-13T17:01:20(2013-12-06T17:19:44) */
+	
+SELECT
+		ROW_NUMBER() OVER (ORDER BY a.LOG_DT desc) AS ROWNO
+	 ,  a.LOG_DT AS LOG_DT /*  */ 	
+     ,  a.SEQ_NO AS SEQ_NO /*  */ 	
+     ,  a.GLOB_ID AS GLOB_ID /*  */ 	
+     ,  a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.IPAD AS IPAD /*  */ 	
+     ,  a.TRN_CD AS TRN_CD /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.OS_VER AS OS_VER /*  */ 	
+     ,  a.AGENT_VER AS AGENT_VER /*  */ 	
+     ,  a.SVC_STRN_DTTM AS SVC_STRN_DTTM /*  */ 	
+     ,  a.SVC_END_DTTM AS SVC_END_DTTM /*  */ 	
+     ,  a.RSLT_MSG_CD1 AS RSLT_MSG_CD1 /*  */ 	
+     ,  a.RSLT_MSG1 AS RSLT_MSG1 /*  */ 	
+     ,  a.ERR_PRGM_NM1 AS ERR_PRGM_NM1 /*  */ 	
+     ,  a.ERR_PRGM_LN1 AS ERR_PRGM_LN1 /*  */ 	
+     ,  a.RSLT_MSG_CD2 AS RSLT_MSG_CD2 /*  */ 	
+     ,  a.RSLT_MSG2 AS RSLT_MSG2 /*  */ 	
+     ,  a.ERR_PRGM_NM2 AS ERR_PRGM_NM2 /*  */ 	
+     ,  a.ERR_PRGM_LN2 AS ERR_PRGM_LN2 /*  */ 	
+     ,  a.RSLT_MSG_CD3 AS RSLT_MSG_CD3 /*  */ 	
+     ,  a.RSLT_MSG3 AS RSLT_MSG3 /*  */ 	
+     ,  a.ERR_PRGM_NM3 AS ERR_PRGM_NM3 /*  */ 	
+     ,  a.ERR_PRGM_LN3 AS ERR_PRGM_LN3 /*  */ 	
+     ,  a.RSLT_MSG_CD4 AS RSLT_MSG_CD4 /*  */ 	
+     ,  a.RSLT_MSG4 AS RSLT_MSG4 /*  */ 	
+     ,  a.ERR_PRGM_NM4 AS ERR_PRGM_NM4 /*  */ 	
+     ,  a.ERR_PRGM_LN4 AS ERR_PRGM_LN4 /*  */ 	
+     ,  a.RSLT_MSG_CD5 AS RSLT_MSG_CD5 /*  */ 	
+     ,  a.RSLT_MSG5 AS RSLT_MSG5 /*  */ 	
+     ,  a.ERR_PRGM_NM5 AS ERR_PRGM_NM5 /*  */ 	
+     ,  a.ERR_PRGM_LN5 AS ERR_PRGM_LN5 /*  */ 	
+     ,  a.WAS_INSTANCE_ID AS WAS_INSTANCE_ID /*  */ 	
+FROM  	AMS_ERR_LOG a
+
+WHERE   LOG_DT BETWEEN #START_DT# AND #END_DT#
+		]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+			$schKind$ LIKE '%' || #schWord# || '%'
+		]]></isNotEmpty><![CDATA[]]>
+	</select>
+	<select id="selectErrLogListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_ERR_LOG_00_selectErrLogListCount_2013-08-13T17:01:20(2013-11-05T17:00:02) */
+
+SELECT	COUNT(*) as totalCount
+		
+FROM  	AMS_ERR_LOG a
+
+WHERE   LOG_DT BETWEEN #START_DT# AND #END_DT#
+]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+	$schKind$ LIKE '%' + #schWord# + '%'
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+	<select id="selectErrLogListToExcel_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.asm.fwksbase.DAMS_ERR_LOG_00_selectErrLogListToExcel_2013-08-13T17:01:20(2013-11-05T17:04:52) */
+	
+SELECT
+		ROW_NUMBER() OVER (ORDER BY a.LOG_DT desc) AS ROWNO
+	 ,  a.LOG_DT AS LOG_DT /*  */ 	
+     ,  a.SEQ_NO AS SEQ_NO /*  */ 	
+     ,  a.GLOB_ID AS GLOB_ID /*  */ 	
+     ,  a.MENU_ID AS MENU_ID /*  */ 	
+     ,  a.IPAD AS IPAD /*  */ 	
+     ,  a.TRN_CD AS TRN_CD /*  */ 	
+     ,  a.USER_ID AS USER_ID /*  */ 	
+     ,  a.GROUP_ID AS GROUP_ID /*  */ 	
+     ,  a.OS_VER AS OS_VER /*  */ 	
+     ,  a.AGENT_VER AS AGENT_VER /*  */ 	
+     ,  a.SVC_STRN_DTTM AS SVC_STRN_DTTM /*  */ 	
+     ,  a.SVC_END_DTTM AS SVC_END_DTTM /*  */ 	
+     ,  a.RSLT_MSG_CD1 AS RSLT_MSG_CD1 /*  */ 	
+     ,  a.RSLT_MSG1 AS RSLT_MSG1 /*  */ 	
+     ,  a.ERR_PRGM_NM1 AS ERR_PRGM_NM1 /*  */ 	
+     ,  a.ERR_PRGM_LN1 AS ERR_PRGM_LN1 /*  */ 	
+     ,  a.RSLT_MSG_CD2 AS RSLT_MSG_CD2 /*  */ 	
+     ,  a.RSLT_MSG2 AS RSLT_MSG2 /*  */ 	
+     ,  a.ERR_PRGM_NM2 AS ERR_PRGM_NM2 /*  */ 	
+     ,  a.ERR_PRGM_LN2 AS ERR_PRGM_LN2 /*  */ 	
+     ,  a.RSLT_MSG_CD3 AS RSLT_MSG_CD3 /*  */ 	
+     ,  a.RSLT_MSG3 AS RSLT_MSG3 /*  */ 	
+     ,  a.ERR_PRGM_NM3 AS ERR_PRGM_NM3 /*  */ 	
+     ,  a.ERR_PRGM_LN3 AS ERR_PRGM_LN3 /*  */ 	
+     ,  a.RSLT_MSG_CD4 AS RSLT_MSG_CD4 /*  */ 	
+     ,  a.RSLT_MSG4 AS RSLT_MSG4 /*  */ 	
+     ,  a.ERR_PRGM_NM4 AS ERR_PRGM_NM4 /*  */ 	
+     ,  a.ERR_PRGM_LN4 AS ERR_PRGM_LN4 /*  */ 	
+     ,  a.RSLT_MSG_CD5 AS RSLT_MSG_CD5 /*  */ 	
+     ,  a.RSLT_MSG5 AS RSLT_MSG5 /*  */ 	
+     ,  a.ERR_PRGM_NM5 AS ERR_PRGM_NM5 /*  */ 	
+     ,  a.ERR_PRGM_LN5 AS ERR_PRGM_LN5 /*  */ 	
+     ,  a.WAS_INSTANCE_ID AS WAS_INSTANCE_ID /*  */ 	
+FROM  	AMS_ERR_LOG a
+
+WHERE   LOG_DT BETWEEN #START_DT# AND #END_DT#
+		]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+			$schKind$ LIKE '%' + #schWord# + '%'
+		]]></isNotEmpty><![CDATA[]]>
+	</select>
+</sqlMap>

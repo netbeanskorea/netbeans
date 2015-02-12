@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_USER_00">
+	<select id="selectUser" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUser_2013-08-14T13:19:37(2014-01-22T16:15:34) */
+SELECT
+        a.USER_ID AS USER_ID /*  */ 	
+     ,  a.USER_NAME AS USER_NAME /*  */ 	
+     ,  a.USER_PASSWORD AS USER_PASSWORD /*  */ 	
+     ,  a.SECOND_PASSWORD AS SECOND_PASSWORD /*  */ 	
+     ,  a.TEAM_CD AS TEAM_CD /*  */ 	
+     ,  a.BRTHDY_DT AS BRTHDY_DT /*  */ 	
+     ,  a.TEL_NO AS TEL_NO /*  */ 	
+     ,  a.MOBILE_NO AS MOBILE_NO /*  */ 	
+     ,  a.FAX_NO AS FAX_NO /*  */ 	
+     ,  a.EMAIL AS EMAIL /*  */ 	
+     ,  a.ZIP_CODE AS ZIP_CODE /*  */ 	
+     ,  a.ADDR AS ADDR /*  */ 	
+     ,  a.ADDR_DETAIL AS ADDR_DETAIL /*  */ 	
+     ,  a.EMP_ID AS EMP_ID /*  */ 	
+     ,  a.FAIL_CNT AS FAIL_CNT /*  */ 	
+     ,  a.LAST_MOD_PASSWD_DT AS LAST_MOD_PASSWD_DT /*  */ 	
+     ,  a.IDPIC_FILE_ID AS IDPIC_FILE_ID /*  */ 	
+     ,  a.IP AS IP /*  */ 	
+     ,  a.AUTO_LOGIN_FLAG AS AUTO_LOGIN_FLAG /*  */ 	
+     ,  a.HASH_VAL AS HASH_VAL /*  */ 	
+     ,  a.LOCK_YN AS LOCK_YN /*  */ 	
+     ,  a.APPROVAL_AUTH AS APPROVAL_AUTH /*  */ 	
+     ,  a.FRT_LOGIN_FLAG AS FRT_LOGIN_FLAG /*  */ 
+     ,	a.COUNTRY_CD AS COUNTRY_CD
+	 ,	a.CORP_CD AS CORP_CD
+	 ,	a.DEPT_CD AS DEPT_CD
+	 ,	a.PART_CD AS PART_CD	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+  FROM  AMS_USER a
+ WHERE  a.USER_ID = #USER_ID#]]>
+	</select>
+	<update id="updateFailCntInit" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_updateFailCntInit_2013-08-14T13:19:37(2013-09-02T11:06:10) */
+UPDATE
+	AMS_USER
+SET
+		FAIL_CNT	=	'0'
+WHERE
+	USER_ID = #USER_ID#]]>
+	</update>
+	<update id="updateAutoLoginInfo" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_updateAutoLoginInfo_2013-08-14T13:19:37(2013-09-02T11:07:59) */
+UPDATE
+	AMS_USER
+SET
+	  IP = #IP#
+	, AUTO_LOGIN_FLAG = 'Y'
+	, HASH_VAL = #HASH_VAL#
+	, UPDATE_DATE = SYSTIMESTAMP
+WHERE
+		USER_ID = #USER_ID#]]>
+	</update>
+	<select id="selectUserForAutoLogin" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserForAutoLogin_2013-08-14T13:19:37(2013-09-09T14:56:24) */
+SELECT
+        a.USER_ID AS USER_ID /*  */ 	
+     ,  a.USER_NAME AS USER_NAME /*  */ 	
+     ,  a.USER_PASSWORD AS USER_PASSWORD /*  */ 	
+     ,  a.SECOND_PASSWORD AS SECOND_PASSWORD /*  */ 	
+     ,  a.TEAM_CD AS TEAM_CD /*  */ 	
+     ,  a.BRTHDY_DT AS BRTHDY_DT /*  */ 	
+     ,  a.TEL_NO AS TEL_NO /*  */ 	
+     ,  a.MOBILE_NO AS MOBILE_NO /*  */ 	
+     ,  a.FAX_NO AS FAX_NO /*  */ 	
+     ,  a.EMAIL AS EMAIL /*  */ 	
+     ,  a.ZIP_CODE AS ZIP_CODE /*  */ 	
+     ,  a.ADDR AS ADDR /*  */ 	
+     ,  a.ADDR_DETAIL AS ADDR_DETAIL /*  */ 	
+     ,  a.EMP_ID AS EMP_ID /*  */ 	
+     ,  a.FAIL_CNT AS FAIL_CNT /*  */ 	
+     ,  a.LAST_MOD_PASSWD_DT AS LAST_MOD_PASSWD_DT /*  */ 	
+     ,  a.IDPIC_FILE_ID AS IDPIC_FILE_ID /*  */ 	
+     ,  a.IP AS IP /*  */ 	
+     ,  a.AUTO_LOGIN_FLAG AS AUTO_LOGIN_FLAG /*  */ 	
+     ,  a.HASH_VAL AS HASH_VAL /*  */ 	
+     ,  a.LOCK_YN AS LOCK_YN /*  */ 	
+     ,  a.APPROVAL_AUTH AS APPROVAL_AUTH /*  */ 	
+     ,  a.FRT_LOGIN_FLAG AS FRT_LOGIN_FLAG /*  */ 	
+     ,	a.COUNTRY_CD AS COUNTRY_CD
+	 ,	a.CORP_CD AS CORP_CD
+	 ,	a.DEPT_CD AS DEPT_CD
+	 ,	a.PART_CD AS PART_CD	     
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+  FROM  AMS_USER a
+WHERE
+		a.LOCK_YN != 'Y' AND
+		a.USER_ID = #USER_ID#
+]]><isNotEmpty prepend="and" property="HASH_VAL"><![CDATA[		
+		a.HASH_VAL = #HASH_VAL#
+]]></isNotEmpty><![CDATA[		
+]]><isNotEmpty prepend="and" property="IP"><![CDATA[		
+		a.IP = #IP#
+]]></isNotEmpty><![CDATA[]]>
+	</select>
+	<update id="updateFailCntAndUserLock" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_updateFailCntAndUserLock_2013-08-14T13:19:37(2013-09-02T11:05:28) */
+UPDATE AMS_USER
+SET
+		FAIL_CNT	=	#FAIL_CNT#
+	,	LOCK_YN		=	#LOCK_YN#
+	, 	UPDATE_DATE = SYSTIMESTAMP
+WHERE 	USER_ID = #USER_ID#]]>
+	</update>
+	<update id="updateAutoLoginInfo_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_updateAutoLoginInfo_MSSQL_2013-08-14T13:19:37(2013-09-02T11:08:03) */
+UPDATE
+	AMS_USER
+SET
+	  IP = #IP#
+	, AUTO_LOGIN_FLAG = 'Y'
+	, HASH_VAL = #HASH_VAL#
+	, UPDATE_DATE = getDate()
+WHERE
+		USER_ID = #USER_ID#]]>
+	</update>
+	<update id="updateFailCntAndUserLock_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_updateFailCntAndUserLock_MSSQL_2013-08-14T13:19:37(2013-09-02T11:05:34) */
+UPDATE AMS_USER
+SET
+		FAIL_CNT	=	#FAIL_CNT#
+	,	LOCK_YN		=	#LOCK_YN#
+	, 	UPDATE_DATE = GETDATE()
+WHERE 	USER_ID = #USER_ID#]]>
+	</update>
+	<select id="selectUserList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserList_2013-08-14T13:19:37(2013-12-06T15:41:23) */
+
+SELECT *
+
+FROM (
+	SELECT
+		   ROW_NUMBER() OVER (ORDER BY USER_ID desc) AS ROWNO
+		,  USER_ID AS USER_ID /*  */ 
+		,  USER_NAME AS USER_NAME /*  */ 	
+		,  USER_PASSWORD AS USER_PASSWORD /*  */ 	
+		,  SECOND_PASSWORD AS SECOND_PASSWORD /*  */ 	
+		,  TEAM_CD AS TEAM_CD /*  */ 	
+		,  TEL_NO AS TEL_NO /*  */ 	
+		,  MOBILE_NO AS MOBILE_NO /*  */ 	
+		,  FAX_NO AS FAX_NO /*  */ 	
+		,  EMAIL AS EMAIL /*  */ 	
+		,  ZIP_CODE AS ZIP_CODE /*  */ 	
+		,  ADDR AS ADDR /*  */ 	
+		,  ADDR_DETAIL AS ADDR_DETAIL /*  */ 	
+		,  EMP_ID AS EMP_ID /*  */ 	
+		,  FAIL_CNT AS FAIL_CNT /*  */ 	
+		,  IDPIC_FILE_ID AS IDPIC_FILE_ID /*  */ 	
+		,  IP AS IP /*  */ 	
+		,  AUTO_LOGIN_FLAG AS AUTO_LOGIN_FLAG /*  */ 	
+		,  HASH_VAL AS HASH_VAL /*  */ 	
+		,  LOCK_YN AS LOCK_YN /*  */ 	
+		,  APPROVAL_AUTH AS APPROVAL_AUTH /*  */ 	
+		,  FRT_LOGIN_FLAG AS FRT_LOGIN_FLAG /*  */ 	
+		,  BRTHDY_DT AS BRTHDY_DT /*  */ 	
+		,  LAST_MOD_PASSWD_DT AS LAST_MOD_PASSWD_DT /*  */ 	
+		,  COUNTRY_CD AS COUNTRY_CD /*  */ 	
+		,  CORP_CD AS CORP_CD /*  */ 	
+		,  DEPT_CD AS DEPT_CD /*  */ 	
+		,  PART_CD AS PART_CD /*  */ 	
+		,  REG_USER_ID AS REG_USER_ID /*  */ 	
+		,  REG_DATE AS REG_DATE /*  */ 	
+		,  UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+		,  UPDATE_DATE AS UPDATE_DATE /*  */ 	
+		,  USE_FLAG AS USE_FLAG /*  */ 	
+	FROM  AMS_USER
+  
+	]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+			USER_ID LIKE '%' || #schWord# || '%'
+			or USER_NAME LIKE '%' || #schWord# || '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="GROUP_ID"><![CDATA[
+			USER_ID IN (
+							SELECT 	USER_ID
+							FROM	AMS_USER_GROUP_MAPPING
+							WHERE	GROUP_ID = #GROUP_ID#
+						)
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="USE_FLAG"><![CDATA[
+			USE_FLAG LIKE '%' || #USE_FLAG# || '%'
+		]]></isNotEmpty><![CDATA[
+	]]></dynamic><![CDATA[
+) A
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectUserList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserList_MSSQL_2013-08-14T13:19:37(2013-10-29T14:35:21) */
+
+
+SELECT *
+
+FROM (
+	SELECT
+		   ROW_NUMBER() OVER (ORDER BY USER_ID desc) AS ROWNO
+		,  USER_ID AS USER_ID /*  */ 
+		,  USER_NAME AS USER_NAME /*  */ 	
+		,  USER_PASSWORD AS USER_PASSWORD /*  */ 	
+		,  SECOND_PASSWORD AS SECOND_PASSWORD /*  */ 	
+		,  TEAM_CD AS TEAM_CD /*  */ 	
+		,  TEL_NO AS TEL_NO /*  */ 	
+		,  MOBILE_NO AS MOBILE_NO /*  */ 	
+		,  FAX_NO AS FAX_NO /*  */ 	
+		,  EMAIL AS EMAIL /*  */ 	
+		,  ZIP_CODE AS ZIP_CODE /*  */ 	
+		,  ADDR AS ADDR /*  */ 	
+		,  ADDR_DETAIL AS ADDR_DETAIL /*  */ 	
+		,  EMP_ID AS EMP_ID /*  */ 	
+		,  FAIL_CNT AS FAIL_CNT /*  */ 	
+		,  IDPIC_FILE_ID AS IDPIC_FILE_ID /*  */ 	
+		,  IP AS IP /*  */ 	
+		,  AUTO_LOGIN_FLAG AS AUTO_LOGIN_FLAG /*  */ 	
+		,  HASH_VAL AS HASH_VAL /*  */ 	
+		,  LOCK_YN AS LOCK_YN /*  */ 	
+		,  APPROVAL_AUTH AS APPROVAL_AUTH /*  */ 	
+		,  FRT_LOGIN_FLAG AS FRT_LOGIN_FLAG /*  */ 	
+		,  BRTHDY_DT AS BRTHDY_DT /*  */ 	
+		,  LAST_MOD_PASSWD_DT AS LAST_MOD_PASSWD_DT /*  */ 	
+		,  COUNTRY_CD AS COUNTRY_CD /*  */ 	
+		,  CORP_CD AS CORP_CD /*  */ 	
+		,  DEPT_CD AS DEPT_CD /*  */ 	
+		,  PART_CD AS PART_CD /*  */ 	
+		,  REG_USER_ID AS REG_USER_ID /*  */ 	
+		,  REG_DATE AS REG_DATE /*  */ 	
+		,  UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+		,  UPDATE_DATE AS UPDATE_DATE /*  */ 	
+		,  USE_FLAG AS USE_FLAG /*  */ 	
+	FROM  AMS_USER
+  
+	]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+			USER_ID LIKE '%' + #schWord# + '%'
+			or USER_NAME LIKE '%' + #schWord# + '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="GROUP_ID"><![CDATA[
+			USER_ID IN (
+							SELECT 	USER_ID
+							FROM	AMS_USER_GROUP_MAPPING
+							WHERE	GROUP_ID = #GROUP_ID#
+						)
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="USE_FLAG"><![CDATA[
+			USE_FLAG LIKE '%' + #USE_FLAG# + '%'
+		]]></isNotEmpty><![CDATA[
+	]]></dynamic><![CDATA[
+) A
+WHERE	ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectUserListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserListCount_2013-08-14T13:19:37(2013-12-06T15:42:04) */
+
+SELECT	COUNT (*) AS totalCount
+		
+FROM	AMS_USER
+  
+]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+			USER_ID LIKE '%' || #schWord# || '%'
+			or USER_NAME LIKE '%' || #schWord# || '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="GROUP_ID"><![CDATA[
+			USER_ID IN (
+							SELECT 	USER_ID
+							FROM	AMS_USER_GROUP_MAPPING
+							WHERE	GROUP_ID = #GROUP_ID#
+						)
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="USE_FLAG"><![CDATA[
+			USE_FLAG LIKE '%' || #USE_FLAG# || '%'
+		]]></isNotEmpty><![CDATA[
+	]]></dynamic><![CDATA[]]>
+	</select>
+	<insert id="insertUserInfo" parameterClass="map" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_insertUserInfo_2013-08-14T13:19:37(2013-12-06T15:50:10) */
+INSERT
+  INTO  AMS_USER
+        (USER_ID /*  */ 	
+        , USER_NAME /*  */ 	
+        , USER_PASSWORD /*  */ 	
+        , SECOND_PASSWORD /*  */ 	
+        , TEAM_CD /*  */ 	
+        , TEL_NO /*  */ 	
+        , MOBILE_NO /*  */ 	
+        , FAX_NO /*  */ 	
+        , EMAIL /*  */ 	
+        , ZIP_CODE /*  */ 	
+        , ADDR /*  */ 	
+        , ADDR_DETAIL /*  */ 	
+        , EMP_ID /*  */ 	
+        , FAIL_CNT /*  */ 	
+        , IDPIC_FILE_ID /*  */ 	
+        , IP /*  */ 	
+        , AUTO_LOGIN_FLAG /*  */ 	
+        , HASH_VAL /*  */ 	
+        , LOCK_YN /*  */ 	
+        , APPROVAL_AUTH /*  */ 	
+        , FRT_LOGIN_FLAG /*  */ 	
+        , BRTHDY_DT /*  */ 	
+        , LAST_MOD_PASSWD_DT /*  */ 	
+        , COUNTRY_CD /*  */ 	
+        , CORP_CD /*  */ 	
+        , DEPT_CD /*  */ 	
+        , PART_CD /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */ 	
+        , UPDATE_USER_ID /*  */ 	
+        , UPDATE_DATE /*  */ 	
+        , USE_FLAG /*  */ )	
+VALUES  
+        ( #USER_ID#	
+        , #USER_NAME# 	
+        , #USER_PASSWORD# 	
+        , #SECOND_PASSWORD# 	
+        , #TEAM_CD# 	
+        , #TEL_NO# 	
+        , #MOBILE_NO# 	
+        , #FAX_NO# 	
+        , #EMAIL# 	
+        , #ZIP_CODE# 	
+        , #ADDR# 	
+        , #ADDR_DETAIL# 	
+        , #EMP_ID# 	
+        , 0 	
+        , #IDPIC_FILE_ID# 	
+        , #IP# 	
+        , #AUTO_LOGIN_FLAG# 	
+        , #HASH_VAL# 	
+        , 'N' 	
+        , #APPROVAL_AUTH# 	
+        , 'Y' 	
+        , #BRTHDY_DT# 	
+        , #LAST_MOD_PASSWD_DT# 	
+        , #COUNTRY_CD# 	
+        , #CORP_CD# 	
+        , #DEPT_CD# 	
+        , #PART_CD# 	
+        , #onlineContext.userInfo.USER_ID# 	
+        , SYSTIMESTAMP	
+        , #onlineContext.userInfo.USER_ID# 	
+        , SYSTIMESTAMP	 	
+        , 'Y')]]>
+	</insert>
+	<update id="updateUserInfo" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_updateUserInfo_2013-08-14T13:19:37(2014-02-18T14:21:21) */
+UPDATE  AMS_USER
+   SET  USER_NAME = #USER_NAME# /*  */
+     ,  TEAM_CD = #TEAM_CD# /*  */ 	
+     ,  TEL_NO = #TEL_NO# /*  */ 	
+     ,  MOBILE_NO = #MOBILE_NO# /*  */ 	
+     ,  FAX_NO = #FAX_NO# /*  */ 	
+     ,  EMAIL = #EMAIL# /*  */ 	
+     ,  ZIP_CODE = #ZIP_CODE# /*  */ 	
+     ,  ADDR = #ADDR# /*  */ 	
+     ,  ADDR_DETAIL = #ADDR_DETAIL# /*  */ 	
+     ,  EMP_ID = #EMP_ID# /*  */ 	
+     ,	IDPIC_FILE_ID = NVL(#IDPIC_FILE_ID#, IDPIC_FILE_ID)     
+	 ,  IP = #IP# /*  */ 	
+     ,  AUTO_LOGIN_FLAG = #AUTO_LOGIN_FLAG# /*  */ 	
+     ,  HASH_VAL = #HASH_VAL# /*  */ 	
+     ,  APPROVAL_AUTH = #APPROVAL_AUTH# /*  */ 	
+     ,  BRTHDY_DT = #BRTHDY_DT# /*  */ 	
+     ,  LAST_MOD_PASSWD_DT = #LAST_MOD_PASSWD_DT# /*  */ 	
+     ,  COUNTRY_CD = #COUNTRY_CD# /*  */ 	
+     ,  CORP_CD = #CORP_CD# /*  */ 	
+     ,  DEPT_CD = #DEPT_CD# /*  */ 	
+     ,  PART_CD = #PART_CD# /*  */ 	
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = SYSTIMESTAMP /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 
+WHERE 	USER_ID = #USER_ID#]]>
+	</update>
+	<update id="updateUserInfo_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_updateUserInfo_MSSQL_2013-08-14T13:19:37(2013-11-01T08:22:37) */
+
+UPDATE  AMS_USER
+   SET  USER_NAME = #USER_NAME# /*  */
+     ,  TEAM_CD = #TEAM_CD# /*  */ 	
+     ,  TEL_NO = #TEL_NO# /*  */ 	
+     ,  MOBILE_NO = #MOBILE_NO# /*  */ 	
+     ,  FAX_NO = #FAX_NO# /*  */ 	
+     ,  EMAIL = #EMAIL# /*  */ 	
+     ,  ZIP_CODE = #ZIP_CODE# /*  */ 	
+     ,  ADDR = #ADDR# /*  */ 	
+     ,  ADDR_DETAIL = #ADDR_DETAIL# /*  */ 	
+     ,  EMP_ID = #EMP_ID# /*  */ 	
+     ,	IDPIC_FILE_ID =	CASE 
+			WHEN #IDPIC_FILE_ID# = ''
+			THEN b.IDPIC_FILE_ID
+			ELSE #IDPIC_FILE_ID#
+		END	 
+	 ,  IP = #IP# /*  */ 	
+     ,  AUTO_LOGIN_FLAG = #AUTO_LOGIN_FLAG# /*  */ 	
+     ,  HASH_VAL = #HASH_VAL# /*  */ 	
+     ,  APPROVAL_AUTH = #APPROVAL_AUTH# /*  */ 	
+     ,  BRTHDY_DT = #BRTHDY_DT# /*  */ 	
+     ,  LAST_MOD_PASSWD_DT = #LAST_MOD_PASSWD_DT# /*  */ 	
+     ,  COUNTRY_CD = #COUNTRY_CD# /*  */ 	
+     ,  CORP_CD = #CORP_CD# /*  */ 	
+     ,  DEPT_CD = #DEPT_CD# /*  */ 	
+     ,  PART_CD = #PART_CD# /*  */ 	
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = GETDATE() /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+FROM	AMS_USER b
+WHERE 	USER_ID = #USER_ID#]]>
+	</update>
+	<select id="selectUserSsoList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserSsoList_2013-08-14T13:19:37(2013-12-06T15:43:40) */
+
+SELECT 	*
+
+FROM
+(
+	SELECT
+		ROW_NUMBER() OVER (ORDER BY HIOK_ID desc) AS ROWNO, 
+		HIOK_ID,
+		EMPNO,
+		NAME,
+		EMAIL,
+		CELLPHONE,
+		DEPT,
+		DEPTNAME,
+		POSITION,
+      	POSITIONNAME,
+      	USEYN,
+      	REG_USER_ID,
+      	REG_DATE,
+		UPDATE_USER_ID,
+      	UPDATE_DATE,
+      	BIZTYPE,
+      	SYSTYPE
+      	
+	FROM	AMS_USER_SSO
+
+	]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="HIOK_ID"><![CDATA[
+			HIOK_ID LIKE '%' || #HIOK_ID# || '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="NAME"><![CDATA[
+			NAME LIKE '%' || #NAME# || '%'
+		]]></isNotEmpty><![CDATA[
+	]]></dynamic><![CDATA[
+) B
+WHERE ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectUserSsoListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserSsoListCount_2013-08-14T13:19:37(2013-12-06T15:44:18) */
+
+SELECT	COUNT(*) AS totalCount
+      	
+FROM	AMS_USER_SSO
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="HIOK_ID"><![CDATA[
+		HIOK_ID LIKE '%' || #HIOK_ID# || '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="NAME"><![CDATA[
+		NAME LIKE '%' || #NAME# || '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+	<select id="selectUserListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserListCount_2013-08-14T13:19:37(2013-10-29T14:36:54) */
+
+SELECT	COUNT (*) AS totalCount
+		
+FROM	AMS_USER
+  
+]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="schWord"><![CDATA[
+			USER_ID LIKE '%' + #schWord# + '%'
+			or USER_NAME LIKE '%' + #schWord# + '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="GROUP_ID"><![CDATA[
+			USER_ID IN (
+							SELECT 	USER_ID
+							FROM	AMS_USER_GROUP_MAPPING
+							WHERE	GROUP_ID = #GROUP_ID#
+						)
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="USE_FLAG"><![CDATA[
+			USE_FLAG LIKE '%' + #USE_FLAG# + '%'
+		]]></isNotEmpty><![CDATA[
+	]]></dynamic><![CDATA[]]>
+	</select>
+	<select id="selectUserSsoList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserSsoList_2013-08-14T13:19:37(2013-10-25T15:47:28) */
+
+SELECT 	*
+
+FROM
+(
+	SELECT
+		ROW_NUMBER() OVER (ORDER BY HIOK_ID desc) AS ROWNO, 
+		HIOK_ID,
+		EMPNO,
+		NAME,
+		EMAIL,
+		CELLPHONE,
+		DEPT,
+		DEPTNAME,
+		POSITION,
+      	POSITIONNAME,
+      	USEYN,
+      	REG_USER_ID,
+      	REG_DATE,
+		UPDATE_USER_ID,
+      	UPDATE_DATE,
+      	BIZTYPE,
+      	SYSTYPE
+      	
+	FROM	AMS_USER_SSO
+
+	]]><dynamic prepend="WHERE"><![CDATA[
+		]]><isNotEmpty prepend="AND" property="HIOK_ID"><![CDATA[
+			HIOK_ID LIKE '%' + #HIOK_ID# + '%'
+		]]></isNotEmpty><![CDATA[
+		]]><isNotEmpty prepend="AND" property="NAME"><![CDATA[
+			NAME LIKE '%' + #NAME# + '%'
+		]]></isNotEmpty><![CDATA[
+	]]></dynamic><![CDATA[
+) B
+WHERE ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectUserSsoListCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserSsoListCount_2013-08-14T13:19:37(2013-10-25T15:53:37) */
+
+SELECT	COUNT(*) AS totalCount
+      	
+FROM	AMS_USER_SSO
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="HIOK_ID"><![CDATA[
+		HIOK_ID LIKE '%' + #HIOK_ID# + '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="NAME"><![CDATA[
+		NAME LIKE '%' + #NAME# + '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+	<insert id="insertUserInfo_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_insertUserInfo_2013-08-14T13:19:37(2013-10-10T15:09:26) */
+INSERT
+  INTO  AMS_USER
+        (USER_ID /*  */ 	
+        , USER_NAME /*  */ 	
+        , USER_PASSWORD /*  */ 	
+        , SECOND_PASSWORD /*  */ 	
+        , TEAM_CD /*  */ 	
+        , TEL_NO /*  */ 	
+        , MOBILE_NO /*  */ 	
+        , FAX_NO /*  */ 	
+        , EMAIL /*  */ 	
+        , ZIP_CODE /*  */ 	
+        , ADDR /*  */ 	
+        , ADDR_DETAIL /*  */ 	
+        , EMP_ID /*  */ 	
+        , FAIL_CNT /*  */ 	
+        , IDPIC_FILE_ID /*  */ 	
+        , IP /*  */ 	
+        , AUTO_LOGIN_FLAG /*  */ 	
+        , HASH_VAL /*  */ 	
+        , LOCK_YN /*  */ 	
+        , APPROVAL_AUTH /*  */ 	
+        , FRT_LOGIN_FLAG /*  */ 	
+        , BRTHDY_DT /*  */ 	
+        , LAST_MOD_PASSWD_DT /*  */ 	
+        , COUNTRY_CD /*  */ 	
+        , CORP_CD /*  */ 	
+        , DEPT_CD /*  */ 	
+        , PART_CD /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */ 	
+        , UPDATE_USER_ID /*  */ 	
+        , UPDATE_DATE /*  */ 	
+        , USE_FLAG /*  */ )	
+VALUES  
+        ( #USER_ID#	
+        , #USER_NAME# 	
+        , #USER_PASSWORD# 	
+        , #SECOND_PASSWORD# 	
+        , #TEAM_CD# 	
+        , #TEL_NO# 	
+        , #MOBILE_NO# 	
+        , #FAX_NO# 	
+        , #EMAIL# 	
+        , #ZIP_CODE# 	
+        , #ADDR# 	
+        , #ADDR_DETAIL# 	
+        , #EMP_ID# 	
+        , 0 	
+        , #IDPIC_FILE_ID# 	
+        , #IP# 	
+        , #AUTO_LOGIN_FLAG# 	
+        , #HASH_VAL# 	
+        , 'N' 	
+        , #APPROVAL_AUTH# 	
+        , 'Y' 	
+        , #BRTHDY_DT# 	
+        , #LAST_MOD_PASSWD_DT# 	
+        , #COUNTRY_CD# 	
+        , #CORP_CD# 	
+        , #DEPT_CD# 	
+        , #PART_CD# 	
+        , #onlineContext.userInfo.USER_ID# 	
+        , GETDATE()	
+        , #onlineContext.userInfo.USER_ID# 	
+        , GETDATE()	 	
+        , 'Y')]]>
+	</insert>
+	<select id="selectUserByUserId" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_selectUserByUserId_2013-08-14T13:19:37(2014-01-22T16:11:37) */
+SELECT
+        a.USER_ID AS USER_ID /*  */ 	
+     ,  a.USER_NAME AS USER_NAME /*  */ 	
+     ,  a.USER_PASSWORD AS USER_PASSWORD /*  */ 	
+     ,  a.SECOND_PASSWORD AS SECOND_PASSWORD /*  */ 	
+     ,  a.TEAM_CD AS TEAM_CD /*  */ 	
+     ,  a.BRTHDY_DT AS BRTHDY_DT /*  */ 	
+     ,  a.TEL_NO AS TEL_NO /*  */ 	
+     ,  a.MOBILE_NO AS MOBILE_NO /*  */ 	
+     ,  a.FAX_NO AS FAX_NO /*  */ 	
+     ,  a.EMAIL AS EMAIL /*  */ 	
+     ,  a.ZIP_CODE AS ZIP_CODE /*  */ 	
+     ,  a.ADDR AS ADDR /*  */ 	
+     ,  a.ADDR_DETAIL AS ADDR_DETAIL /*  */ 	
+     ,  a.EMP_ID AS EMP_ID /*  */ 	
+     ,  a.FAIL_CNT AS FAIL_CNT /*  */ 	
+     ,  a.LAST_MOD_PASSWD_DT AS LAST_MOD_PASSWD_DT /*  */ 	
+     ,  a.IDPIC_FILE_ID AS IDPIC_FILE_ID /*  */ 	
+     ,  a.IP AS IP /*  */ 	
+     ,  a.AUTO_LOGIN_FLAG AS AUTO_LOGIN_FLAG /*  */ 	
+     ,  a.HASH_VAL AS HASH_VAL /*  */ 	
+     ,  a.LOCK_YN AS LOCK_YN /*  */ 	
+     ,  a.APPROVAL_AUTH AS APPROVAL_AUTH /*  */ 	
+     ,  a.FRT_LOGIN_FLAG AS FRT_LOGIN_FLAG /*  */ 
+     ,	a.COUNTRY_CD AS COUNTRY_CD
+	 ,	a.CORP_CD AS CORP_CD
+	 ,	a.DEPT_CD AS DEPT_CD
+	 ,	a.PART_CD AS PART_CD	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+  FROM  AMS_USER a
+ WHERE  a.USE_FLAG = 'Y'
+ 		AND a.USER_ID = #USER_ID#]]>
+	</select>
+	<update id="changePassword" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.usrsbase.DAMS_USER_00_changePassword_2013-08-14T13:19:37(2014-02-25T00:24:27) */
+
+UPDATE 	AMS_USER
+SET 	USER_PASSWORD = #USER_PASSWORD#,
+		FRT_LOGIN_FLAG = #FRT_LOGIN_FLAG#
+WHERE 	USER_ID = #USER_ID#]]>
+	</update>
+</sqlMap>

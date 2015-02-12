@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_CODE_00">
+	<select id="selectSecretMode" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(박세일) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_selectSecretMode_2013-08-09T15:10:04(2013-09-02T11:12:06) */
+SELECT
+        a.CODE_ID AS CODE_ID /*  */ 	
+     ,  a.LOCALE_ID AS LOCALE_ID /*  */ 	
+     ,  a.CODE_NAME AS CODE_NAME /*  */ 	
+     ,  a.DISPLAY_INDEX AS DISPLAY_INDEX /*  */ 	
+     ,  a.PARENT_CODE_ID AS PARENT_CODE_ID /*  */ 	
+     ,  a.ATTRIBUTE_01 AS ATTRIBUTE_01 /*  */ 	
+     ,  a.ATTRIBUTE_02 AS ATTRIBUTE_02 /*  */ 	
+     ,  a.ATTRIBUTE_03 AS ATTRIBUTE_03 /*  */ 	
+     ,  a.ATTRIBUTE_04 AS ATTRIBUTE_04 /*  */ 	
+     ,  a.ATTRIBUTE_05 AS ATTRIBUTE_05 /*  */ 	
+     ,  a.ATTRIBUTE_06 AS ATTRIBUTE_06 /*  */ 	
+     ,  a.ATTRIBUTE_07 AS ATTRIBUTE_07 /*  */ 	
+     ,  a.ATTRIBUTE_08 AS ATTRIBUTE_08 /*  */ 	
+     ,  a.ATTRIBUTE_09 AS ATTRIBUTE_09 /*  */ 	
+     ,  a.ATTRIBUTE_10 AS ATTRIBUTE_10 /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+     ,  a.CATEGORY AS CATEGORY /*  */ 	
+  FROM  AMS_CODE a
+ WHERE  a.CODE_ID = 'C101'	
+  ]]>
+	</select>
+	<select id="selectCodeList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_selectCodeList_MSSQL_2013-08-09T15:10:04(2013-12-09T15:52:10) */
+
+DECLARE @CODE_ID NVARCHAR(100)
+SET @CODE_ID = #CODE_ID#;
+DECLARE @CODE_NAME NVARCHAR(100)
+SET @CODE_NAME = #CODE_NAME#;
+
+WITH CODETREE1 (SORT,PATH,CODE_ID,CODE_NAME,PARENT_CODE_ID, 
+				GRANS_CODE_ID,DISPLAY_INDEX,USE_FLAG,PARENT_SORT, 
+				ATTRIBUTE_01,ATTRIBUTE_02,ATTRIBUTE_03,ATTRIBUTE_04,ATTRIBUTE_05,
+				ATTRIBUTE_06,ATTRIBUTE_07,ATTRIBUTE_08,ATTRIBUTE_09,ATTRIBUTE_10,
+				REG_USER_ID,REG_DATE,UPDATE_USER_ID,UPDATE_DATE,LOCALE_ID,CATEGORY,LEVEL) AS 
+(
+     SELECT 
+			CAST(dbo.FN_LPAD(DISPLAY_INDEX, 3, '0') AS NVARCHAR(max)) AS SORT,
+			'/'+CAST(CODE_ID AS NVARCHAR(200)) AS PATH,
+            CODE_ID, CODE_NAME, PARENT_CODE_ID, 
+            PARENT_CODE_ID AS GRANS_CODE_ID, DISPLAY_INDEX,USE_FLAG,
+            CAST('ROOT' AS NVARCHAR(max)) AS PARENT_SORT,
+            ATTRIBUTE_01,ATTRIBUTE_02,ATTRIBUTE_03,ATTRIBUTE_04,ATTRIBUTE_05,
+            ATTRIBUTE_06,ATTRIBUTE_07,ATTRIBUTE_08,ATTRIBUTE_09,ATTRIBUTE_10,
+            REG_USER_ID,REG_DATE,UPDATE_USER_ID,UPDATE_DATE,LOCALE_ID,CATEGORY, 0 AS LEVEL
+     FROM	AMS_CODE
+     WHERE	PARENT_CODE_ID = 'ROOT' 
+
+	UNION ALL
+            
+     SELECT 
+			(BB.SORT + CAST(dbo.FN_LPAD(ISNULL(AA.DISPLAY_INDEX, 0), 3, '0') AS NVARCHAR(max))) AS SORT,
+			CAST(BB.PATH +'/'+ CAST(AA.CODE_ID AS NVARCHAR(200)) AS NVARCHAR(201)) AS PATH,
+            AA.CODE_ID, AA.CODE_NAME,AA.PARENT_CODE_ID, 
+            BB.PARENT_CODE_ID AS GRANS_CODE_ID, AA.DISPLAY_INDEX, AA.USE_FLAG, 
+            BB.SORT AS PARENT_SORT,
+            AA.ATTRIBUTE_01,AA.ATTRIBUTE_02,AA.ATTRIBUTE_03,AA.ATTRIBUTE_04,AA.ATTRIBUTE_05,
+            AA.ATTRIBUTE_06,AA.ATTRIBUTE_07,AA.ATTRIBUTE_08,AA.ATTRIBUTE_09,AA.ATTRIBUTE_10,
+            AA.REG_USER_ID,AA.REG_DATE,AA.UPDATE_USER_ID,AA.UPDATE_DATE,AA.LOCALE_ID,AA.CATEGORY,
+            BB.LEVEL + 1 AS LEVEL 
+     FROM   AMS_CODE AA                   
+            INNER JOIN CODETREE1 BB               
+            ON AA.PARENT_CODE_ID = BB.CODE_ID
+                          
+), CODESEARCH AS (
+	SELECT * 	
+	FROM CODETREE1
+	WHERE 	PATH LIKE '%' + @CODE_ID + '%' AND
+			CODE_NAME LIKE '%' + @CODE_NAME + '%'
+)
+
+SELECT	DISTINCT *
+FROM	(
+		SELECT
+			A.SORT,A.PATH,/* '2' 'TYPE', */
+			A.CODE_ID,A.CODE_NAME,A.PARENT_SORT,A.PARENT_CODE_ID,A.DISPLAY_INDEX,A.USE_FLAG,
+			A.ATTRIBUTE_01,A.ATTRIBUTE_02,A.ATTRIBUTE_03,A.ATTRIBUTE_04,A.ATTRIBUTE_05,
+			A.ATTRIBUTE_06,A.ATTRIBUTE_07,A.ATTRIBUTE_08,A.ATTRIBUTE_09,A.ATTRIBUTE_10,
+			A.REG_USER_ID,A.REG_DATE,A.UPDATE_USER_ID,A.UPDATE_DATE,A.LOCALE_ID,A.CATEGORY,
+			A.GRANS_CODE_ID,
+			CASE WHEN (
+						  SELECT COUNT (*) AS COUNT 
+						  from AMS_CODE 
+						  WHERE A.CODE_ID = PARENT_CODE_ID) > 0 THEN 'false'
+			ELSE 'true'
+			END AS LEAF_,
+			A.LEVEL AS LEVEL_,
+			'false' AS EXPAND_, 
+			'true' AS LOADED
+		 FROM	CODETREE1 A
+		 
+		 WHERE	A.LOCALE_ID LIKE '%' + #LOCALE_ID# + '%'
+		) T
+WHERE (
+		CODE_ID IN (SELECT GRANS_CODE_ID FROM CODESEARCH) OR
+		CODE_ID IN (SELECT PARENT_CODE_ID FROM CODESEARCH) OR
+		PATH IN (SELECT PATH FROM CODESEARCH )
+	   )  
+
+ORDER BY SORT]]>
+	</select>
+	<select id="selectCode" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_selectCode_2013-08-09T15:10:04(2013-09-02T18:46:57) */
+
+SELECT
+        a.CODE_ID AS CODE_ID /*  */ 	
+     ,  a.CODE_NAME AS CODE_NAME /*  */ 	
+     ,  a.DISPLAY_INDEX AS DISPLAY_INDEX /*  */ 	
+     ,  a.USE_FLAG AS USE_FLAG /*  */ 	
+     ,  a.PARENT_CODE_ID AS PARENT_CODE_ID /*  */ 	
+     ,  a.ATTRIBUTE_01 AS ATTRIBUTE_01 /*  */ 	
+     ,  a.ATTRIBUTE_02 AS ATTRIBUTE_02 /*  */ 	
+     ,  a.ATTRIBUTE_03 AS ATTRIBUTE_03 /*  */ 	
+     ,  a.ATTRIBUTE_04 AS ATTRIBUTE_04 /*  */ 	
+     ,  a.ATTRIBUTE_05 AS ATTRIBUTE_05 /*  */ 	
+     ,  a.ATTRIBUTE_06 AS ATTRIBUTE_06 /*  */ 	
+     ,  a.ATTRIBUTE_07 AS ATTRIBUTE_07 /*  */ 	
+     ,  a.ATTRIBUTE_08 AS ATTRIBUTE_08 /*  */ 	
+     ,  a.ATTRIBUTE_09 AS ATTRIBUTE_09 /*  */ 	
+     ,  a.ATTRIBUTE_10 AS ATTRIBUTE_10 /*  */ 	
+     ,  a.REG_USER_ID AS REG_USER_ID /*  */ 	
+     ,  a.REG_DATE AS REG_DATE /*  */ 	
+     ,  a.UPDATE_USER_ID AS UPDATE_USER_ID /*  */ 	
+     ,  a.UPDATE_DATE AS UPDATE_DATE /*  */ 	
+     ,  a.LOCALE_ID AS LOCALE_ID /*  */ 	
+     ,  a.CATEGORY AS CATEGORY /*  */ 	
+  FROM  AMS_CODE a
+ WHERE  a.CODE_ID = #CODE_ID#
+   AND  a.LOCALE_ID = #LOCALE_ID#]]>
+	</select>
+	<insert id="insertCode_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_insertCode_MSSQL_2013-08-09T15:10:04(2013-09-10T16:37:02) */
+INSERT
+  INTO  AMS_CODE
+        (CODE_ID /*  */ 	
+        , CODE_NAME /*  */ 	
+        , DISPLAY_INDEX /*  */ 	
+        , USE_FLAG /*  */ 	
+        , PARENT_CODE_ID /*  */ 	
+        , ATTRIBUTE_01 /*  */ 	
+        , ATTRIBUTE_02 /*  */ 	
+        , ATTRIBUTE_03 /*  */ 	
+        , ATTRIBUTE_04 /*  */ 	
+        , ATTRIBUTE_05 /*  */ 	
+        , ATTRIBUTE_06 /*  */ 	
+        , ATTRIBUTE_07 /*  */ 	
+        , ATTRIBUTE_08 /*  */ 	
+        , ATTRIBUTE_09 /*  */ 	
+        , ATTRIBUTE_10 /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */	
+        , LOCALE_ID /*  */ 	
+        , CATEGORY /*  */ )	
+VALUES  
+        (#CODE_ID#	
+        , #CODE_NAME# 	
+        , #DISPLAY_INDEX# 	
+        , #USE_FLAG# 	
+        , #PARENT_CODE_ID# 	
+        , #ATTRIBUTE_01# 	
+        , #ATTRIBUTE_02# 	
+        , #ATTRIBUTE_03# 	
+        , #ATTRIBUTE_04# 	
+        , #ATTRIBUTE_05# 	
+        , #ATTRIBUTE_06# 	
+        , #ATTRIBUTE_07# 	
+        , #ATTRIBUTE_08# 	
+        , #ATTRIBUTE_09# 	
+        , #ATTRIBUTE_10# 	
+        , #onlineContext.userInfo.USER_ID#
+        , GETDATE()	
+        , #LOCALE_ID# 	
+        , #CATEGORY#)]]>
+	</insert>
+	<delete id="deleteCode" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_deleteCode_2013-08-09T15:10:04(2013-09-02T19:05:33) */
+DELETE
+  FROM  AMS_CODE
+ WHERE  CODE_ID = #CODE_ID# /*  */ 	
+   AND  LOCALE_ID = #LOCALE_ID# /*  */ ]]>
+	</delete>
+	<update id="updateCode_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_updateCode_MSSQL_2013-08-09T15:10:04(2013-09-10T16:37:39) */
+
+
+UPDATE  AMS_CODE
+   SET  CODE_NAME = #CODE_NAME# /*  */ 	
+     ,  DISPLAY_INDEX = #DISPLAY_INDEX# /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     ,  PARENT_CODE_ID = #PARENT_CODE_ID# /*  */ 	
+     ,  ATTRIBUTE_01 = #ATTRIBUTE_01# /*  */ 	
+     ,  ATTRIBUTE_02 = #ATTRIBUTE_02# /*  */ 	
+     ,  ATTRIBUTE_03 = #ATTRIBUTE_03# /*  */ 	
+     ,  ATTRIBUTE_04 = #ATTRIBUTE_04# /*  */ 	
+     ,  ATTRIBUTE_05 = #ATTRIBUTE_05# /*  */ 	
+     ,  ATTRIBUTE_06 = #ATTRIBUTE_06# /*  */ 	
+     ,  ATTRIBUTE_07 = #ATTRIBUTE_07# /*  */ 	
+     ,  ATTRIBUTE_08 = #ATTRIBUTE_08# /*  */ 	
+     ,  ATTRIBUTE_09 = #ATTRIBUTE_09# /*  */ 	
+     ,  ATTRIBUTE_10 = #ATTRIBUTE_10# /*  */ 
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = GETDATE() /*  */	
+     ,  CATEGORY = #CATEGORY# /*  */ 	
+ WHERE CODE_ID = #CODE_ID#	
+   AND LOCALE_ID = #LOCALE_ID#]]>
+	</update>
+	<insert id="insertCode" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_insertCode_2013-08-09T15:10:04(2013-12-06T15:52:54) */
+
+INSERT
+  INTO  AMS_CODE
+        (CODE_ID /*  */ 	
+        , CODE_NAME /*  */ 	
+        , DISPLAY_INDEX /*  */ 	
+        , USE_FLAG /*  */ 	
+        , PARENT_CODE_ID /*  */ 	
+        , ATTRIBUTE_01 /*  */ 	
+        , ATTRIBUTE_02 /*  */ 	
+        , ATTRIBUTE_03 /*  */ 	
+        , ATTRIBUTE_04 /*  */ 	
+        , ATTRIBUTE_05 /*  */ 	
+        , ATTRIBUTE_06 /*  */ 	
+        , ATTRIBUTE_07 /*  */ 	
+        , ATTRIBUTE_08 /*  */ 	
+        , ATTRIBUTE_09 /*  */ 	
+        , ATTRIBUTE_10 /*  */ 	
+        , REG_USER_ID /*  */ 	
+        , REG_DATE /*  */	
+        , LOCALE_ID /*  */ 	
+        , CATEGORY /*  */ )	
+VALUES  
+        (#CODE_ID#	
+        , #CODE_NAME# 	
+        , #DISPLAY_INDEX# 	
+        , #USE_FLAG# 	
+        , #PARENT_CODE_ID# 	
+        , #ATTRIBUTE_01# 	
+        , #ATTRIBUTE_02# 	
+        , #ATTRIBUTE_03# 	
+        , #ATTRIBUTE_04# 	
+        , #ATTRIBUTE_05# 	
+        , #ATTRIBUTE_06# 	
+        , #ATTRIBUTE_07# 	
+        , #ATTRIBUTE_08# 	
+        , #ATTRIBUTE_09# 	
+        , #ATTRIBUTE_10# 	
+        , #onlineContext.userInfo.USER_ID#
+        , SYSTIMESTAMP	
+        , #LOCALE_ID# 	
+        , #CATEGORY#)]]>
+	</insert>
+	<update id="updateCode" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_updateCode_2013-08-09T15:10:04(2013-12-06T15:53:02) */
+
+
+UPDATE  AMS_CODE
+   SET  CODE_NAME = #CODE_NAME# /*  */ 	
+     ,  DISPLAY_INDEX = #DISPLAY_INDEX# /*  */ 	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     ,  PARENT_CODE_ID = #PARENT_CODE_ID# /*  */ 	
+     ,  ATTRIBUTE_01 = #ATTRIBUTE_01# /*  */ 	
+     ,  ATTRIBUTE_02 = #ATTRIBUTE_02# /*  */ 	
+     ,  ATTRIBUTE_03 = #ATTRIBUTE_03# /*  */ 	
+     ,  ATTRIBUTE_04 = #ATTRIBUTE_04# /*  */ 	
+     ,  ATTRIBUTE_05 = #ATTRIBUTE_05# /*  */ 	
+     ,  ATTRIBUTE_06 = #ATTRIBUTE_06# /*  */ 	
+     ,  ATTRIBUTE_07 = #ATTRIBUTE_07# /*  */ 	
+     ,  ATTRIBUTE_08 = #ATTRIBUTE_08# /*  */ 	
+     ,  ATTRIBUTE_09 = #ATTRIBUTE_09# /*  */ 	
+     ,  ATTRIBUTE_10 = #ATTRIBUTE_10# /*  */ 
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = SYSTIMESTAMP /*  */	
+     ,  CATEGORY = #CATEGORY# /*  */ 	
+ WHERE CODE_ID = #CODE_ID#	
+   AND LOCALE_ID = #LOCALE_ID#]]>
+	</update>
+	<select id="selectCodeDisplayIndexCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_selectCodeDisplayIndexCount_2013-08-09T15:10:04(2013-12-09T23:06:46) */
+
+SELECT 	NVL(MAX(DISPLAY_INDEX), 0) AS maxCount
+
+FROM	AMS_CODE
+
+WHERE	PARENT_CODE_ID = #PARENT_CODE_ID#]]>
+	</select>
+	<select id="selectCodeDisplayIndexCount_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_selectCodeDisplayIndexCount_2013-08-09T15:10:04(2013-12-06T10:00:53) */
+
+SELECT 	ISNULL(MAX(DISPLAY_INDEX), 0) AS maxCount
+
+FROM	AMS_CODE
+
+WHERE	PARENT_CODE_ID = #PARENT_CODE_ID#]]>
+	</select>
+	<select id="selectCodeList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.codsbase.DAMS_CODE_00_selectCodeList_2013-08-09T15:10:04(2014-02-24T22:36:13) */
+SELECT DISTINCT *
+
+FROM (
+	SELECT   
+		REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '')  AS  SORT
+		,CASE 
+			WHEN LEVEL=1 THEN 'ROOT'
+			WHEN LEVEL=2 THEN SUBSTR( REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '') ,1 , (LEVEL-1)*3)
+			WHEN LEVEL=3 THEN SUBSTR( REPLACE(SYS_CONNECT_BY_PATH(LPAD(A.DISPLAY_INDEX,3,'0'), '/'),'/', '') ,1 , (LEVEL-1)*3)
+		END  PARENT_SORT
+		,SYS_CONNECT_BY_PATH(A.CODE_ID,'/') AS PATH
+		,A.CODE_ID
+		,A.CODE_NAME
+		,A.DISPLAY_INDEX
+		,A.USE_FLAG
+		,A.PARENT_CODE_ID
+		,A.ATTRIBUTE_01,A.ATTRIBUTE_02,A.ATTRIBUTE_03,A.ATTRIBUTE_04,A.ATTRIBUTE_05
+		,A.ATTRIBUTE_06,A.ATTRIBUTE_07,A.ATTRIBUTE_08,A.ATTRIBUTE_09,A.ATTRIBUTE_10
+		,A.REG_USER_ID
+		,A.REG_DATE
+		,A.UPDATE_USER_ID
+		,A.UPDATE_DATE
+		,A.LOCALE_ID
+		,A.CATEGORY
+    	,CASE 	
+    	 WHEN(
+			  SELECT COUNT (*) AS COUNT 
+			  FROM  AMS_CODE B
+			  WHERE A.CODE_ID = B.PARENT_CODE_ID) > 0 
+		 THEN 'false'
+		 ELSE 'true'
+		 END AS LEAF_
+		,LEVEL-1 AS LEVEL_
+		,'false' AS EXPAND_
+    	,'true' AS LOADED
+	FROM 	AMS_CODE A
+	WHERE 	A.CATEGORY = 'SYS'
+   
+	START WITH A.PARENT_CODE_ID = 'ROOT'
+	CONNECT BY PRIOR A.CODE_ID =  A.PARENT_CODE_ID
+	ORDER 	SIBLINGS BY A.DISPLAY_INDEX ASC
+) C
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="LOCALE_ID"><![CDATA[
+		C.LOCALE_ID LIKE '%' || #LOCALE_ID# || '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="CODE_ID"><![CDATA[
+		C.PATH LIKE '%' || UPPER(#CODE_ID#) || '%'
+	]]></isNotEmpty><![CDATA[
+	]]><isNotEmpty prepend="AND" property="CODE_NAME"><![CDATA[
+		C.CODE_NAME LIKE '%' || #CODE_NAME# || '%'
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[
+ORDER BY SORT]]>
+	</select>
+</sqlMap>

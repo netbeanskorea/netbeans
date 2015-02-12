@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE ejb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN" "http://java.sun.com/dtd/ejb-jar_2_0.dtd">
+<ejb-jar>
+<!-- ejb id : AUTBBase -->
+
+ <enterprise-beans>
+     <session id="Session_abm.AUTBBase">
+         <display-name>abm.AUTBBase</display-name>
+         <ejb-name>abm.AUTBBase</ejb-name>
+         <home>ams.abm.autbbase.ejb.AUTBBaseHome</home>
+         <remote>ams.abm.autbbase.ejb.AUTBBase</remote>
+         <ejb-class>ams.abm.autbbase.ejb.AUTBBaseBean</ejb-class>
+         <session-type>Stateless</session-type>
+         <transaction-type>Container</transaction-type>
+     </session>
+ </enterprise-beans>
+
+ <assembly-descriptor>
+
+ </assembly-descriptor>
+</ejb-jar>

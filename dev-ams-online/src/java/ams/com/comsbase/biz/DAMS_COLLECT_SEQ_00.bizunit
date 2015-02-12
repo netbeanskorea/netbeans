@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DAMS_COLLECT_SEQ_00" type="">
+    <bizUnitName>[DU]채번테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>com.COMSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="insertSelectSeqNo" type="1">
+            <methodName>채번입력후 조회</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMSBase#insertSelectSeqNo</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields>
+                    <field data="" id="TX_DT" length="">
+                        <fieldName>필드1</fieldName>
+                        <fieldEngName/>
+                        <dataTypeXd>00</dataTypeXd>
+                        <dataFormat/>
+                        <keyTypeXd>0</keyTypeXd>
+                        <inMandatoryXd>1</inMandatoryXd>
+                        <inMandatoryLogic/>
+                        <inMinLength/>
+                        <inMaxLength/>
+                        <inLimitTypeXd>00</inLimitTypeXd>
+                        <inLimitLogic/>
+                        <formattingMethodXd>00</formattingMethodXd>
+                        <formattingLogic/>
+                        <loggingMethodXd>1</loggingMethodXd>
+                        <encrypted/>
+                    </field>
+                    <field data="" id="TABLE_NAME" length="">
+                        <fieldName>필드2</fieldName>
+                        <fieldEngName/>
+                        <dataTypeXd>00</dataTypeXd>
+                        <dataFormat/>
+                        <keyTypeXd>0</keyTypeXd>
+                        <inMandatoryXd>1</inMandatoryXd>
+                        <inMandatoryLogic/>
+                        <inMinLength/>
+                        <inMaxLength/>
+                        <inLimitTypeXd>00</inLimitTypeXd>
+                        <inLimitLogic/>
+                        <formattingMethodXd>00</formattingMethodXd>
+                        <formattingLogic/>
+                        <loggingMethodXd>1</loggingMethodXd>
+                        <encrypted/>
+                    </field>
+                </fields>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-08-28T14:43:02" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DAMS_COLLECT_SEQ_00.xsql</name>
+        <history>
+            <created date="2013-08-28T14:43:07" user="박세일(ParkSeIl)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2013-08-28T14:41:43" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component fqId="com.COMSBase" id="COMSBase" version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://nexcore.skcc.com/schema/nexcore-biz-component-1-0.xsd">
+    <componentName>[SC]공통업무</componentName>
+    <componentEngName/>
+    <bizGroupXd>ams-com</bizGroupXd>
+    <ejbVersion>2.1</ejbVersion>
+    <jndiName>ejb/com/COMSBase</jndiName>
+    <packageName>ams.com.comsbase</packageName>
+    <ejbFlagXd>1</ejbFlagXd>
+    <transactionTimeoutSeconds>30</transactionTimeoutSeconds>
+    <componentTypeXd>SC</componentTypeXd>
+    <nationName>Not Defined</nationName>
+    <customerName>Not Defined</customerName>
+    <systemName>Not Defined</systemName>
+    <developmentLanguage>Java</developmentLanguage>
+    <componentCategory>OnLine</componentCategory>
+    <description/>
+    <bizUnit-list filescan="true"/>
+    <custom-props/>
+    <history>
+        <created date="2013-07-09T13:27:00" user="박세일 (ParkSeIl)"/>
+    </history>
+</component>

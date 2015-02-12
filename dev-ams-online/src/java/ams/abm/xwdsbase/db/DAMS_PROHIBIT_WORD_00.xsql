@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DAMS_PROHIBIT_WORD_00">
+	<select id="selectProhibitWordList" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.xwdsbase.DAMS_PROHIBIT_WORD_00_selectProhibitWordList_2014-01-03T15:40:45(2014-01-03T18:48:50) */
+
+SELECT	*
+
+FROM(
+		SELECT 	ROW_NUMBER() OVER (ORDER BY SEQ_NO asc) AS ROWNO,
+				SEQ_NO,
+				PROHIBIT_WORD,
+				REG_USER_ID,
+				REG_DATE,
+				UPDATE_USER_ID,
+				UPDATE_DATE,
+				USE_FLAG
+				
+		FROM	AMS_PROHIBIT_WORD
+		
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isNotEmpty prepend="AND" property="PROHIBIT_WORD"><![CDATA[
+				PROHIBIT_WORD = #PROHIBIT_WORD#
+			]]></isNotEmpty><![CDATA[
+		]]></dynamic><![CDATA[
+	) B
+	
+WHERE ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<select id="selectProhibitWordList_MSSQL" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.xwdsbase.DAMS_PROHIBIT_WORD_00_selectProhibitWordList_2014-01-03T15:40:45(2014-01-03T15:50:20) */
+
+SELECT	*
+
+FROM(
+		SELECT 	ROW_NUMBER() OVER (ORDER BY SEQ_NO asc) AS ROWNO,
+				SEQ_NO,
+				PROHIBIT_WORD,
+				REG_USER_ID,
+				REG_DATE,
+				UPDATE_USER_ID,
+				UPDATE_DATE,
+				USE_FLAG
+				
+		FROM	AMS_PROHIBIT_WORD
+		
+		]]><dynamic prepend="WHERE"><![CDATA[
+			]]><isNotEmpty prepend="AND" property="PROHIBIT_WORD"><![CDATA[
+				PROHIBIT_WORD = #PROHIBIT_WORD#
+			]]></isNotEmpty><![CDATA[
+		]]></dynamic><![CDATA[
+	) B
+	
+WHERE ROWNO BETWEEN #nc_firstRowIndex# AND #nc_lastRowIndex#]]>
+	</select>
+	<insert id="insertProhibitWord" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.xwdsbase.DAMS_PROHIBIT_WORD_00_insertProhibitWord_2014-01-03T15:40:45(2014-01-03T15:56:50) */
+
+INSERT
+  INTO  AMS_PROHIBIT_WORD
+        ( SEQ_NO, 
+          PROHIBIT_WORD, 
+          REG_USER_ID, 
+          REG_DATE, 
+          UPDATE_USER_ID, 
+          UPDATE_DATE, 
+          USE_FLAG)	
+VALUES  
+        ( SEQ_AMS_PROHIBIT_WORD_00.NEXTVAL,
+          #PROHIBIT_WORD#,
+       	  #onlineContext.userInfo.USER_ID#, 
+       	  SYSTIMESTAMP, 
+       	  #onlineContext.userInfo.USER_ID#, 
+       	  SYSTIMESTAMP, 
+       	  #USE_FLAG#		
+        )]]>
+	</insert>
+	<insert id="insertProhibitWord_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.xwdsbase.DAMS_PROHIBIT_WORD_00_insertProhibitWord_MSSQL_2014-01-03T15:40:45(2014-01-03T15:57:43) */
+
+INSERT
+  INTO  AMS_PROHIBIT_WORD
+        ( 
+          PROHIBIT_WORD, 
+          REG_USER_ID,
+          REG_DATE, 
+          UPDATE_USER_ID, 
+          UPDATE_DATE, 
+          USE_FLAG)	
+VALUES  
+        ( 
+          #PROHIBIT_WORD#,
+       	  #onlineContext.userInfo.USER_ID#, 
+       	  GETDATE(), 
+       	  #onlineContext.userInfo.USER_ID#, 
+       	  GETDATE(), 
+       	  #USE_FLAG#		
+        )]]>
+	</insert>
+	<update id="updateProhibitWord" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.xwdsbase.DAMS_PROHIBIT_WORD_00_updateProhibitWord_2014-01-03T15:40:45(2014-01-03T16:01:50) */
+
+UPDATE  AMS_PROHIBIT_WORD
+
+   SET  PROHIBIT_WORD = #PROHIBIT_WORD# /*  */ 	
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = SYSTIMESTAMP /*  */  	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     
+ WHERE 	SEQ_NO = #SEQ_NO#]]>
+	</update>
+	<update id="updateProhibitWord_MSSQL" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.xwdsbase.DAMS_PROHIBIT_WORD_00_updateProhibitWord_MSSQL_2014-01-03T15:40:45(2014-01-03T16:02:02) */
+
+UPDATE  AMS_PROHIBIT_WORD
+
+   SET  PROHIBIT_WORD = #PROHIBIT_WORD# /*  */ 	
+     ,  UPDATE_USER_ID = #onlineContext.userInfo.USER_ID# /*  */ 	
+     ,  UPDATE_DATE = GETDATE() /*  */  	
+     ,  USE_FLAG = #USE_FLAG# /*  */ 	
+     
+ WHERE 	SEQ_NO = #SEQ_NO#]]>
+	</update>
+	<delete id="deleteProhibitWord" parameterClass="map" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.xwdsbase.DAMS_PROHIBIT_WORD_00_deleteProhibitWord_2014-01-03T15:40:45(2014-01-03T16:03:43) */
+
+DELETE 	
+  FROM 	AMS_PROHIBIT_WORD
+ WHERE	SEQ_NO = #SEQ_NO#]]>
+	</delete>
+	<select id="selectProhibitWordListCount" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_강훈기(강훈기) */
+/* IO: ams.abm.xwdsbase.DAMS_PROHIBIT_WORD_00_selectProhibitWordListCount_2014-01-03T15:40:45(2014-01-03T16:45:02) */
+
+SELECT 	COUNT(*) AS totalCount
+
+FROM	AMS_PROHIBIT_WORD
+
+]]><dynamic prepend="WHERE"><![CDATA[
+	]]><isNotEmpty prepend="AND" property="PROHIBIT_WORD"><![CDATA[
+		PROHIBIT_WORD = #PROHIBIT_WORD#
+	]]></isNotEmpty><![CDATA[
+]]></dynamic><![CDATA[]]>
+	</select>
+</sqlMap>

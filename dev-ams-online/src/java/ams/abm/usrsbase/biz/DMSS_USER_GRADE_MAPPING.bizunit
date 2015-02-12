@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="DMSS_USER_GRADE_MAPPING" type="">
+    <bizUnitName>[DU]사용자와 상품간 맵핑 테이블</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SDU</parentClassXd>
+    <componentId>abm.USRSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="selectUserGradeMapping" type="1">
+            <methodName>사용자별 상품등급맵핑</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>abm.USRSBase#selectUserGradeMapping</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-09T15:54:51" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql>
+        <name>DMSS_USER_GRADE_MAPPING.xsql</name>
+        <history>
+            <created date="2013-09-09T15:55:01" user="박세일(ParkSeIl)"/>
+        </history>
+    </xsql>
+    <history>
+        <created date="2013-09-09T15:33:25" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

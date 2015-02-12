@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bizUnit id="FCOM100" type="">
+    <bizUnitName>[FU]공통업무함수</bizUnitName>
+    <bizUnitEngName/>
+    <parentClassXd>SFU</parentClassXd>
+    <componentId>com.COMSBase</componentId>
+    <interface-list/>
+    <description/>
+    <method-list>
+        <method id="fUpdateMenuTbActiveTime" type="1">
+            <methodName>지정된 테이블의 Active Time update</methodName>
+            <methodEngName/>
+            <methodTypeXd>C</methodTypeXd>
+            <transactionId>com.COMSBase#fUpdateMenuTbActiveTime</transactionId>
+            <txMethodXd>03</txMethodXd>
+            <exception-list/>
+            <complexityXd>M</complexityXd>
+            <importanceXd>M</importanceXd>
+            <loggingMethodXd>00</loggingMethodXd>
+            <webServiceOpenXd>0</webServiceOpenXd>
+            <fixedLengthXd>0</fixedLengthXd>
+            <autoFieldXd>0</autoFieldXd>
+            <preprocess-list/>
+            <postprocess-list/>
+            <description/>
+            <inputMethodIo>
+                <fields/>
+            </inputMethodIo>
+            <outputMethodIo>
+                <fields/>
+            </outputMethodIo>
+            <custom-props/>
+            <history>
+                <created date="2013-09-12T13:27:32" user="박세일 (ParkSeIl)"/>
+            </history>
+        </method>
+    </method-list>
+    <xsql/>
+    <history>
+        <created date="2013-09-12T13:26:28" user="박세일 (ParkSeIl)"/>
+    </history>
+</bizUnit>

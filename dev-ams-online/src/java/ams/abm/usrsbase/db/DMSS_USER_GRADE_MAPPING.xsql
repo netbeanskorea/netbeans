@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="DMSS_USER_GRADE_MAPPING">
+	<select id="selectUserGradeMapping" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_박세일(강훈기) */
+/* IO: ams.abm.usrsbase.DMSS_USER_GRADE_MAPPING_selectUserGradeMapping_2013-09-09T15:55:01(2013-10-10T17:40:56) */
+
+SELECT
+        a.USER_ID AS USER_ID /*  */  
+     ,  a.GRADE AS GRADE /*  */  
+     ,  a.REGDT AS REGDT /*  */  
+     ,  a.REGID AS REGID /*  */  
+     ,  a.UPDDT AS UPDDT /*  */  
+     ,  a.UPDID AS UPDID /*  */  
+     
+  FROM  MSS_USER_GRADE_MAPPING a
+  INNER JOIN MSS_GRADE GRD
+  ON A.GRADE = GRD.GRADENO
+ WHERE  a.USER_ID = #USER_ID#
+
+ ]]>
+	</select>
+</sqlMap>
