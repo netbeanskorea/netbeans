@@ -1,21 +1,19 @@
-
-
 {
-     name: 'Hong, Gil-Dong',
-    "griddata": {
-        "list": [
-            {
-                "deptNo": 11
-            },
-            {
-                "deptNo": 22
-            },
-            {
-                "deptNo": 33
-            },
-            {
-                "deptNo": 44
-            }
-        ]
-    }
+    "page": "1",
+    "total": 4,
+    "records": "4",
+    "rows": [
+                {
+	                "deptNo": 11
+	            },
+	            {
+	                "deptNo": 22
+	            },
+	            {
+	                "deptNo": 33
+	            },
+	            {
+	                "deptNo": 44
+	            }
+	]
 }
