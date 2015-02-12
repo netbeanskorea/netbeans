@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="core.code">
+    <select id="getParentCodes" resultClass="hmap">
+			 SELECT  CODE_ID	
+					,CODE_NAME	
+					,DISPLAY_INDEX	
+					,USE_FLAG	
+					,PARENT_CODE_ID	
+					,LOCALE_ID	
+					,CATEGORY
+					,ATTRIBUTE_01	
+					,ATTRIBUTE_02	
+					,ATTRIBUTE_03	
+					,ATTRIBUTE_04	
+					,ATTRIBUTE_05	
+					,ATTRIBUTE_06	
+					,ATTRIBUTE_07	
+					,ATTRIBUTE_08	
+					,ATTRIBUTE_09	
+					,ATTRIBUTE_10	
+			 FROM AMS_CODE
+			 WHERE CODE_ID IN (
+								SELECT DISTINCT(PARENT_CODE_ID) AS PARENT_CODE_ID
+								FROM AMS_CODE
+								)
+			 ORDER BY DISPLAY_INDEX
+    </select>
+    
+    <select id="getCodes" parameterClass="map" resultClass="hmap">
+		 SELECT  CODE_ID	
+				,CODE_NAME	
+				,DISPLAY_INDEX	
+				,USE_FLAG	
+				,PARENT_CODE_ID	
+				,LOCALE_ID	
+				,CATEGORY
+				,ATTRIBUTE_01	
+				,ATTRIBUTE_02	
+				,ATTRIBUTE_03	
+				,ATTRIBUTE_04	
+				,ATTRIBUTE_05	
+				,ATTRIBUTE_06	
+				,ATTRIBUTE_07	
+				,ATTRIBUTE_08	
+				,ATTRIBUTE_09	
+				,ATTRIBUTE_10	
+				,REG_USER_ID	
+				,REG_DATE	
+				,UPDATE_USER_ID	
+				,UPDATE_DATE	
+		  FROM AMS_CODE
+		WHERE PARENT_CODE_ID = #PARENT_CODE_ID#
+		ORDER BY DISPLAY_INDEX
+    </select>
+    
+    <select id="getCode" parameterClass="map" resultClass="hmap">
+ 	     SELECT  CODE_ID	
+				,CODE_NAME	
+				,DISPLAY_INDEX	
+				,USE_FLAG	
+				,PARENT_CODE_ID	
+				,LOCALE_ID	
+				,CATEGORY
+				,ATTRIBUTE_01	
+				,ATTRIBUTE_02	
+				,ATTRIBUTE_03	
+				,ATTRIBUTE_04	
+				,ATTRIBUTE_05	
+				,ATTRIBUTE_06	
+				,ATTRIBUTE_07	
+				,ATTRIBUTE_08	
+				,ATTRIBUTE_09	
+				,ATTRIBUTE_10	
+				,REG_USER_ID	
+				,REG_DATE	
+				,UPDATE_USER_ID	
+				,UPDATE_DATE		
+		FROM AMS_CODE
+		WHERE PARENT_CODE_ID = #PARENT_CODE_ID#
+        <isNotEmpty prepend="AND" property="CODE_ID">
+        	CODE_ID = #CODE_ID#
+        </isNotEmpty>
+    </select>
+</sqlMap>

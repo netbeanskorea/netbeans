@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ams.push">
+    <select id="selectPushMessage" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_성지호(성지호) */
+SELECT
+	MSG,
+	CONVERT(int, TIME) as timestamp,
+	DATE
+FROM
+	AMS_PUSH_TABLE
+WHERE
+	convert(varchar(10), DATE, 102) = convert(varchar(10), getdate(), 102)
+	AND CONVERT(int, TIME) > #timestamp#]]>
+	</select>
+	<insert id="insertPushMessage" parameterClass="map" ><![CDATA[/* Biz: author_성지호(성지호) */
+INSERT 
+INTO
+	AMS_PUSH_TABLE(MSG, DATE)
+VALUES (
+	  #MSG#
+	, GETDATE()
+)]]>
+	</insert>
+	<select id="selectPushMessageAll" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[/* Biz: author_성지호(성지호) */
+SELECT
+	MSG,
+	CONVERT(int, TIME) as timestamp,
+	DATE
+FROM
+	AMS_PUSH_TABLE
+WHERE
+	convert(varchar(10), DATE, 102) = convert(varchar(10), getdate(), 102)]]>
+	</select>
+	<select id="selectLastTimestamp" parameterClass="map" resultClass="hmap" fetchSize="50" ><![CDATA[]]>
+	</select>
+</sqlMap>

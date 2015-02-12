@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ams.label">
+    <select id="getLabelBundleById" parameterClass="string" resultClass="hmap">
+        SELECT LOCALE_ID,
+               LABEL_ID as ID,
+               LABEL_NAME as NAME
+          FROM AMS_LABEL
+         WHERE LABEL_ID = #value#
+    </select>
+ 
+    <select id="getLabelBundles" resultClass="hmap">
+        SELECT LOCALE_ID,
+               LABEL_ID as ID,
+               LABEL_NAME as NAME
+          FROM AMS_LABEL
+    </select>
+</sqlMap>

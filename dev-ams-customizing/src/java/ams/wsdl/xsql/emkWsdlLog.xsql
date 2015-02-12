@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="emk.wsdl">
+    <select id="insertWsdlLog" parameterClass="map" resultClass="hmap" fetchSize="50" >
+	 INSERT INTO TBL_CIF_LOG
+           (IF_DT
+           ,IF_TP_CD
+           ,IF_APP_NM
+           ,IF_STRN_DTTM
+           ,IF_END_DTTM
+           ,IF_RSLT_CD
+           ,IF_MSG
+           ,IF_REQS_DESC
+           ,IF_RSPNSE_DESC
+           ,RGSTER_ID
+           ,RGST_DTIM
+           ,UPDUSR_ID
+           ,UPDT_DTIM)
+     OUTPUT INSERTED.IF_SEQ
+     VALUES
+           (
+            #IF_DT#
+            ,#IF_TP_CD#
+            ,#IF_APP_NM#
+            ,#IF_STRN_DTTM#
+            ,#IF_END_DTTM#
+            ,#IF_RSLT_CD#
+            ,#IF_MSG#
+            ,#IF_REQS_DESC#
+            ,#IF_RSPNSE_DESC#
+            ,#RGSTER_ID#
+            ,GETDATE()
+            ,#UPDUSR_ID#
+            ,GETDATE()
+           )
+    </select>
+    <update id="updateWsdlLog" parameterClass="map">
+   		 UPDATE TBL_CIF_LOG
+   		 SET
+   		 		 IF_RSPNSE_DESC = #IF_RSPNSE_DESC#
+   		 		,IF_RSLT_CD = #IF_RSLT_CD#
+   		 		,IF_MSG = #IF_MSG#
+   		 		,IF_END_DTTM = #IF_END_DTTM#
+   		 		,UPDT_DTIM = GETDATE()
+   		 WHERE IF_SEQ = #IF_SEQ# AND 
+   		 			   IF_DT = #IF_DT#
+   		 		
+    </update>
+</sqlMap>

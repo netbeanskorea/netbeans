@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="core.upload">
+
+    <insert id="createUpload" parameterClass="map">
+        INSERT INTO AMS_UPLOADED_FILE
+               (
+                 TX_DT
+				,SEQ_NO
+				,TYPE_ID
+				,FILE_ID
+				,FILE_NAME
+				,FILE_PATH
+				,FILE_SIZE
+				,REG_USER
+				,REG_DATE
+               )
+        VALUES (
+        		#TX_DT#,
+        		#SEQ_NO#,
+                #TYPE_ID:VARCHAR#,
+                #FILE_ID#,
+                #FILE_NAME#,
+                #FILE_PATH#,
+                #FILE_SIZE#,
+                #REG_USER#,
+                #REG_DATE#
+               )
+    </insert>
+
+    <delete id="deleteUploads" parameterClass="map">
+        DELETE 
+          FROM AMS_UPLOADED_FILE
+         WHERE SEQ_NO = #SEQ_NO# 
+    </delete>
+ 
+    <delete id="deleteUpload" parameterClass="string">
+        DELETE
+          FROM AMS_UPLOADED_FILE
+         WHERE FILE_ID = #value# 
+           
+    </delete>
+
+    <select id="getUploads" parameterClass="map" resultClass="hmap">
+        SELECT 
+        				TX_DT,
+						SEQ_NO,
+        				FILE_NAME,
+               			FILE_PATH,
+               			FILE_SIZE,
+               			TYPE_ID,
+               			FILE_ID
+          FROM AMS_UPLOADED_FILE
+         WHERE SEQ_NO= #SEQ_NO#
+    </select>
+    
+    <select id="getUploadedFileById" parameterClass="string" resultClass="hmap">
+        SELECT   FILE_ID,
+        				FILE_NAME,
+               			FILE_PATH
+          FROM AMS_UPLOADED_FILE
+         WHERE FILE_ID = #value#
+    </select>
+    
+    <select id="getUploadedFileInfo" parameterClass="map" resultClass="hmap">
+        SELECT 	FILE_ID, 
+        				TYPE_ID, 
+        				FILE_NAME,
+               			FILE_PATH
+          FROM AMS_UPLOADED_FILE
+         WHERE SEQ_NO= #SEQ_NO#
+			           AND FILE_ID = #FILE_ID#
+    </select>
+
+</sqlMap>

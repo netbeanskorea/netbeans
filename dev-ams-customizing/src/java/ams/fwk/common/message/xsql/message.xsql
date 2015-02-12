@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="core.message">
+
+    <select id="getMessages" parameterClass="string" resultClass="hmap">
+        SELECT 'ko_KR' as "LOCALE_XD", 
+               MESSAGE_ID as "ID",
+               MESSAGE_NAME as "NAME",
+               DESCRIPTION as "REMARK",
+               '' as "REASON",
+               MESSAGE_TYPE as "TYPE_XD"
+          FROM AMS_MESSAGE
+    </select>
+
+    <select id="getMessage" parameterClass="map" resultClass="hmap">
+        SELECT 'ko_KR' as "LOCALE_XD",
+               MESSAGE_ID as "ID",
+               MESSAGE_NAME as "NAME",
+               DESCRIPTION as "REMARK",
+               '' as "REASON",
+               MESSAGE_TYPE as "TYPE_XD"
+          FROM AMS_MESSAGE
+         WHERE MESSAGE_ID = #id#
+    </select>
+    
+    <select id="getMessageBundle" parameterClass="string" resultClass="hmap">
+        SELECT 'ko_KR' as "LOCALE_XD",
+               MESSAGE_NAME as "NAME",
+               DESCRIPTION as "REMARK",
+               '' as "REASON",
+               MESSAGE_TYPE as "TYPE_XD"
+          FROM AMS_MESSAGE
+         WHERE MESSAGE_ID = #value#
+    </select>
+    
+</sqlMap>

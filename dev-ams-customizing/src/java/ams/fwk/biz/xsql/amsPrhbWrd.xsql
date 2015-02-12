@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ams.prhbwrd">
+    <select id="selectAll" resultClass="hmap">
+		SELECT   SEQ_NO
+				,PROHIBIT_WORD
+				,REG_USER_ID
+				,REG_DATE
+				,UPDATE_USER_ID
+				,UPDATE_DATE
+				,USE_FLAG
+		  FROM AMS_PROHIBIT_WORD 
+		  WHERE USE_FLAG = 'Y'		  
+    </select>
+  </sqlMap>

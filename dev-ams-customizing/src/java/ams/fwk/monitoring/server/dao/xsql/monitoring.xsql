@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap
+    PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ams.monitoring">
+    <insert id="insertCpuDetailInfo"  parameterClass="map" ><![CDATA[
+    	MERGE INTO AMS_CPU_INFO 
+    	USING DUAL
+    	ON (WAS_INSTANCE_ID=#WAS_INSTANCE_ID#)
+    	WHEN NOT MATCHED THEN 
+	   		INSERT  (
+	                            WAS_INSTANCE_ID,
+	                            MHZ,
+	                            VENDOR,
+	                            CPU_CNT
+			) VALUES (
+			          #WAS_INSTANCE_ID#,
+			          #MHZ#,
+			          #VENDOR#,
+			          #CPU_CNT#
+			)
+		WHEN MATCHED THEN 
+			UPDATE 
+			SET   MHZ = #MHZ#,
+			        VENDOR  = #VENDOR#,
+			        CPU_CNT = #CPU_CNT#
+			WHERE  WAS_INSTANCE_ID = #WAS_INSTANCE_ID#          
+    ]]>
+    </insert>
+ 
+    <insert id="insertCpuPerHistory"  parameterClass="map" ><![CDATA[
+     INSERT INTO AMS_CPU_PER_HISTORY(
+              WAS_INSTANCE_ID,
+              HISTORY_DT,
+              HISTORY_HOUR,
+              HISTORY_MIN,
+              HISTORY_SEC,
+              SYS_CPU_PERC,
+              IDLE_CPU_PERC,
+              PROC_CPU_PERC,
+              WAIT_CPU_PERC,
+              NICE_CPU_PERC,
+              COMBINE_CPU_PERC,
+              REQ_DATE
+		 )
+		VALUES (
+		        #WAS_INSTANCE_ID#,
+		        #HISTORY_DT#,
+		        #HISTORY_HOUR#,
+		        #HISTORY_MIN#,
+		        #HISTORY_SEC#,
+		        #SYS_CPU_PERC#,
+		        #IDLE_CPU_PERC#,
+		        #PROC_CPU_PERC#,
+		        #WAIT_CPU_PERC#,
+		        #NICE_CPU_PERC#,
+		        #COMBINE_CPU_PERC#,
+		        SYSTIMESTAMP
+		)           
+    ]]>
+    </insert>
+     <insert id="insertFsHistory"  parameterClass="map" ><![CDATA[
+     INSERT INTO AMS_FILESYSTEM_HISTORY (
+     																 WAS_INSTANCE_ID
+																	,HISTORY_DT
+																	,HISTORY_HOUR
+																	,HISTORY_MIN
+																	,HISTORY_SEC
+																	,FILE_SYSTEM_NAME
+																	,FS_SIZE
+																	,USED
+																	,AVAIL
+																	,USED_PERC
+																	,MOUNT_ON
+																	,TYPE
+																	,REQ_DATE
+	)
+	VALUES (
+				 #WAS_INSTANCE_ID#
+				,#HISTORY_DT#
+				,#HISTORY_HOUR#
+				,#HISTORY_MIN#
+				,#HISTORY_SEC#
+				,#FILE_SYSTEM_NAME#
+				,#FS_SIZE#
+				,#USED#
+				,#AVAIL#
+				,#USED_PERC#
+				,#MOUNT_ON#
+				,#TYPE#
+				, SYSTIMESTAMP
+	
+	)
+     
+     ]]>
+    </insert>
+     <select id="selectCpuPerc" parameterClass="map" resultClass="hmap"><![CDATA[
+       SELECT * 
+		FROM (
+		            SELECT 
+		                           WAS_INSTANCE_ID
+		                          ,HISTORY_DT
+		                          ,HISTORY_HOUR
+		                          ,HISTORY_MIN
+		                          ,HISTORY_SEC
+		                          ,PROC_CPU_PERC
+		                          ,SYS_CPU_PERC
+		                          ,IDLE_CPU_PERC
+		                          ,WAIT_CPU_PERC
+		                          ,NICE_CPU_PERC
+		                          ,COMBINE_CPU_PERC
+		                          ,REQ_DATE
+		            FROM AMS_CPU_PER_HISTORY
+		            WHERE WAS_INSTANCE_ID = #WAS_INSTANCE_ID# 
+		                       AND HISTORY_DT = #HISTORY_DT#         
+		            ORDER BY REQ_DATE DESC
+		)
+		WHERE ROWNUM =1
+		]]>
+    </select>
+    <insert id="insertMemHistory"  parameterClass="map" ><![CDATA[
+     INSERT INTO AMS_MEM_PER_HISTORY (
+   														 WAS_INSTANCE_ID
+														,HISTORY_DT
+														,HISTORY_HOUR
+														,HISTORY_MIN
+														,HISTORY_SEC
+														,TOTAL_MEM
+														,USED_MEM
+														,FREE_MEM
+														,USED_PERC
+														,REQ_DATE
+	)
+	VALUES (
+				  #WAS_INSTANCE_ID#
+				,#HISTORY_DT#
+				,#HISTORY_HOUR#
+				,#HISTORY_MIN#
+				,#HISTORY_SEC#
+				,#TOTAL_MEM#
+				,#USED_MEM#
+				,#FREE_MEM#
+				,#USED_PERC#
+				,SYSTIMESTAMP
+	)
+     ]]>
+    </insert>
+    <select id="selectMemPerc" parameterClass="map" resultClass="hmap"><![CDATA[
+       SELECT * 
+		FROM (
+		            SELECT 
+		                           WAS_INSTANCE_ID
+		                          ,HISTORY_DT
+		                          ,HISTORY_HOUR
+		                          ,HISTORY_MIN
+		                          ,HISTORY_SEC
+		                          ,TOTAL_MEM
+								  ,USED_MEM
+								  ,FREE_MEM
+								  ,USED_PERC
+		                          ,REQ_DATE
+		            FROM AMS_MEM_PER_HISTORY
+		            WHERE WAS_INSTANCE_ID = #WAS_INSTANCE_ID# 
+		                       AND HISTORY_DT = #HISTORY_DT#         
+		            ORDER BY REQ_DATE DESC
+		)
+		WHERE ROWNUM =1
+		 ]]>
+    </select>
+    <select id="selectFsPerc" parameterClass="map" resultClass="hmap"><![CDATA[
+	 SELECT FILE_SYSTEM_NAME, MOUNT_ON, TYPE, HISTORY_DT, HISTORY_HOUR, HISTORY_MIN, HISTORY_SEC, FS_SIZE, USED, AVAIL, USED_PERC, REQ_DATE
+	 FROM (
+	              SELECT *
+	                FROM AMS_FILESYSTEM_HISTORY
+	                WHERE WAS_INSTANCE_ID = #WAS_INSTANCE_ID#
+	                AND HISTORY_DT = #HISTORY_DT#
+	                AND HISTORY_HOUR = (SELECT MAX(TO_NUMBER(HISTORY_HOUR)) AS HISTORY_HOUR FROM AMS_FILESYSTEM_HISTORY WHERE WAS_INSTANCE_ID = #WAS_INSTANCE_ID# AND HISTORY_DT = #HISTORY_DT#)
+	                ORDER BY REQ_DATE DESC
+	  )
+	  WHERE ROWNUM <= (SELECT COUNT(DISTINCT FILE_SYSTEM_NAME) FROM AMS_FILESYSTEM_HISTORY WHERE WAS_INSTANCE_ID = #WAS_INSTANCE_ID# AND HISTORY_DT = #HISTORY_DT#)
+	  ]]>
+    </select>
+    <select id="selectTransPerSec" parameterClass="map" resultClass="hmap"><![CDATA[
+    SELECT *
+	FROM (
+	            SELECT   	 SUB.WAS_INSTANCE_ID
+	                          ,  SUB.TR_HOUR
+	                          ,  SUB.TR_MIN
+	                          ,  SUB.TR_SEC
+	                          ,  COUNT(SUB.SEQ_NO) AS CNT
+	            FROM (
+		                  SELECT  	  WAS_INSTANCE_ID
+		                                , SEQ_NO
+		                                , SUBSTR(SVC_END_DTTM,9,2) AS TR_HOUR
+		                                , SUBSTR(SVC_END_DTTM,11,2) AS TR_MIN
+		                                , SUBSTR(SVC_END_DTTM,13,2) AS TR_SEC
+		                                , SVC_END_DTTM
+		                  FROM AMS_TRAN_LOG
+		                  WHERE LOG_DT=#LOG_DT#
+		                  AND WAS_INSTANCE_ID=#WAS_INSTANCE_ID#
+		                  AND SUBSTR(SVC_END_DTTM,0,14)  >= TO_CHAR(SYSDATE-(1/(24*60))*10, 'YYYYMMDDHH24MISS')
+	            )SUB
+	            GROUP BY WAS_INSTANCE_ID,  TR_HOUR, TR_MIN, TR_SEC
+	            ORDER BY  TO_NUMBER(TR_HOUR||TR_MIN||TR_SEC)  DESC
+	)
+	WHERE ROWNUM =1
+     ]]>
+    </select>
+</sqlMap>
