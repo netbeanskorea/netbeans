@@ -32,7 +32,7 @@ public class DefaultController {
 	public ModelAndView selectAll(@RequestBody Map<String, Object> dataMap) {
 		ModelAndView mav = new ModelAndView("jsonView");
 		List<Object> map = service.selectAll(dataMap);
-		mav.addObject("data", map);
+		mav.addObject("row", map);
 		return mav;
 	}
 

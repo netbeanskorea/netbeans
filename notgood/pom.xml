@@ -22,6 +22,9 @@
 		<!-- Spring -->
 		<spring-framework.version>3.2.3.RELEASE</spring-framework.version>
 
+		<!-- Spring Security -->
+		<spring.security.version>3.2.3.RELEASE</spring.security.version>
+
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.2.1.Final</hibernate.version>
 
@@ -32,6 +35,11 @@
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
 
+		<!-- mysql -->
+		<mysql.connector.version>5.1.6</mysql.connector.version>
+
+		<!-- jstl -->
+		<jstl.version>1.2</jstl.version>
 
 	</properties>
 
@@ -121,6 +129,12 @@
 			<version>1.4</version>
 		</dependency>
 
+		<!-- connect to mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.connector.version}</version>
+		</dependency>
 
 		<!-- Logging with SLF4J & LogBack -->
 		<dependency>
@@ -155,6 +169,7 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
+
 		<!-- Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -189,7 +204,33 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+
+		<!-- Spring Security JSP Taglib -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<!-- jstl for jsp page -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
 	</dependencies>
 
 
