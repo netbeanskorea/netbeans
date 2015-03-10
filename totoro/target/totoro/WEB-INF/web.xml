@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns="http://java.sun.com/xml/ns/javaee" 
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
 
 	<display-name>Archetype Created Web Application</display-name>
 
@@ -11,25 +12,48 @@
 		<param-value>classpath:META-INF/spring/context-*.xml</param-value>
 	</context-param>
 
-<!-- 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener> -->
-	
+	<filter>
+		<filter-name>Request Monitor Filter</filter-name>
+		<filter-class>com.kjblink.totoro.RequestMonFilter</filter-class>
+	</filter>
+
+	<!-- <listener> <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
+		</listener> -->
+
+	<listener>
+		<listener-class>sessionmon.SessionListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>sessionmon.SessionAttributeListener</listener-class>
+	</listener>
+
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
-		<servlet-class>
-			org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
-			<init-param>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/mvc-config.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+	<servlet>
+		<servlet-name>SessionMonServlet</servlet-name>
+		<servlet-class>sessionmon.SessionMonSevlet</servlet-class>
+		<init-param>
+			<param-name>enabled</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>server_node_addresses</param-name>
+			<param-value>http://localhost:8000, http://localhost:8081</param-value>
+		</init-param>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
+	<servlet-mapping>
+		<servlet-name>SessionMonServlet</servlet-name>
+		<url-pattern>/sessionmon/*</url-pattern>
+	</servlet-mapping>
 </web-app>
