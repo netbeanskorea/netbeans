@@ -31,7 +31,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1426558009901" FOLDED="true" ID="ID_894902268" MODIFIED="1426748781751" POSITION="left" TEXT="&#xbc84;&#xc804;&#xbcc4; &#xd504;&#xb85c;&#xc81d;&#xd2b8; &#xc885;&#xb958;">
+<node CREATED="1426558009901" ID="ID_894902268" MODIFIED="1428021952983" POSITION="left" TEXT="&#xbc84;&#xc804;&#xbcc4; &#xd504;&#xb85c;&#xc81d;&#xd2b8; &#xc885;&#xb958;">
 <node CREATED="1426558026398" ID="ID_1619929750" MODIFIED="1426558042941" TEXT="2010">
 <node CREATED="1426558323781" ID="ID_997472993" MODIFIED="1426558326298" TEXT="austin">
 <node CREATED="1426558389960" ID="ID_794151187" MODIFIED="1426558408482" TEXT="&#xb2e8;&#xc21c; compute/storage/image &#xad00;&#xb9ac; &#xc11c;&#xbe44;&#xc2a4; &#xc81c;&#xacf5;"/>
@@ -155,11 +155,10 @@
   <body>
     <img src="../../../../../../Users/07506/Downloads/&#xc774;&#xbbf8;&#xc9c0;_14.jpg" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
-<node CREATED="1426748784594" FOLDED="true" ID="ID_1668958471" MODIFIED="1427072614518" POSITION="left" TEXT="NOVA">
+<node CREATED="1426748784594" ID="ID_1668958471" MODIFIED="1427674210769" POSITION="left" TEXT="NOVA">
 <node CREATED="1426748791280" ID="ID_193039843" MODIFIED="1426748800549" TEXT="http://docs.openstack.org/developer/nova/"/>
 <node CREATED="1426748803649" ID="ID_144815513" MODIFIED="1426748816542" TEXT="Nova&#xb294; OpenStack Compute &#xc758; &#xd504;&#xb85c;&#xc81d;&#xd2b8;&#xba85;"/>
 <node CREATED="1426748817450" ID="ID_905460112" MODIFIED="1426748824632" TEXT="cloud computing fabric controller"/>
@@ -279,8 +278,7 @@
   <body>
     <img src="../../../../../../Users/07506/Downloads/&#xc2a4;&#xc704;&#xd504;&#xd2b8;1.jpg" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 <node CREATED="1427074320144" ID="ID_1022246194" MODIFIED="1427074339931" TEXT="&#xad6c;&#xc870;(architecture)">
@@ -314,8 +312,7 @@
   <body>
     <img src="../../../../../../Users/07506/Pictures/ring.PNG" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node CREATED="1427086143727" ID="ID_553377446" MODIFIED="1427086509529">
 <richcontent TYPE="NODE"><html>
@@ -330,8 +327,7 @@
       (node dict keys)
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1427086155228" ID="ID_1598171261" MODIFIED="1427086157291" TEXT="id">
 <node CREATED="1427086157958" ID="ID_1788999537" MODIFIED="1427086172360" TEXT="unique integr identifier amoungst devices"/>
 <node CREATED="1427086512547" ID="ID_1041189375" MODIFIED="1427086534553" TEXT="&#xac01; &#xb514;&#xbc14;&#xc774;&#xc2a4;&#xb97c; &#xad6c;&#xbd84;&#xd558;&#xae30; &#xc704;&#xd55c; &#xbc88;&#xd638;"/>
@@ -396,8 +392,7 @@
       http://helloworld.naver.com/helloworld/textyle/258077
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <node CREATED="1427076374657" ID="ID_301191973" MODIFIED="1427076556557" TEXT="GFS2">
 <node CREATED="1427076387673" ID="ID_1075361053" MODIFIED="1427076400509" TEXT="Google&#xc758; GFS (Google FileSystem)"/>
 <node CREATED="1427076556558" ID="ID_1629437003" MODIFIED="1427076566742" TEXT="&#xbb38;&#xc81c;&#xc810;">
@@ -512,8 +507,7 @@
   <body>
     <img src="../../../../../../Users/07506/Pictures/swift01.PNG" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 </node>

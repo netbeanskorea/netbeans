@@ -260,8 +260,7 @@
   <body>
     <img src="../../../../../../Users/07506/Pictures/&#xbe14;&#xb85d;_&#xc2a4;&#xd1a0;&#xb9ac;&#xc9c0;.jpg" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node CREATED="1426494935734" ID="ID_582350363" MODIFIED="1426494950003" TEXT="Folsom &#xbc84;&#xc804;&#xbd80;&#xd130; Cinder&#xb77c;&#xb294; &#xbcc4;&#xb3c4;&#xc758; &#xd504;&#xb85c;&#xc81d;&#xd2b8;&#xb85c; &#xb3c5;&#xb9bd;"/>
 <node CREATED="1426494952513" ID="ID_1325822590" MODIFIED="1426494956452" TEXT="Cinder">
@@ -284,8 +283,7 @@
   <body>
     <img src="../../../../../../Users/07506/Pictures/&#xc624;&#xbe0c;&#xc81d;&#xd2b8;_&#xc2a4;&#xd1a0;&#xb9ac;&#xc9c0;.jpg" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node CREATED="1426495018000" ID="ID_1364518056" MODIFIED="1426495039072" TEXT="Swift&#xb294; OpenStack&#xc758; &#xae30;&#xbcf8; &#xc11c;&#xbe44;&#xc2a4; &#xc911; &#xd558;&#xb098;&#xc774;&#xba70;, &#xc624;&#xbe0c;&#xc81d;&#xd2b8; &#xc2a4;&#xd1a0;&#xb9ac;&#xc9c0; &#xc11c;&#xbe44;&#xc2a4;&#xb97c; &#xc81c;&#xacf5;"/>
 <node CREATED="1426495040567" ID="ID_1970497180" MODIFIED="1426495042508" TEXT="Swift">
@@ -305,8 +303,7 @@
   <body>
     <img src="../../../../../../Users/07506/Pictures/&#xc624;&#xd508;&#xc2a4;&#xd0dd;_&#xc2e0;&#xb354;_and_&#xc2a4;&#xc704;&#xd504;&#xd2b8;.jpg" />
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 </node>
 </node>
