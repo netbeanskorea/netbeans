@@ -1,7 +1,7 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node CREATED="1427174042753" ID="ID_1043992564" MODIFIED="1427674319345" TEXT="cloudcomputing">
-<node CREATED="1427173885464" ID="ID_1957872020" MODIFIED="1427173899461" POSITION="right" TEXT="&#xd074;&#xb77c;&#xc6b0;&#xb4dc;&#xcef4;&#xd4e8;&#xd305; &#xad00;&#xb828; &#xbc95;&#xc801; &#xc774;&#xc288;">
+<node CREATED="1427174042753" ID="ID_1043992564" MODIFIED="1429614634376" TEXT="cloudcomputing">
+<node CREATED="1427173885464" FOLDED="true" ID="ID_1957872020" MODIFIED="1429614610125" POSITION="right" TEXT="&#xd074;&#xb77c;&#xc6b0;&#xb4dc;&#xcef4;&#xd4e8;&#xd305; &#xad00;&#xb828; &#xbc95;&#xc801; &#xc774;&#xc288;">
 <node CREATED="1427173900151" ID="ID_650849032" MODIFIED="1427173929182">
 <richcontent TYPE="NODE"><html>
   <head>
@@ -17,7 +17,7 @@
 <node CREATED="1427173931209" ID="ID_1049656013" MODIFIED="1427173931941" TEXT="&#xb2e4;&#xb2e8;&#xacc4;&#xc758; &#xb2f9;&#xc0ac;&#xc790;&#xac00; &#xc788;&#xc744; &#xacbd;&#xc6b0; &#xcc45;&#xc784;&#xc18c;&#xc7ac; &#xbb38;&#xc81c;,"/>
 <node CREATED="1427173934000" ID="ID_1623024205" MODIFIED="1427173939982" TEXT="&#xc9c0;&#xc801;&#xc7ac;&#xc0b0;&#xad8c; &#xbb38;&#xc81c; &#xb4f1;"/>
 </node>
-<node CREATED="1427174095078" ID="ID_1060970170" MODIFIED="1427174099004" POSITION="left" TEXT="&#xac1c;&#xb150;">
+<node CREATED="1427174095078" FOLDED="true" ID="ID_1060970170" MODIFIED="1429614601540" POSITION="left" TEXT="&#xac1c;&#xb150;">
 <node CREATED="1427174099654" ID="ID_1463036754" MODIFIED="1427174129910" TEXT="1965&#xb144; &#xbbf8;&#xad6d;&#xc758; &#xcef4;&#xd4e8;&#xd130;&#xd559;&#xc790; &#xc874; &#xb9e4;&#xce74;&#xc2dc;&#xac00; &quot;&#xcef4;&#xd4e8;&#xd305; &#xd658;&#xacbd;&#xc740; &#xacf5;&#xacf5;&#xc2dc;&#xc124;&#xc744; &#xc4f0;&#xb294; &#xac83;&#xacfc;&#xb3c4; &#xac19;&#xc744; &#xac83;&quot;&#xc774;&#xb77c;&#xb294; &#xac1c;&#xb150;&#xc744; &#xc81c;&#xc2dc;&#xd55c;&#xb370;&#xc11c; &#xc720;&#xb798;"/>
 <node CREATED="1427174132369" ID="ID_369237652" MODIFIED="1427174152878" TEXT="1993 : &#xc774;&#xbbf8; &#xd074;&#xb77c;&#xc6b0;&#xb4dc;&#xb77c;&#xb294; &#xc6a9;&#xc5b4;&#xac00; &#xac70;&#xb300;&#xd55c; &#xaddc;&#xbaa8;&#xc758; ATM&#xc744; &#xc9c0;&#xce6d;&#xd558;&#xb294;&#xb370; &#xc4f0;&#xc784;"/>
 <node CREATED="1427174154775" ID="ID_498421893" MODIFIED="1427174192016" TEXT="General Magic&#xb77c;&#xb294; &#xd68c;&#xc0ac;&#xb294; 1995&#xb144; 3&#xc6d4;&#xbd80;&#xd130; AT&amp;T&#xc640; &#xb2e4;&#xb978; &#xc5ec;&#xb7ec;&#xd1b5;&#xc2e0;&#xc0ac;&#xb4e4;&#xacfc; &#xc81c;&#xd734;&#xb97c; &#xb9fa;&#xace0; &#xd074;&#xb77c;&#xc6b0;&#xb4dc; &#xcef4;&#xd4e8;&#xd305; &#xc11c;&#xbe44;&#xc2a4;&#xb97c; &#xcd5c;&#xcd08;&#xb85c; &#xc2dc;&#xc791;"/>
@@ -27,7 +27,7 @@
 <node CREATED="1427174475626" ID="ID_178200575" MODIFIED="1427174489526" TEXT="&#xc6d0;&#xb798; &#xcef4;&#xd4e8;&#xd130;&#xc758; &#xb124;&#xd2b8;&#xc6cc;&#xd06c;&#xb97c; &#xb3c4;&#xc2dd;&#xd654;&#xd560; &#xb54c; &#xad6c;&#xb984;&#xbaa8;&#xc591;&#xc744; &#xd45c;&#xd604;&#xd55c;&#xb2e4;&#xb294; &#xc810;"/>
 <node CREATED="1427174491345" ID="ID_1625604986" MODIFIED="1427174509846" TEXT="&#xc774;&#xc6a9;&#xc790;&#xb294; &#xc790;&#xc2e0;&#xc774; &#xc774;&#xc6a9;&#xd558;&#xb294; &#xc11c;&#xbc84;&#xc758; &#xd658;&#xacbd;&#xc774;&#xb098; &#xc2dc;&#xc2a4;&#xd15c;&#xc5d0; &#xb300;&#xd574; &#xc54c; &#xd544;&#xc694;&#xb3c4; &#xc5c6;&#xace0; &#xbcf4;&#xc774;&#xc9c0;&#xb3c4; &#xc54a;&#xb294;&#xb2e4;&#xb294; &#xc758;&#xbbf8;&#xc5d0;&#xc11c; &#xc720;&#xb798;"/>
 </node>
-<node CREATED="1427174211369" ID="ID_3635460" MODIFIED="1427174213679" POSITION="right" TEXT="&#xc7a5;&#xb2e8;&#xc810;">
+<node CREATED="1427174211369" FOLDED="true" ID="ID_3635460" MODIFIED="1429614611757" POSITION="right" TEXT="&#xc7a5;&#xb2e8;&#xc810;">
 <node CREATED="1427174216986" ID="ID_971378385" MODIFIED="1427174218079" TEXT="&#xc7a5;&#xc810;">
 <node CREATED="1427174219514" ID="ID_553408693" MODIFIED="1427174229143" TEXT="&#xcd08;&#xae30; &#xad6c;&#xc785;&#xbe44;&#xc6a9;&#xacfc; &#xbe44;&#xc6a9;&#xc9c0;&#xcd9c;&#xc774; &#xc801;&#xc73c;&#xba70; &#xd734;&#xb300;&#xc131;&#xc774; &#xb192;&#xb2e4;"/>
 <node CREATED="1427174230115" ID="ID_801834406" MODIFIED="1427174245232" TEXT="&#xcef4;&#xd4e8;&#xd130; &#xac00;&#xc6a9;&#xc728;&#xc774; &#xb192;&#xb2e4;. &#xc774;&#xb7ec;&#xd55c; &#xb192;&#xc740; &#xac00;&#xc6a9;&#xc728;&#xc740; &#xadf8;&#xb9b0; IT&#xc804;&#xb7b5;&#xacfc;&#xb3c4; &#xc77c;&#xce58;&#xd55c;&#xb2e4;."/>
@@ -62,7 +62,7 @@
 <node CREATED="1427183328068" ID="ID_1512289960" MODIFIED="1427183353208" TEXT="&#xc790;&#xb8cc;&#xb97c; &#xacf5;&#xc720;&#xd558;&#xc9c0; &#xc54a;&#xc73c;&#xb824;&#xb294; &#xc0ac;&#xb78c;&#xb4e4;&#xc5d0;&#xac8c;&#xb294; USB&#xb098; &#xc678;&#xc7a5;&#xd558;&#xb4dc;&#xac00; &#xb354; &#xd6a8;&#xc728;&#xc801;"/>
 </node>
 </node>
-<node CREATED="1427174530774" ID="ID_18135719" MODIFIED="1427174531860" POSITION="left" TEXT="&#xc815;&#xc758;">
+<node CREATED="1427174530774" FOLDED="true" ID="ID_18135719" MODIFIED="1429614606773" POSITION="left" TEXT="&#xc815;&#xc758;">
 <node CREATED="1427174532480" ID="ID_1298696219" MODIFIED="1427174535363" TEXT="Gartner">
 <node CREATED="1427174536102" ID="ID_1756026781" MODIFIED="1427174557046" TEXT="&#xc778;&#xd130;&#xb137; &#xae30;&#xc220;&#xc744; &#xd65c;&#xc6a9;&#xd558;&#xc5ec; &#xb2e4;&#xc218;&#xc758; &#xace0;&#xac1d;&#xc5d0;&#xac8c; &#xd655;&#xc7a5;&#xc131;&#xacfc; &#xd0c4;&#xb825;&#xc131;&#xc744; &#xac00;&#xc9c4; IT &#xc790;&#xc6d0;&#xb4e4;&#xc744; &#xc11c;&#xbe44;&#xc2a4;&#xb85c; &#xc81c;&#xacf5;&#xd558;&#xb294; &#xd558;&#xb098;&#xc758; &#xcef4;&#xd4e8;&#xd305; &#xc2a4;&#xd0c0;&#xc77c;&#xb85c; &#xc815;&#xc758;"/>
 </node>
@@ -156,7 +156,7 @@
 </node>
 </node>
 </node>
-<node CREATED="1427674321207" ID="ID_990539806" MODIFIED="1427675244912" POSITION="left" TEXT="&#xd074;&#xb77c;&#xc6b0;&#xb4dc; &#xbc1c;&#xc804;&#xbc95;">
+<node CREATED="1427674321207" FOLDED="true" ID="ID_990539806" MODIFIED="1429614604767" POSITION="left" TEXT="&#xd074;&#xb77c;&#xc6b0;&#xb4dc; &#xbc1c;&#xc804;&#xbc95;">
 <node CREATED="1427674327813" ID="ID_1898338097" MODIFIED="1427674334456" TEXT="http://www.software.kr/world/coverage/coverageView.do?boardSeq=86"/>
 <node CREATED="1427674338583" ID="ID_1364079565" MODIFIED="1427674359937" TEXT="[&#xbbf8;&#xb798;&#xbd80;] &#xacbd;&#xc81c;&#xd65c;&#xc131;&#xd654;&#xbc95;, &#xd074;&#xb77c;&#xc6b0;&#xb4dc;&#xcef4;&#xd4e8;&#xd305; &#xbc1c;&#xc804;&#xbc95; &#xad6d;&#xd68c; &#xbcf8;&#xd68c;&#xc758; &#xd1b5;&#xacfc;"/>
 <node CREATED="1427674365435" ID="ID_1487104482" MODIFIED="1427674391964" TEXT="&quot;&#xd074;&#xb77c;&#xc6b0;&#xb4dc;&#xcef4;&#xd4e8;&#xd305; &#xbc1c;&#xc804; &#xbc0f; &#xc774;&#xc6a9;&#xc790;&#xbcf4;&#xd638;&#xc5d0; &#xad00;&#xd55c; &#xbc95;&#xb960;&quot;(&#xc774;&#xd558; &#xd074;&#xb77c;&#xc6b0;&#xb4dc;&#xcef4;&#xd4e8;&#xd305;&#xbc1c;&#xc804;&#xbc95;&quot; &#xc774; 3&#xc6d4;3&#xc77c; &#xad6d;&#xd68c; &#xbcf8;&#xd68c;&#xc758; &#xd1b5;&#xacfc;"/>
@@ -169,6 +169,27 @@
 <node CREATED="1427675244913" ID="ID_570497971" MODIFIED="1427675279800" TEXT="&#xc815;&#xbd80;&#xc548;(&apos;13.10.16)&#xbc0f; &#xae40;&#xb3c4;&#xc74d; &#xc758;&#xc6d0; &#xb300;&#xd45c;&#xbc1c;&#xd45c;&#xc548;(&apos;13/11/27)&#xc774; &#xac01;&#xac01; &#xc81c;&#xcd9c;&#xb428;"/>
 <node CREATED="1427675285802" ID="ID_1559558355" MODIFIED="1427675304945" TEXT="&#xad6d;&#xd68c; &#xb17c;&#xc758;&#xacfc;&#xc815;&#xc5d0;&#xc11c;&#xb294; &#xc815;&#xbcf4;&#xbcf4;&#xd638;&#xc5d0; &#xb300;&#xd55c; &#xc6b0;&#xb824;&#xc640; &#xacf5;&#xacf5;&#xae30;&#xac04;&#xc774; &#xbbfc;&#xac04; &#xc11c;&#xbe44;&#xc2a4;&#xb97c; &#xc774;&#xc6a9;&#xd560; &#xacbd;&#xc6b0; &#xad6d;&#xc815;&#xc6d0;&#xc758; &#xc5ed;&#xd560; &#xb4f1;&#xc5d0; &#xad00;&#xd55c; &#xbb38;&#xc81c;&#xac00; &#xc81c;&#xae30;&#xb418;&#xc5c8;&#xb2e4;."/>
 <node CREATED="1427675305940" ID="ID_54847782" MODIFIED="1427675368792" TEXT="&#xc62c;&#xd574; 2&#xc6d4; &#xc784;&#xc2dc;&#xad6d;&#xd68c;&#xc5d0;&#xc11c; &#xbbf8;&#xbc29;&#xc704;&#xb294; &#xc815;&#xbd80;&#xc548;&#xacfc; &#xae40;&#xb3c4;&#xc74d; &#xc758;&#xc6d0;&#xc548;&#xc744; &#xbcd1;&#xd569;&#xc2ec;&#xc0ac;&#xd558;&#xc600;&#xace0;, &#xc815;&#xbcf4;&#xbcf4;&#xd638;&#xb97c; &#xac15;&#xd654;&#xd558;&#xb294; &#xb4f1; &#xad00;&#xb828; &#xc800;&#x3157;"/>
+</node>
+<node CREATED="1429614637070" ID="ID_438530914" MODIFIED="1429614671369" POSITION="right" TEXT="Cloud Computing defined National Institute of Standards and Technology">
+<node CREATED="1429614672292" ID="ID_1785956591" MODIFIED="1429614677033" TEXT="Service Models">
+<node CREATED="1429614678161" ID="ID_1509170208" MODIFIED="1429614681257" TEXT="IaaS"/>
+<node CREATED="1429614682332" ID="ID_1879531485" MODIFIED="1429614688354" TEXT="PaaS"/>
+<node CREATED="1429614689676" ID="ID_1333267734" MODIFIED="1429614692297" TEXT="SaaS"/>
+</node>
+<node CREATED="1429614693983" ID="ID_292826638" MODIFIED="1429614698337" TEXT="Deployment Models">
+<node CREATED="1429614699309" ID="ID_57713104" MODIFIED="1429614702145" TEXT="Private"/>
+<node CREATED="1429614703140" ID="ID_537302529" MODIFIED="1429614707859" TEXT="Community"/>
+<node CREATED="1429614709061" ID="ID_929063867" MODIFIED="1429614711826" TEXT="Public"/>
+<node CREATED="1429614712790" ID="ID_326408906" MODIFIED="1429614715659" TEXT="Hybrid"/>
+</node>
+<node CREATED="1429614717462" ID="ID_809583943" MODIFIED="1429614721586" TEXT="Characteristics">
+<node CREATED="1429614722469" ID="ID_1281731317" MODIFIED="1429614727226" TEXT="On-Demand Self-service"/>
+<node CREATED="1429614728062" ID="ID_1403897524" MODIFIED="1429614742515" TEXT="Broad Network Access"/>
+<node CREATED="1429614733782" ID="ID_526445474" MODIFIED="1429614750660" TEXT="Resource Pooling"/>
+<node CREATED="1429614751558" ID="ID_1865968420" MODIFIED="1429614754988" TEXT="Rapid Elasticity"/>
+<node CREATED="1429614756095" ID="ID_1736848438" MODIFIED="1429614760844" TEXT="Measured Service"/>
+</node>
+<node CREATED="1429614766151" ID="ID_988781189" MODIFIED="1429614835831" TEXT="Definition: Cloud Computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configuarable compiting resources(e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal mnanagement effort or service provider interaction."/>
 </node>
 </node>
 </map>
