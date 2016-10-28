@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="paging">
+
+<!-- 패이징을 위한 샘플 QUERY 입니다..업무에 맞게 수정하셔서 사용 바랍니다..  -->
+<sql id="pagingPreSQL">
+ 		SELECT * FROM (   
+   				SELECT ROWNUM AS "rowNo" , AA.* FROM (
+</sql>
+
+<sql id="pagingPostSQL">
+       			)   AA )
+       	 <![CDATA[
+       	    WHERE "rowNo"  >= #{firstRowIndex} AND  "rowNo"  <= #{lastRowIndex}
+       	 ]]> 	
+</sql>
+
+<sql id="pagingPreSqlOverCount">
+		SELECT  FLOOR((AA.totalCount-1)/#{rowPerPage})+1 totalPage ,  AA.* FROM (
+					SELECT COUNT(*) OVER() totalCount, ROWNUM ROWNUMBER,MAINSQL.* FROM 
+      					(
+</sql>
+
+<sql id="pagingPostSqlOverCount">
+
+		 	) MAINSQL 
+		 <![CDATA[ ) AA WHERE ROWNUMBER>=((#{pageNo}-1)*#{rowPerPage})+1 AND ROWNUMBER <= (((#{pageNo}-1)*#{rowPerPage})+1) + #{rowPerPage}-1 ]]>  
+</sql>
+
+</mapper>

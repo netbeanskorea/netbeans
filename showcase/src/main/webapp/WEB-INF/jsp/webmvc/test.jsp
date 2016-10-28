@@ -1,0 +1,11 @@
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Menu Item 1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Menu Item 2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Menu Item 3&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;

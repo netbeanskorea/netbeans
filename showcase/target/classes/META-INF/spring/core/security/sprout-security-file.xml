@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 권한 체크가 필요없는 url 정보 등록 -->	
+	<sec:http pattern="/resources/**" 		security="none" />
+	<sec:http pattern="/webmvc/**" 			security="none" />
+	<sec:http pattern="/orm/**" 			security="none" />
+	<sec:http pattern="/resourcebundle/**" 	security="none" />
+	<sec:http pattern="/etc/**" 			security="none" />
+	
+	<!-- spring security file cofnig (file 기반일때의 설정)-->
+	<sec:http access-decision-manager-ref="accessDecisionManager"
+		      authentication-manager-ref="authenticationManager"
+		      entry-point-ref="loginUrlAuthenticationEntryPoint"
+		      use-expressions="false">
+		     <!--  <sec:csrf disabled="true"/> -->
+		<sec:custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />			      
+		<sec:custom-filter position="LOGOUT_FILTER"             ref="logoutFilter"  />			      
+		<sec:custom-filter position="FORM_LOGIN_FILTER"         ref="defaultUsernamePasswordAuthenticationFilter"  />
+	
+		<sec:csrf disabled="true" />
+		<sec:headers>
+			<sec:frame-options policy="SAMEORIGIN"/>
+			<sec:hsts disabled="true"/>
+		</sec:headers>
+		<sec:access-denied-handler ref="accessDeniedHandler"  />
+	
+		<!-- <sec:intercept-url pattern="/index.jsp" 		access="ROLE_ANONYMOUS"  />
+		<sec:intercept-url pattern="/ajax-redirect/**" 	access="ROLE_ANONYMOUS"  />
+		<sec:intercept-url pattern="/board/**" 			access="ROLE_ANONYMOUS"  /> -->
+		
+		<!-- spring security showcase에 필요한 URL 정보 -->
+		<sec:intercept-url pattern="/security/loginForm"   			access="ROLE_ANONYMOUS"/> <!-- ㄹㅣ다이렉션처리시 :  로그인폼 인증경로 제외 -->
+		<sec:intercept-url pattern="/security/loginSuccess"       	access="ROLE_USER,ROLE_ADMIN"/>
+	</sec:http>	
+		
+	<sec:user-service id="defaultUserDetailsService" properties="classpath:META-INF/properties/users.properties"/>
+			
+</beans:beans>

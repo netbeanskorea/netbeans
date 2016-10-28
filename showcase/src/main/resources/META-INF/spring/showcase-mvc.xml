@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+		xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<mvc:view-controller path="/" view-name="webmvc/simple"/>
+	<mvc:view-controller path="/webmvc" view-name="webmvc/simple"/>
+	<mvc:view-controller path="/security" view-name="security/security_main"/>
+	<mvc:view-controller path="/orm" view-name="orm/orm_main"/>
+	<mvc:view-controller path="/exceptions" view-name="exceptions/exceptions_main"/>
+	<mvc:view-controller path="/integration" view-name="integration/integration_main"/>
+	<mvc:view-controller path="/etc" view-name="etc/etc_main"/>
+	
+	 <!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven conversion-service="conversionService"  enableMatrixVariables="true">
+		<mvc:argument-resolvers>  
+			<bean class="nexcore.sprout.showcase.mvc.data.custom.CustomArgumentResolver"/>
+		</mvc:argument-resolvers>
+		<mvc:async-support default-timeout="1000000">
+			<mvc:callable-interceptors>
+				<bean class="nexcore.sprout.showcase.mvc.async.TimeoutCallableProcessingInterceptor" />
+			</mvc:callable-interceptors>
+		</mvc:async-support>    
+	</mvc:annotation-driven>
+
+	<mvc:interceptors>
+	 	<mvc:interceptor>
+			<mvc:mapping path="/interceptors/checkinterceptor" />
+			<bean id="officeHoursInterceptor" class="nexcore.sprout.showcase.mvc.interceptors.TimeBasedAccessInterceptor">
+			    <property name="openingTime" value="9"/>    
+			    <property name="closingTime" value="18"/>
+			</bean> 
+		</mvc:interceptor>	
+	</mvc:interceptors>
+	
+	 
+	<!-- Only needed because we install custom converters to support the examples in the org.springframewok.samples.mvc.convert package -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="formatters">
+            <bean class="nexcore.sprout.showcase.mvc.convert.MaskFormatAnnotationFormatterFactory" />
+		</property>
+	</bean>
+	
+	 <bean id="someBean" class="nexcore.sprout.showcase.mvc.SomeBean"/> 
+	<util:properties id="showcaseproperties" location="/WEB-INF/jsp/taglib/showcase.properties"/>
+	
+
+
+	<task:annotation-driven />
+	
+	<beans profile="devProfile">   
+	     <bean id="someBean" class="nexcore.sprout.showcase.mvc.SomeBean">
+	        <property name="profileName" value="Developement  profile"/>
+	    </bean>
+	</beans>
+	<beans profile="prodProfile">
+	    <bean id="someBean" class="nexcore.sprout.showcase.mvc.SomeBean">
+	        <property name="profileName" value="Production profile"/>
+	    </bean>
+	</beans>
+	
+	
+	
+</beans>

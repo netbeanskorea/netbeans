@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="tiles-sample" template="/WEB-INF/jsp/tiles/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/tiles/header.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/tiles/sidebar.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/tiles/footer.jsp" />
+	</definition>
+	<definition name="/WEB-INF/jsp/tiles/tilesview.do" extends="tiles-sample" >
+		<put-attribute name="body" value="/WEB-INF/jsp/tiles/tilesview.jsp" />
+	</definition>
+	
+	
+	
+	<definition name="sprout-basic" template="/WEB-INF/layouts/tiles/template-basic.jsp">
+		<put-attribute name="htmlCommon" value="/WEB-INF/jsp/common/htmlCommon.jsp" />
+		<put-attribute name="header" value="/WEB-INF/layouts/header.jsp" />
+		<put-attribute name="sidebar" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/layouts/footer.jsp" />
+	</definition>
+	<definition name="/WEB-INF/jsp/*/**.do" extends="sprout-basic" >
+		<put-attribute name="body" value="/WEB-INF/jsp/{1}/{2}.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/layouts/{1}_sidebar.jsp" />
+	</definition>
+	
+	<definition name="sprout-basic-frag" template="/WEB-INF/layouts/tiles/template-basic-frag.jsp">
+		<put-attribute name="common" value="/WEB-INF/jsp/common/common.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+	<definition name="**/*.frag" extends="sprout-basic-frag" >
+		<put-attribute name="body" value="{1}/{2}.jsp" />
+	</definition>
+</tiles-definitions>

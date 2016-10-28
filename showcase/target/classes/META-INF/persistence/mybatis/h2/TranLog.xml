@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TranLog">	
+	<select id="selectTranLogList" parameterType="nexcore.sprout.showcase.etc.board.vo.ShowcaseTranLogVO" resultType="nexcore.sprout.showcase.etc.board.vo.ShowcaseTranLogVO">
+	SELECT 	 TOP 10 LOG_DT , 
+		SEQ_NO, 
+		GLOB_ID , 
+		MENU_ID , 
+		IPAD , 
+		TRN_CD , 
+		USER_ID , 
+		GROUP_ID , 
+		OS_VER , 
+		AGENT_VER , 
+		SVC_STRN_DTTM , 
+		SVC_END_DTTM , 
+		RSLT_MSG , 
+		RSLT_MSG_CD , 
+		WAS_INSTANCE_ID , 
+		ELAPSE_TIME 
+	FROM NSF_TRAN_LOG
+	
+	</select>
+</mapper>
+
+

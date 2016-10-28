@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	
+	<select id="selectBoardList" parameterType="com.skcc.sample.board.vo.BoardVO" resultType="com.skcc.sample.board.vo.BoardVO">
+	SELECT 
+				SEQ_NO AS "seqNo"
+	            ,TITLE AS "title"
+	            ,CONTENT AS "content"
+	            ,READ_CNT AS "readCnt"
+	            ,WRITER AS "writer"
+	            ,TO_CHAR(REQ_DATE,'YYYY-MM-DD') AS "reqDate"
+	            ,DUE_DATE AS "dueDate"
+	FROM BOARD
+	</select>
+		
+	<select id="selectBoardInfo" parameterType="com.skcc.sample.board.vo.BoardVO" resultType="com.skcc.sample.board.vo.BoardVO">
+	SELECT 
+				SEQ_NO AS "seqNo"
+	            ,TITLE AS "title"
+	            ,CONTENT AS "content"
+	            ,READ_CNT AS "readCnt"
+	            ,WRITER AS "writer"
+	            ,TO_CHAR(REQ_DATE,'YYYY-MM-DD') AS "reqDate"
+	            ,DUE_DATE AS "dueDate"
+	FROM BOARD
+	WHERE SEQ_NO = #{seqNo}
+	</select>	
+
+	<select id="selectTotalBoardCnt" resultType="java.lang.Integer">
+	SELECT 	COUNT(DISTINCT SEQ_NO) as "totalCnt"	
+  	FROM		BOARD  				
+  	</select>
+	
+	<insert id="insertBoard" parameterType="com.skcc.sample.board.vo.BoardVO">
+	INSERT
+	INTO		BOARD (
+			SEQ_NO
+		,	TITLE
+		,	CONTENT
+		,	READ_CNT
+		,	WRITER
+		,	REQ_DATE
+		,	DUE_DATE
+	) VALUES (
+			(SELECT	MAX(TO_NUMBER(SEQ_NO)) + 1	FROM	BOARD)
+		,	#{title}
+		,	#{content}
+		,	#{readCnt, jdbcType=VARCHAR}
+		,	#{writer}
+		,	SYSDATE
+		,	#{dueDate}
+	)
+	</insert>
+	
+	<update id="updateBoard" parameterType="com.skcc.sample.board.vo.BoardVO">
+	UPDATE  BOARD
+	SET  
+			TITLE 						= 	#{title} 	
+	     ,  CONTENT 				= 	#{content}
+	     ,	DUE_DATE 				=	#{dueDate}	     
+	WHERE 	SEQ_NO = #{seqNo}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="com.skcc.sample.board.vo.BoardVO">
+	DELETE
+    FROM  	BOARD
+	WHERE  	SEQ_NO = #{seqNo}
+	</delete>
+</mapper>
+
+

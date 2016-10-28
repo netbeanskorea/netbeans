@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<sql id="selectBoardSearchCondition">
+		<where>
+            <if test="schKind != null and schKind == 'title'">
+            	TITLE LIKE '%' || #{schWord} || '%' 
+            </if>
+            <if test="schKind != null and schKind == 'contents'">
+            	CONTENTS LIKE '%' || #{schWord} || '%'
+            </if>
+            <if test="seqNo != null">
+        		SEQ_NO =  #{seqNo} 
+        	</if>
+        </where>
+	</sql>
+
+	<select id="selectBoardList" parameterType="nexcore.sprout.showcase.orm.board.vo.ShowcaseBoardVO" resultType="nexcore.sprout.showcase.orm.board.vo.ShowcaseBoardVO">
+		 <include refid="paging.pagingPreSQL" /> 
+		SELECT 
+					SEQ_NO AS "seqNo"
+		            ,TITLE AS "title"
+		            ,CONTENT AS "content"
+		            ,READ_CNT AS "readCnt"
+		            ,WRITER AS "writer"
+		            ,REQ_DATE AS "reqDate"
+		            ,'' AS "dueDate"
+		FROM BOARD
+		<!-- <include refid="selectBoardSearchCondition" /> -->
+        ORDER BY SEQ_NO DESC
+      <include refid="paging.pagingPostSQL" /> 
+	</select>
+		
+	<select id="selectBoardInfo" parameterType="nexcore.sprout.showcase.orm.board.vo.ShowcaseBoardVO" resultType="nexcore.sprout.showcase.orm.board.vo.ShowcaseBoardVO">
+	SELECT 
+				SEQ_NO AS "seqNo"
+	            ,TITLE AS "title"
+	            ,CONTENT AS "content"
+	            ,READ_CNT AS "readCnt"
+	            ,WRITER AS "writer"
+	            ,TO_CHAR(REQ_DATE,'YYYY-MM-DD') AS "reqDate"
+	            ,DUE_DATE AS "dueDate"
+	FROM BOARD
+	WHERE SEQ_NO = #{seqNo}
+	</select>	
+
+	<select id="selectTotalBoardCnt" parameterType="nexcore.sprout.showcase.orm.board.vo.ShowcaseBoardVO" resultType="java.lang.Integer">
+		SELECT 	COUNT(DISTINCT SEQ_NO) as "totalCnt"	
+	  	FROM		BOARD  		
+	  	<include refid="selectBoardSearchCondition" />	
+	 </select>
+	
+	<insert id="insertBoard" parameterType="nexcore.sprout.showcase.orm.board.vo.ShowcaseBoardVO">
+	INSERT
+	INTO		BOARD (
+			SEQ_NO
+		,	TITLE
+		,	CONTENT
+		,	READ_CNT
+		,	WRITER
+		,	REQ_DATE
+		,	DUE_DATE
+	) VALUES (
+			(SELECT	MAX(TO_NUMBER(SEQ_NO)) + 1	FROM	BOARD)
+		,	#{title}
+		,	#{content}
+		,	#{readCnt, jdbcType=VARCHAR}
+		,	#{writer}
+		,	SYSDATE
+		,	#{dueDate}
+	)
+	</insert>
+	
+	<update id="updateBoard" parameterType="nexcore.sprout.showcase.orm.board.vo.ShowcaseBoardVO">
+	UPDATE  BOARD
+	SET  
+			TITLE 						= 	#{title} 	
+	     ,  CONTENT 				= 	#{content}
+	     ,	DUE_DATE 				=	#{dueDate}	     
+	WHERE 	SEQ_NO = #{seqNo}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="nexcore.sprout.showcase.orm.board.vo.ShowcaseBoardVO">
+	DELETE
+    FROM  	BOARD
+	WHERE  	SEQ_NO = #{seqNo}
+	</delete>
+</mapper>	
+
+
